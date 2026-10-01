@@ -3,3 +3,8 @@
 **/.DS_Store
 results/
 **/.coverage
+.venv/
+.pytest_cache/
+.matplotlib/
+local/
+*.zh.md

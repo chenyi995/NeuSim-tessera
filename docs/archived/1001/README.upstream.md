@@ -1,15 +1,3 @@
-# NeuSim with Tessera
-
-This fork adds Tessera mapping, equal-PE baselines, finite-SRAM energy accounting and request replay to NeuSim. The default upstream backend remains available.
-
-- [Tessera changes, energy coefficients and reproduction](docs/tessera_reproduction.md)
-- [Current results: one two-panel figure per workload](artifacts/tessera-20261001/per_workload/figures/all_workloads.pdf)
-- [Complete current artifact and workload sources](artifacts/tessera-20261001/README.md)
-
-The current artifact corresponds only to the requested `all_workloads.pdf` run. Earlier performance results are archived locally. Array coefficients are in pJ per multiply or add; SRAM coefficients are in pJ per transferred bit, not per arithmetic op. The detailed accounting and limitations are documented above.
-
----
-
 # NeuSim: An Open-source Simulator Framework for NPUs
 
 [![CI Lint Status](https://github.com/platformxlab/NeuSim/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/platformxlab/NeuSim/actions/workflows/lint.yml) [![CI Test Status](https://github.com/platformxlab/NeuSim/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/platformxlab/NeuSim/actions/workflows/test.yml)
