@@ -1,0 +1,87 @@
+"""One joint resource selector extending Planaria's urgency objective.
+
+Planaria scheduler.py::assign_cores_if_tasks_not_fit ranks by
+priority / slack / minimum cores, a greedy urgency-per-resource score.
+This selector instead maximizes total admitted urgency over the complete
+resource allocation using multiple-choice dynamic programming. Among equal
+urgency solutions it maximizes priority-weighted predicted service rate,
+the priority/time score used by Planaria's all-fit allocator.
+There is no architecture branch, coarse reference, incumbent or fallback.
+"""
+import math
+import numpy as np
+
+
+# chenyi9: decision start — replace greedy allocation with one joint selector at every grain.
+class JointSLAAllocator:
+    def __init__(self, trace=None):
+        self.trace = trace
+        self.audit = dict(calls=0,candidate_options=0,frontier_options=0,
+                          selected_predicted_admissions=0,unassigned_requests=0)
+
+    @staticmethod
+    def utilities(task, times, frequency):
+        slack = task.sla * 1.e-3 * frequency - (task.current_time - task.start_time)
+        finite = np.isfinite(times)
+        # Live requests have positive remaining service. The native engine
+        # retires completed requests before invoking resource selection.
+        assert np.all(times[finite] > 0), 'A completed request reached allocation'
+        urgent = task.priority / slack if slack > 0 else 0.
+        admitted = finite & (times <= slack)
+        primary = np.where(admitted, urgent, 0.)
+        rate = np.zeros_like(times)
+        np.divide(task.priority, times, out=rate, where=finite)
+        return primary,rate,admitted
+
+    def __call__(self, queue, possible, units):
+        from neusim.run_scripts.run_feature_qos_scheduler import FREQ
+        assert units > 0
+        keys=list(queue);budget=np.arange(units+1)
+        primary=np.full(units+1,-np.inf);rate=primary.copy()
+        primary[0]=rate[0]=0.
+        parents=[];details=[]
+        self.audit['calls']+=1
+        for key in keys:
+            task=queue[key]
+            times=np.array([math.inf]+[task.get_remaining_estimated_time(c) for c in range(1,units+1)])
+            reward,service,admitted=self.utilities(task,times,FREQ)
+            assert set(np.flatnonzero(admitted))==set(possible[key])
+            # Exact Pareto pruning: a smaller allocation with no worse reward
+            # in either objective dominates a larger choice. Time curves need
+            # not be monotone, and zero allocation remains an explicit option.
+            choices=[0];best_any=best_admitted=0.
+            for c in range(1,units+1):
+                if not math.isfinite(times[c]):continue
+                dominated=(service[c]<=best_admitted if admitted[c] else service[c]<=best_any)
+                if not dominated:choices.append(c)
+                best_any=max(best_any,service[c])
+                if admitted[c]:best_admitted=max(best_admitted,service[c])
+            choices=np.array(choices,dtype=np.int64)
+            previous=budget[None,:]-choices[:,None]
+            valid=previous>=0;indices=np.maximum(previous,0)
+            p=np.where(valid,primary[indices]+reward[choices,None],-np.inf)
+            s=np.where(valid,rate[indices]+service[choices,None],-np.inf)
+            maximum=p.max(axis=0)
+            pick=np.argmax(np.where(p==maximum,s,-np.inf),axis=0)
+            selected=choices[pick]
+            primary=p[pick,budget];rate=s[pick,budget]
+            parents.append(selected)
+            details.append((times,admitted))
+            self.audit['candidate_options']+=int(np.count_nonzero(np.isfinite(times)))+1
+            self.audit['frontier_options']+=len(choices)
+        best_primary=primary.max()
+        finalists=np.where(primary==best_primary,rate,-np.inf)
+        used=int(np.argmax(finalists));objective=(float(primary[used]),float(rate[used]))
+        allocation={}
+        for index in reversed(range(len(keys))):
+            chosen=int(parents[index][used]);allocation[keys[index]]=chosen;used-=chosen
+        assert used==0 and 0<sum(allocation.values())<=units
+        allocation={key:allocation[key] for key in keys}
+        good=sum(bool(details[i][1][allocation[key]]) for i,key in enumerate(keys))
+        self.audit['selected_predicted_admissions']+=good
+        self.audit['unassigned_requests']+=sum(c==0 for c in allocation.values())
+        if self.trace is not None:
+            self.trace.append(dict(units=units,allocation=allocation,objective=objective,
+                                   predicted_admissions=good))
+        return allocation
+# chenyi9: decision end
