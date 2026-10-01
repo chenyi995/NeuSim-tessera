@@ -44,7 +44,8 @@ disallow_untyped_defs = false
 check_untyped_defs = true
 
 [tool.pytest.ini_options]
-norecursedirs = ["results", "dist", "build", ".git", "*.egg-info"]
+# Codex: archived tests are preserved history, not active collection targets.
+norecursedirs = ["results", "archived", "artifacts", "dist", "build", ".git", "*.egg-info"]
 testpaths = ["neusim"]
 addopts = "--cov=neusim"
 markers = [
