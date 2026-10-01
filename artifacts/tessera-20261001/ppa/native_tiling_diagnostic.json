@@ -1,0 +1,294 @@
+{
+  "status": "PASS",
+  "evidence": [
+    {
+      "policy": "native_tail",
+      "architecture": "WS",
+      "kind": "shape",
+      "operator_id": "12463",
+      "mapping": {
+        "geometry": [
+          128,
+          128,
+          true,
+          1,
+          128,
+          128
+        ],
+        "memory_tile": [
+          1,
+          32000,
+          1
+        ],
+        "engine": "SA",
+        "B": 1,
+        "M": 1,
+        "N": 32000,
+        "K": 4096,
+        "sram_bandwidth_model": "per_pe_double_buffer",
+        "sram_bandwidth_bytes_per_ns": 131072.0,
+        "sram_service_time_ns": 275999,
+        "sram_overlap_hidden_ns": 0,
+        "sa_energy_accounting": "padded_tiles",
+        "charged_sa_macs": 16777216000,
+        "padding_macs": 16646144000,
+        "sram_read_accounting": "padded_tiles",
+        "padding_sram_read_bytes": 33552384000
+      },
+      "time_ns": "262684672",
+      "energy_J": "31.226280342795935",
+      "static_J": "30.886582249113523",
+      "dynamic_J": "0.3396980936824109",
+      "hbm_bytes": "262216192",
+      "sram_bytes": "36175624192",
+      "sa_ns": "262684672",
+      "vu_ns": "21329",
+      "charged_to_useful_macs": 128.0
+    },
+    {
+      "policy": "native_tail",
+      "architecture": "Planaria-8",
+      "kind": "shape",
+      "operator_id": "12463",
+      "mapping": {
+        "memory_tile": [
+          1,
+          32000,
+          1
+        ],
+        "phase_plans": [
+          {
+            "native_tail": true,
+            "engine": "SA",
+            "M": 1,
+            "N": 32000,
+            "K": 4096,
+            "B": 1,
+            "memory_tile": [
+              1,
+              32000,
+              1
+            ],
+            "producer_planes": 1,
+            "family": "Planaria",
+            "sa_ns": 1105920
+          }
+        ],
+        "engine": "SA",
+        "B": 1,
+        "M": 1,
+        "N": 32000,
+        "K": 4096,
+        "sram_bandwidth_model": "per_pe_double_buffer",
+        "sram_bandwidth_bytes_per_ns": 131072.0,
+        "sram_service_time_ns": 34124,
+        "sram_overlap_hidden_ns": 0,
+        "sa_energy_accounting": "padded_tiles",
+        "charged_sa_macs": 1048576000,
+        "padding_macs": 917504000,
+        "sram_read_accounting": "padded_tiles",
+        "padding_sram_read_bytes": 1849344000
+      },
+      "time_ns": "1105920",
+      "energy_J": "0.16080196999279484",
+      "static_J": "0.13003457255754775",
+      "dynamic_J": "0.030767397435247083",
+      "hbm_bytes": "262216192",
+      "sram_bytes": "4472584192",
+      "sa_ns": "1105920",
+      "vu_ns": "21329",
+      "charged_to_useful_macs": 8.0
+    },
+    {
+      "policy": "native_tail",
+      "architecture": "Tessera-8",
+      "kind": "shape",
+      "operator_id": "12463",
+      "mapping": {
+        "memory_tile": [
+          1,
+          32000,
+          1
+        ],
+        "phase_plans": [
+          {
+            "native_tail": true,
+            "engine": "SA",
+            "M": 1,
+            "N": 32000,
+            "K": 4096,
+            "B": 1,
+            "memory_tile": [
+              1,
+              32000,
+              1
+            ],
+            "producer_planes": 1,
+            "family": "Tessera",
+            "sa_ns": 1142784
+          }
+        ],
+        "engine": "SA",
+        "B": 1,
+        "M": 1,
+        "N": 32000,
+        "K": 4096,
+        "sram_bandwidth_model": "per_pe_double_buffer",
+        "sram_bandwidth_bytes_per_ns": 131072.0,
+        "sram_service_time_ns": 34124,
+        "sram_overlap_hidden_ns": 0,
+        "sa_energy_accounting": "padded_tiles",
+        "charged_sa_macs": 1048576000,
+        "padding_macs": 917504000,
+        "sram_read_accounting": "padded_tiles",
+        "padding_sram_read_bytes": 1849344000
+      },
+      "time_ns": "1142784",
+      "energy_J": "0.1646877826304149",
+      "static_J": "0.134369058309466",
+      "dynamic_J": "0.030318724320948905",
+      "hbm_bytes": "262216192",
+      "sram_bytes": "4472584192",
+      "sa_ns": "1142784",
+      "vu_ns": "21329",
+      "charged_to_useful_macs": 8.0
+    },
+    {
+      "policy": "joint_edp",
+      "architecture": "WS",
+      "kind": "shape",
+      "operator_id": "12463",
+      "mapping": {
+        "geometry": [
+          128,
+          128,
+          true,
+          1,
+          128,
+          128
+        ],
+        "memory_tile": [
+          1,
+          256,
+          128
+        ],
+        "engine": "SA",
+        "B": 1,
+        "M": 1,
+        "N": 32000,
+        "K": 4096,
+        "sram_bandwidth_model": "per_pe_double_buffer",
+        "sram_bandwidth_bytes_per_ns": 131072.0,
+        "sram_service_time_ns": 4147,
+        "sram_overlap_hidden_ns": 0,
+        "sa_energy_accounting": "padded_tiles",
+        "charged_sa_macs": 131072000,
+        "padding_macs": 0,
+        "sram_read_accounting": "padded_tiles",
+        "padding_sram_read_bytes": 0
+      },
+      "time_ns": "1536000",
+      "energy_J": "0.18749424259642367",
+      "static_J": "0.18060357299659408",
+      "dynamic_J": "0.006890669599829582",
+      "hbm_bytes": "263232000",
+      "sram_bytes": "543488000",
+      "sa_ns": "1536000",
+      "vu_ns": "162",
+      "charged_to_useful_macs": 1.0
+    },
+    {
+      "policy": "joint_edp",
+      "architecture": "Planaria-8",
+      "kind": "shape",
+      "operator_id": "12463",
+      "mapping": {
+        "geometry": [
+          256,
+          64,
+          true,
+          1,
+          256,
+          64
+        ],
+        "memory_tile": [
+          1,
+          8000,
+          256
+        ],
+        "engine": "SA",
+        "B": 1,
+        "M": 1,
+        "N": 32000,
+        "K": 4096,
+        "sram_bandwidth_model": "per_pe_double_buffer",
+        "sram_bandwidth_bytes_per_ns": 131072.0,
+        "sram_service_time_ns": 4093,
+        "sram_overlap_hidden_ns": 0,
+        "sa_energy_accounting": "padded_tiles",
+        "charged_sa_macs": 131072000,
+        "padding_macs": 0,
+        "sram_read_accounting": "padded_tiles",
+        "padding_sram_read_bytes": 0
+      },
+      "time_ns": "93658",
+      "energy_J": "0.01756853769999293",
+      "static_J": "0.010855273166938517",
+      "dynamic_J": "0.006713264533054414",
+      "hbm_bytes": "262240768",
+      "sram_bytes": "536352768",
+      "sa_ns": "84864",
+      "vu_ns": "79",
+      "charged_to_useful_macs": 1.0
+    },
+    {
+      "policy": "joint_edp",
+      "architecture": "Tessera-8",
+      "kind": "shape",
+      "operator_id": "12463",
+      "mapping": {
+        "geometry": [
+          128,
+          8,
+          false,
+          1,
+          8,
+          128
+        ],
+        "memory_tile": [
+          1,
+          16000,
+          128
+        ],
+        "engine": "SA",
+        "B": 1,
+        "M": 1,
+        "N": 32000,
+        "K": 4096,
+        "sram_bandwidth_model": "per_pe_double_buffer",
+        "sram_bandwidth_bytes_per_ns": 131072.0,
+        "sram_service_time_ns": 4374,
+        "sram_overlap_hidden_ns": 0,
+        "sa_energy_accounting": "padded_tiles",
+        "charged_sa_macs": 131072000,
+        "padding_macs": 0,
+        "sram_read_accounting": "padded_tiles",
+        "padding_sram_read_bytes": 0
+      },
+      "time_ns": "93652",
+      "energy_J": "0.0176016189959206",
+      "static_J": "0.01085457774701708",
+      "dynamic_J": "0.006747041248903517",
+      "hbm_bytes": "262224384",
+      "sram_bytes": "573200384",
+      "sa_ns": "73664",
+      "vu_ns": "162",
+      "charged_to_useful_macs": 1.0
+    }
+  ],
+  "source_sha256": {
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/diagnose_native_tiling.py": "ce26f310291d7d9463e6c115d3ae748f30ddc5d0e89fcc84e3afc93317fc39c9",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/native_tail/main_costs/operator_costs.csv": "9500cee20154108ebcebb2bb62c4f1222a83dc6721ed8ae92309b68422613f3d",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/joint_edp/main_costs/operator_costs.csv": "4529a603145b16d3654fdc6ec3e72e964c14499ec1e980a0e10f10e36b367ee0"
+  }
+}

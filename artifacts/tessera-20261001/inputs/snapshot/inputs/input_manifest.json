@@ -1,0 +1,348 @@
+{
+  "status": "complete",
+  "operation": "Saved-input extraction and verification only; no simulation",
+  "producer": {
+    "path": "Tessera-revision/experiments/paper_revision/build_workloads.py",
+    "bytes": 14072,
+    "sha256": "b95efa87bb14b90d4eb926165a0d8808902fc29d0ba51d6fdeb4338c27dcfc52",
+    "purpose": "Reproducible input builder"
+  },
+  "sources": [
+    {
+      "path": "out/tessera-revision/fissionsa_selected8_hbm4/sram_12mb/inputs/workloads.csv",
+      "bytes": 153938647,
+      "sha256": "0314c70c88d420e7e212deda4502cd4d2ba4ecc9cf73cf6ea99651ce37ae2fbe",
+      "purpose": "Frozen eight-cohort input; retain six new cohorts and verify duplicate Vidur cohorts"
+    },
+    {
+      "path": "out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_conv300/mnk_trace.csv",
+      "bytes": 10467031,
+      "sha256": "b92a327626fa9c888ea65cbc900a32267af59a4a2350b5656e8ed7b02746c622",
+      "purpose": "Original paper complete GEMM trace"
+    },
+    {
+      "path": "out/tes-old/continuous_batching/traces/llama2-7b_conv300/batch_composition.csv",
+      "bytes": 5531426,
+      "sha256": "a61b51b2c16b2dd753714c8591ec0f5172908b06f17d0fca7c5d57b3b7acfd6b",
+      "purpose": "Original schedule composition used to validate request geometry and phase"
+    },
+    {
+      "path": "out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama3-8b_conv300/mnk_trace.csv",
+      "bytes": 10655275,
+      "sha256": "f8eb65ff5d41b06150c00418d86e9a00f36188556bf3a97d8405b66984231f50",
+      "purpose": "Original paper complete GEMM trace"
+    },
+    {
+      "path": "out/tes-old/continuous_batching/traces/llama3-8b_conv300/batch_composition.csv",
+      "bytes": 5532418,
+      "sha256": "75b644e9807aaf980a5986cb51da9f53c329d7ac21c67491658d1b867a98915e",
+      "purpose": "Original schedule composition used to validate request geometry and phase"
+    },
+    {
+      "path": "out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-70b-tp4_conv300/mnk_trace.csv",
+      "bytes": 9707132,
+      "sha256": "6bdf75f6b438a64ba5318efa3c5b37dbf8f6c53f6f36ba85fdba802341e2ceeb",
+      "purpose": "Original paper complete GEMM trace"
+    },
+    {
+      "path": "out/tes-old/continuous_batching/traces/llama2-70b-tp4_conv300/batch_composition.csv",
+      "bytes": 5546147,
+      "sha256": "8809bfa9bceaf07e9b30078ebc3ac3c7ebacea3d022eda07cd1d5bcc9f159017",
+      "purpose": "Original schedule composition used to validate request geometry and phase"
+    },
+    {
+      "path": "out/tessera-hpca/Batch6-BW-Sweep/workload/traces/phi2_conv300/mnk_trace.csv",
+      "bytes": 11495051,
+      "sha256": "265161ce99ed6950778870a674a56c7ce24bbe94d3802182ffa4a0b0fecab04c",
+      "purpose": "Original paper complete GEMM trace"
+    },
+    {
+      "path": "out/tes-old/continuous_batching/traces/phi2_conv300/batch_composition.csv",
+      "bytes": 5531165,
+      "sha256": "5051f32b5ba16a72b0f57ba5577769e1a60daf0beca03c44a17131e97046f2d0",
+      "purpose": "Original schedule composition used to validate request geometry and phase"
+    },
+    {
+      "path": "out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_code300/mnk_trace.csv",
+      "bytes": 1416947,
+      "sha256": "249fffbfb68b73032538cf65ee6e08ff409bcad7cca31397ed1dd76374474b2e",
+      "purpose": "Original paper complete GEMM trace"
+    },
+    {
+      "path": "out/tes-old/continuous_batching/traces/llama2-7b_code300/batch_composition.csv",
+      "bytes": 594098,
+      "sha256": "441be4c9d618735aba4c49bffc27ec73dc49257378f4512ad136f31197261307",
+      "purpose": "Original schedule composition used to validate request geometry and phase"
+    },
+    {
+      "path": "out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_arxiv-qps1/mnk_trace.csv",
+      "bytes": 15566519,
+      "sha256": "33b9c52a04360f0e286dd466dc8e051ce782cb0be84566f9eec4ee90300ed2a9",
+      "purpose": "Original paper complete GEMM trace"
+    },
+    {
+      "path": "out/tes-old/continuous_batching/traces/llama2-7b_arxiv-qps1/batch_composition.csv",
+      "bytes": 7217652,
+      "sha256": "416a4306f95dc0c064c8f02a985546fa7845133b4abfb667a9748e990293e17b",
+      "purpose": "Original schedule composition used to validate request geometry and phase"
+    },
+    {
+      "path": "out/tessera-revision/planaria_all_collected_800_hbm4/inputs.csv",
+      "bytes": 472391,
+      "sha256": "dc1dfb240a02461333f912d30e59e4b082a282f89bf1c2b011117e68bb117817",
+      "purpose": "Native cache MNK coverage only"
+    },
+    {
+      "path": "out/tessera-revision/planaria_all_collected_800_hbm4/run/run_manifest.json",
+      "bytes": 16329,
+      "sha256": "25df3d0747990fa9d6e5ebea21b55e402d1bbff1d01b949c657ea55f4b647a81",
+      "purpose": "Completed native run metadata; no assertion of identical main-figure memory model"
+    }
+  ],
+  "cohorts": [
+    {
+      "dataset": "llama2_vidur",
+      "cohort": "full_trace",
+      "model": "meta-llama/Llama-2-7b-hf",
+      "workload_label": "Llama-2-7B / conv",
+      "trace_tag": "llama2-7b_conv300",
+      "input_group": "original_six",
+      "records": 172492,
+      "source_records": 172492,
+      "logical_gemms": 159140224,
+      "logical_macs": 2336079548252160,
+      "unique_shapes": 6339
+    },
+    {
+      "dataset": "llama3_vidur",
+      "cohort": "full_trace",
+      "model": "meta-llama/Meta-Llama-3-8B",
+      "workload_label": "Llama-3-8B / conv",
+      "trace_tag": "llama3-8b_conv300",
+      "input_group": "original_six",
+      "records": 175574,
+      "source_records": 175574,
+      "logical_gemms": 159218240,
+      "logical_macs": 2510837432451072,
+      "unique_shapes": 6249
+    },
+    {
+      "dataset": "llama2_70b_tp4_vidur",
+      "cohort": "full_trace",
+      "model": "meta-llama/Llama-2-70b-hf",
+      "workload_label": "Llama-2-70B TP4 / conv",
+      "trace_tag": "llama2-70b-tp4_conv300",
+      "input_group": "original_six",
+      "records": 161022,
+      "source_records": 161022,
+      "logical_gemms": 198919600,
+      "logical_macs": 6039385722060800,
+      "unique_shapes": 6464
+    },
+    {
+      "dataset": "phi2_vidur",
+      "cohort": "full_trace",
+      "model": "microsoft/phi-2",
+      "workload_label": "Phi-2 / conv",
+      "trace_tag": "phi2_conv300",
+      "input_group": "original_six",
+      "records": 191788,
+      "source_records": 191788,
+      "logical_gemms": 159504384,
+      "logical_macs": 930808782356480,
+      "unique_shapes": 6040
+    },
+    {
+      "dataset": "llama2_code_vidur",
+      "cohort": "full_trace",
+      "model": "meta-llama/Llama-2-7b-hf",
+      "workload_label": "Llama-2-7B / code",
+      "trace_tag": "llama2-7b_code300",
+      "input_group": "original_six",
+      "records": 23190,
+      "source_records": 23190,
+      "logical_gemms": 16964832,
+      "logical_macs": 3680899126788096,
+      "unique_shapes": 7976
+    },
+    {
+      "dataset": "llama2_arxiv_vidur",
+      "cohort": "full_trace",
+      "model": "meta-llama/Llama-2-7b-hf",
+      "workload_label": "Llama-2-7B / arXiv-1QPS",
+      "trace_tag": "llama2-7b_arxiv-qps1",
+      "input_group": "original_six",
+      "records": 252708,
+      "source_records": 252708,
+      "logical_gemms": 184732896,
+      "logical_macs": 6095867705556992,
+      "unique_shapes": 10495
+    },
+    {
+      "dataset": "flashinfer_attention",
+      "cohort": "gqa_decode",
+      "model": "",
+      "workload_label": "GQA decode",
+      "trace_tag": "",
+      "input_group": "new_six",
+      "records": 1732,
+      "source_records": 3040,
+      "logical_gemms": 22528,
+      "logical_macs": 8132045824,
+      "unique_shapes": 1542
+    },
+    {
+      "dataset": "flashinfer_attention",
+      "cohort": "single_kv_head_decode",
+      "model": "",
+      "workload_label": "Single KV-head decode",
+      "trace_tag": "",
+      "input_group": "new_six",
+      "records": 844,
+      "source_records": 1054,
+      "logical_gemms": 1054,
+      "logical_macs": 241561600,
+      "unique_shapes": 563
+    },
+    {
+      "dataset": "upstream_reuse_prefill",
+      "cohort": "CacheBlend_samsum",
+      "model": "mistralai/Mistral-7B-Instruct-v0.2",
+      "workload_label": "CacheBlend SAMSum",
+      "trace_tag": "",
+      "input_group": "new_six",
+      "records": 3800,
+      "source_records": 3800,
+      "logical_gemms": 128200,
+      "logical_macs": 1338672013606912,
+      "unique_shapes": 2045
+    },
+    {
+      "dataset": "upstream_reuse_prefill",
+      "cohort": "CacheBlend_wikimqa",
+      "model": "mistralai/Mistral-7B-Instruct-v0.2",
+      "workload_label": "CacheBlend WikiMQA",
+      "trace_tag": "",
+      "input_group": "new_six",
+      "records": 3800,
+      "source_records": 3800,
+      "logical_gemms": 128200,
+      "logical_macs": 2417073639137280,
+      "unique_shapes": 1913
+    },
+    {
+      "dataset": "upstream_reuse_prefill",
+      "cohort": "EPIC_hotpotqa",
+      "model": "mistralai/Mistral-7B-Instruct-v0.2",
+      "workload_label": "EPIC HotpotQA",
+      "trace_tag": "",
+      "input_group": "new_six",
+      "records": 1400,
+      "source_records": 1400,
+      "logical_gemms": 128200,
+      "logical_macs": 1327882322837504,
+      "unique_shapes": 797
+    },
+    {
+      "dataset": "upstream_reuse_prefill",
+      "cohort": "EPIC_multi_news",
+      "model": "mistralai/Mistral-7B-Instruct-v0.2",
+      "workload_label": "EPIC Multi-News",
+      "trace_tag": "",
+      "input_group": "new_six",
+      "records": 1393,
+      "source_records": 1393,
+      "logical_gemms": 127559,
+      "logical_macs": 321636498145280,
+      "unique_shapes": 427
+    }
+  ],
+  "input_records": 989743,
+  "unique_shapes": 30669,
+  "native_cache": {
+    "unique_shapes": 20728,
+    "covered_shapes": 19499,
+    "missing_shapes": 11170,
+    "meaning": "MNK set coverage only; numerical reuse requires separately matching model/config hashes"
+  },
+  "duplicate_cohort_checks": {
+    "llama2_vidur": {
+      "status": "PASS",
+      "key": "phase/source_op/M/N/K",
+      "exact_repeat_equal": true,
+      "logical_gemms": 159140224,
+      "distinct_keys": 6408
+    },
+    "phi2_vidur": {
+      "status": "PASS",
+      "key": "phase/source_op/M/N/K",
+      "exact_repeat_equal": true,
+      "logical_gemms": 159504384,
+      "distinct_keys": 6120
+    }
+  },
+  "preservation": "Every original-six MNK CSV row is preserved once. New attention/reuse rows retain all original metadata and repeat. Llama2/Phi2 selected-eight copies are excluded only after exact weighted phase/op/MNK equality.",
+  "repeat_semantics": "Use repeat once; Vidur repeat=gemm_batch*num_layers. source_records is provenance, not another multiplicity.",
+  "phase_semantics": "Vidur request phase and attention query/context lengths checked against saved batch composition; dense batches retain mixed phases.",
+  "operation_names": "Only op attn_qk/attn_pv normalized to QK/PV; source_op preserves the original spelling and all MNK values stay unchanged.",
+  "metric": "Per-cohort weighted single-GEMM service-cycle sum; scheduled_at is preserved but no arrival idle or cross-GEMM overlap is applied by the input builder.",
+  "reuse_scope": "Original four datasets attempted all 800 rows; 799 source-valid requests retained. Existing Multi-News index37 exclusion and duplicate-index semantics are unchanged.",
+  "checks": {
+    "output_phase_operator_mnk_weights": "PASS",
+    "duplicate_vidur_inputs": "PASS",
+    "source_hash_stability": "PASS",
+    "source_line_counts": {
+      "out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_conv300/mnk_trace.csv": 172492,
+      "out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama3-8b_conv300/mnk_trace.csv": 175574,
+      "out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-70b-tp4_conv300/mnk_trace.csv": 161022,
+      "out/tessera-hpca/Batch6-BW-Sweep/workload/traces/phi2_conv300/mnk_trace.csv": 191788,
+      "out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_code300/mnk_trace.csv": 23190,
+      "out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_arxiv-qps1/mnk_trace.csv": 252708,
+      "out/tessera-revision/fissionsa_selected8_hbm4/sram_12mb/inputs/workloads.csv": 12969
+    }
+  },
+  "outputs": [
+    {
+      "path": "out/tessera-revision/paper_revision/inputs/dataset_summary.csv",
+      "bytes": 1759,
+      "sha256": "fd917c95f3e8a87e469f8c9a0943e6afbae7e4311cf3467deaf242746efd69b6",
+      "purpose": "Generated paper input"
+    },
+    {
+      "path": "out/tessera-revision/paper_revision/inputs/native_cache_coverage.csv",
+      "bytes": 758,
+      "sha256": "a536dfd3ca56dc7c8ba7e53925c902e954f246e5c4b2d1b88858733077442b0f",
+      "purpose": "Generated paper input"
+    },
+    {
+      "path": "out/tessera-revision/paper_revision/inputs/native_cache_missing_shapes.csv",
+      "bytes": 626479,
+      "sha256": "70e4cd21f1b360ae17d503d3d8c4e4bfb0e2f2d88def12929f4d37d09a0034d5",
+      "purpose": "Generated paper input"
+    },
+    {
+      "path": "out/tessera-revision/paper_revision/inputs/operator_summary.csv",
+      "bytes": 9794,
+      "sha256": "b95aa681a671fd280e6e27b750f9418585ea20e60e62b869ca9fd62b50577a22",
+      "purpose": "Generated paper input"
+    },
+    {
+      "path": "out/tessera-revision/paper_revision/inputs/producer_snapshot/build_workloads.py",
+      "bytes": 14072,
+      "sha256": "b95efa87bb14b90d4eb926165a0d8808902fc29d0ba51d6fdeb4338c27dcfc52",
+      "purpose": "Generated paper input"
+    },
+    {
+      "path": "out/tessera-revision/paper_revision/inputs/unique_shapes.csv",
+      "bytes": 570591,
+      "sha256": "5dc21a8dd8a1a227303d886ebec99b3709f2a0335a9de41946cd76710ca98efa",
+      "purpose": "Generated paper input"
+    },
+    {
+      "path": "out/tessera-revision/paper_revision/inputs/workloads.csv",
+      "bytes": 806131594,
+      "sha256": "7f43220302ddf347214590491f8aafb8b0d906bade7d0c717f1e7438ba7dca25",
+      "purpose": "Generated paper input"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "source_sha256": {
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/run_scripts/run_tessera_ppa.py": "200260d484488899c497e3ceda32ef1ca1e77df0b3b8300a49b6bfb6f22e28be",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/run_scripts/run_tessera_joint.py": "a3bd7ab094adf1a758d57db74252ffb1efd6863feded38b2c29cb51ae7c5b6df",
+    "/data2/chenyi9/fracturableT3/Tessera-HPCA-2026/fig/plotting/make_area_figs.py": "8bf3baf784f4f5be5934011557ca636abdc78e6530b9b7df93eecb02be10d529",
+    "/data2/chenyi9/fracturableT3/SA-rtl/docs/SYN22_ARRAY_CHIP_DATA.md": "f937bbd4d1bcb81b1ad469bb600ebfb599cb7b18fa51d8a32b272ad1419bcaa8",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/configs/chips/tessera_joules_energy.json": "4e9fe956096070d8ccdc8ca04bb7302ff7b37843472a619d53cdb64a8ec16d2c",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260930_energy_corrected_v1/main_costs/configs.json": "db2d716a8000cecab50daf9e275fb89e4cfaeeb8f61f8348e8bae9f3bdf89e8b",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/tessera_baselines.py": "a5373998693bdb0ff3290a0b2247aeba7b78e14b5f6c89fbcb0d34c24ec71f65",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/tessera_joint.py": "f4193b6b5d6e920798d8d229723892ca85b910d4ee18570d4fa08c7467a2452f",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/tessera_partitioned.py": "91b9afabe35a2daba5ab68d46940ac58fe5de16937cd88d034002d029a11fa2f",
+    "/data2/chenyi9/fracturableT3/FissionSA/fissionsa/modes/combo0.py": "567f7a752414a1f5001e4298ffca8a0d6c4e2e8297fa0632850838e8dbe922c3",
+    "/data2/chenyi9/fracturableT3/FissionSA/fissionsa/modes/combo4.py": "d816c5f44edd54a7268e3f924dc54564bef55d2568041626dd75eef94ccb9271",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/common_verification/verification.json": "2742b5eedce1441b5c32c5601c7213c30f323704231acfa497b32a864641c9ef",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/verify_native_tail.py": "7f82840eb6d9ed2f358aa639797397c2542fcc2419dbf2666cc6f4f36d60dc9c",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/tessera_native_tail.py": "b714c35b29d8d4c114e6ab08069ec7923586ea2ca63bbe7a52ff8c52dc806df8",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/run_scripts/tessera_request_dispatch.py": "24e8945b4df2f04331a8a21da8d630b95ed83e64a8f5e34183751c9baca250ad",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/npusim_lib.py": "7049c1304446adb21ceb6e83c1c413b6e1ee2ae88af803c159d30a95e7612277",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/native_verification_v2/verification.json": "63e62b355154cd412b84c8399a8b86bf4604887f0d6548fe03e78d8e408dbc30"
+  }
+}

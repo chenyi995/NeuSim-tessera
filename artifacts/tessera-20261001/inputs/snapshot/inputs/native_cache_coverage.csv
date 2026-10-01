@@ -1,0 +1,13 @@
+dataset,cohort,trace_tag,unique_shapes,native_cached_shapes,native_missing_shapes
+llama2_vidur,full_trace,llama2-7b_conv300,6339,6339,0
+llama3_vidur,full_trace,llama3-8b_conv300,6249,4742,1507
+llama2_70b_tp4_vidur,full_trace,llama2-70b-tp4_conv300,6464,4450,2014
+phi2_vidur,full_trace,phi2_conv300,6040,6040,0
+llama2_code_vidur,full_trace,llama2-7b_code300,7976,3118,4858
+llama2_arxiv_vidur,full_trace,llama2-7b_arxiv-qps1,10495,4711,5784
+flashinfer_attention,gqa_decode,,1542,1542,0
+flashinfer_attention,single_kv_head_decode,,563,563,0
+upstream_reuse_prefill,CacheBlend_samsum,,2045,2045,0
+upstream_reuse_prefill,CacheBlend_wikimqa,,1913,1913,0
+upstream_reuse_prefill,EPIC_hotpotqa,,797,797,0
+upstream_reuse_prefill,EPIC_multi_news,,427,427,0

@@ -1,0 +1,15 @@
+PASS WS {'status': 'RUNNING', 'native_tiles': 0, 'literal_counter_cases': 0, 'physical_lane_checks': 0, 'native_operators': 6, 'attention_cases': 2, 'source_segments': 0, 'concurrent_replays': 0}
+PASS WS-independent-64 {'status': 'RUNNING', 'native_tiles': 0, 'literal_counter_cases': 0, 'physical_lane_checks': 0, 'native_operators': 12, 'attention_cases': 4, 'source_segments': 0, 'concurrent_replays': 0}
+PASS WS-independent-32 {'status': 'RUNNING', 'native_tiles': 0, 'literal_counter_cases': 0, 'physical_lane_checks': 0, 'native_operators': 18, 'attention_cases': 6, 'source_segments': 0, 'concurrent_replays': 0}
+PASS WS-independent-16 {'status': 'RUNNING', 'native_tiles': 0, 'literal_counter_cases': 0, 'physical_lane_checks': 0, 'native_operators': 24, 'attention_cases': 8, 'source_segments': 0, 'concurrent_replays': 0}
+PASS WS-independent-8 {'status': 'RUNNING', 'native_tiles': 0, 'literal_counter_cases': 0, 'physical_lane_checks': 0, 'native_operators': 30, 'attention_cases': 10, 'source_segments': 0, 'concurrent_replays': 0}
+Traceback (most recent call last):
+  File "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/verify_native_tail.py", line 149, in <module>
+    if __name__=='__main__':main()
+  File "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/verify_native_tail.py", line 98, in main
+    r=native_record(op,chip);records[oid]=r
+  File "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/run_scripts/run_tessera_partitioned.py", line 70, in native_record
+    vu_fallback_calls=int(d.get("engine") == "VU" or any(p["engine"] == "VU" for p in d.get("phase_plans", []))),
+  File "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/run_scripts/run_tessera_partitioned.py", line 70, in <genexpr>
+    vu_fallback_calls=int(d.get("engine") == "VU" or any(p["engine"] == "VU" for p in d.get("phase_plans", []))),
+KeyError: 'engine'

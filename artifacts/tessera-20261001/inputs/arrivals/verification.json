@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "models": [
+    {
+      "model": "llama2-7b_conv300",
+      "batches": 4444,
+      "requests": 300,
+      "source_composition": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tes-old/continuous_batching/traces/llama2-7b_conv300/batch_composition.csv",
+      "source_mnk": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_conv300/mnk_trace.csv"
+    },
+    {
+      "model": "llama3-8b_conv300",
+      "batches": 5226,
+      "requests": 300,
+      "source_composition": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tes-old/continuous_batching/traces/llama3-8b_conv300/batch_composition.csv",
+      "source_mnk": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama3-8b_conv300/mnk_trace.csv"
+    },
+    {
+      "model": "llama2-70b-tp4_conv300",
+      "batches": 1523,
+      "requests": 300,
+      "source_composition": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tes-old/continuous_batching/traces/llama2-70b-tp4_conv300/batch_composition.csv",
+      "source_mnk": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-70b-tp4_conv300/mnk_trace.csv"
+    },
+    {
+      "model": "phi2_conv300",
+      "batches": 9296,
+      "requests": 300,
+      "source_composition": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tes-old/continuous_batching/traces/phi2_conv300/batch_composition.csv",
+      "source_mnk": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/phi2_conv300/mnk_trace.csv"
+    },
+    {
+      "model": "llama2-7b_code300",
+      "batches": 1723,
+      "requests": 300,
+      "source_composition": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tes-old/continuous_batching/traces/llama2-7b_code300/batch_composition.csv",
+      "source_mnk": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_code300/mnk_trace.csv"
+    },
+    {
+      "model": "llama2-7b_arxiv-qps1",
+      "batches": 18811,
+      "requests": 300,
+      "source_composition": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tes-old/continuous_batching/traces/llama2-7b_arxiv-qps1/batch_composition.csv",
+      "source_mnk": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_arxiv-qps1/mnk_trace.csv"
+    }
+  ],
+  "source_sha256": {
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260930_async_full_v1/main_costs/manifest.json": "9bc0bc1618795c83c2a5a456b580b4b5140a47fae56b0c4de85c396b73f88622",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/workload_metadata.json": "e3cd5d9235f5764adce249f43c7e2257270d9596b76c365ffeba059842843145",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/run_scripts/run_tessera_async.py": "4105a1a7975830a5aa491eb0d4de309e2236e66c205d6ac25bd6d2b8c4ef0d0d",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/speed/trace_graph_operators.jsonl": "33dfed0eb846b1f95fb62c6527e0de9f90c1ef3efb46e52ebdc90c9bc12bb07c",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/speed/trace_graph_batches.jsonl": "85c1eeeb8129726d8da2394c2474533706e2c66554841f1c3f78fc0e53a5755f",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tes-old/continuous_batching/traces/llama2-7b_conv300/batch_composition.csv": "a61b51b2c16b2dd753714c8591ec0f5172908b06f17d0fca7c5d57b3b7acfd6b",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_conv300/mnk_trace.csv": "b92a327626fa9c888ea65cbc900a32267af59a4a2350b5656e8ed7b02746c622",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tes-old/continuous_batching/traces/llama3-8b_conv300/batch_composition.csv": "75b644e9807aaf980a5986cb51da9f53c329d7ac21c67491658d1b867a98915e",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama3-8b_conv300/mnk_trace.csv": "f8eb65ff5d41b06150c00418d86e9a00f36188556bf3a97d8405b66984231f50",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tes-old/continuous_batching/traces/llama2-70b-tp4_conv300/batch_composition.csv": "8809bfa9bceaf07e9b30078ebc3ac3c7ebacea3d022eda07cd1d5bcc9f159017",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-70b-tp4_conv300/mnk_trace.csv": "6bdf75f6b438a64ba5318efa3c5b37dbf8f6c53f6f36ba85fdba802341e2ceeb",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tes-old/continuous_batching/traces/phi2_conv300/batch_composition.csv": "5051f32b5ba16a72b0f57ba5577769e1a60daf0beca03c44a17131e97046f2d0",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/phi2_conv300/mnk_trace.csv": "265161ce99ed6950778870a674a56c7ce24bbe94d3802182ffa4a0b0fecab04c",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tes-old/continuous_batching/traces/llama2-7b_code300/batch_composition.csv": "441be4c9d618735aba4c49bffc27ec73dc49257378f4512ad136f31197261307",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_code300/mnk_trace.csv": "249fffbfb68b73032538cf65ee6e08ff409bcad7cca31397ed1dd76374474b2e",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tes-old/continuous_batching/traces/llama2-7b_arxiv-qps1/batch_composition.csv": "416a4306f95dc0c064c8f02a985546fa7845133b4abfb667a9748e990293e17b",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/archived/0929/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_arxiv-qps1/mnk_trace.csv": "33b9c52a04360f0e286dd466dc8e051ce782cb0be84566f9eec4ee90300ed2a9"
+  },
+  "artifacts": {
+    "operator_metadata.json": "7368ea700fccf99cce7a3c8a44abbe3123ce7c72c5bc19d123a35079e494ef5a",
+    "llama2-7b_conv300.jsonl": "1d5db5bf9fcb16bf312f805c8c2d30ce4845a36ba68ceb2ff9cad5e8ac3f2462",
+    "llama3-8b_conv300.jsonl": "6922252276734ddeced4e958169aad9ea3c95ba8fcb982ed566e76488ac81f24",
+    "llama2-70b-tp4_conv300.jsonl": "7b72de321254d54a33404a351cc99c53dd5b7f2403775983c61a317615afbf4b",
+    "phi2_conv300.jsonl": "b71e14597b797868a92c7fea718f62bdaebb11a7a18ccc9604a0c2c9b4d36269",
+    "llama2-7b_code300.jsonl": "8b3b7df6d52c9eef1cf9f4537978562d9d8504df70b448ae4273f5442a53d91e",
+    "llama2-7b_arxiv-qps1.jsonl": "0e6d89bd5eeb8b282209e346a9208a17a8109954e8350af4ee89c8cc53462977"
+  },
+  "accounting": "Original request arrivals and idle gaps retained; original batches and request dependencies retained; only adjacent independent request chains may overlap."
+}

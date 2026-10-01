@@ -1,0 +1,817 @@
+{
+  "status": "PASS",
+  "workload_id": "llama2_conv",
+  "checked_weighted_totals": {
+    "WS-independent-8": {
+      "sram_bytes": 6727505257176544,
+      "charged_sa_macs": 2765593718554624,
+      "useful_macs": 2346462363254784,
+      "hbm_bytes": 189967753517240
+    },
+    "Tessera-8": {
+      "sram_bytes": 20105140428701152,
+      "charged_sa_macs": 10734640664936448,
+      "useful_macs": 2346462363254784,
+      "hbm_bytes": 111351471241400
+    }
+  },
+  "net_sram_gap_bytes": 13377635171524608,
+  "top_five_gap_fraction": 0.7813820846022066,
+  "largest_contributors": [
+    {
+      "operator_id": "89",
+      "kind": "graph",
+      "invocations": 15616,
+      "tessera_extra_sram_bytes": 10003089427791872,
+      "tessera_extra_charged_macs": 5030265697075200,
+      "mappings": {
+        "native_tail/WS-independent-8": {
+          "mapping": {
+            "geometry": [
+              8,
+              8,
+              true,
+              256,
+              8,
+              8
+            ],
+            "memory_tile": [
+              64,
+              172,
+              1024
+            ],
+            "engine": "SA",
+            "B": 1,
+            "M": 512,
+            "N": 22016,
+            "K": 4096,
+            "sram_bandwidth_model": "per_pe_double_buffer",
+            "sram_bandwidth_bytes_per_ns": 131072.0,
+            "sram_service_time_ns": 820304,
+            "sram_overlap_hidden_ns": 0,
+            "sa_energy_accounting": "padded_tiles",
+            "charged_sa_macs": 47244640256,
+            "padding_macs": 1073741824,
+            "sram_read_accounting": "padded_tiles",
+            "padding_sram_read_bytes": 33554432
+          },
+          "sram_bytes": 107518885888,
+          "charged_sa_macs": 47244640256,
+          "useful_macs": 46170898432,
+          "charged_to_useful_macs": 1.0232558139534884
+        },
+        "native_tail/Tessera-8": {
+          "mapping": {
+            "memory_tile": [
+              512,
+              2752,
+              1
+            ],
+            "phase_plans": [
+              {
+                "native_tail": true,
+                "engine": "SA",
+                "M": 512,
+                "N": 22016,
+                "K": 4096,
+                "B": 1,
+                "memory_tile": [
+                  512,
+                  2752,
+                  1
+                ],
+                "producer_planes": 1,
+                "family": "Tessera",
+                "sa_ns": 39485440
+              }
+            ],
+            "engine": "SA",
+            "B": 1,
+            "M": 512,
+            "N": 22016,
+            "K": 4096,
+            "sram_bandwidth_model": "per_pe_double_buffer",
+            "sram_bandwidth_bytes_per_ns": 131072.0,
+            "sram_service_time_ns": 5707440,
+            "sram_overlap_hidden_ns": 0,
+            "sa_energy_accounting": "padded_tiles",
+            "charged_sa_macs": 369367187456,
+            "padding_macs": 323196289024,
+            "sram_read_accounting": "padded_tiles",
+            "padding_sram_read_bytes": 8074035200
+          },
+          "sram_bytes": 748085575680,
+          "charged_sa_macs": 369367187456,
+          "useful_macs": 46170898432,
+          "charged_to_useful_macs": 8.0
+        },
+        "joint_edp/WS-independent-8": {
+          "mapping": {
+            "geometry": [
+              8,
+              8,
+              true,
+              256,
+              8,
+              8
+            ],
+            "memory_tile": [
+              128,
+              64,
+              4096
+            ],
+            "engine": "SA",
+            "B": 1,
+            "M": 512,
+            "N": 22016,
+            "K": 4096,
+            "sram_bandwidth_model": "per_pe_double_buffer",
+            "sram_bandwidth_bytes_per_ns": 131072.0,
+            "sram_service_time_ns": 813904,
+            "sram_overlap_hidden_ns": 0,
+            "sa_energy_accounting": "padded_tiles",
+            "charged_sa_macs": 46170898432,
+            "padding_macs": 0,
+            "sram_read_accounting": "padded_tiles",
+            "padding_sram_read_bytes": 0
+          },
+          "sram_bytes": 106680025088,
+          "charged_sa_macs": 46170898432,
+          "useful_macs": 46170898432,
+          "charged_to_useful_macs": 1.0
+        },
+        "joint_edp/Tessera-8": {
+          "mapping": {
+            "geometry": [
+              128,
+              64,
+              false,
+              1,
+              64,
+              128
+            ],
+            "memory_tile": [
+              512,
+              1024,
+              1024
+            ],
+            "engine": "SA",
+            "B": 1,
+            "M": 512,
+            "N": 22016,
+            "K": 4096,
+            "sram_bandwidth_model": "per_pe_double_buffer",
+            "sram_bandwidth_bytes_per_ns": 131072.0,
+            "sram_service_time_ns": 57808,
+            "sram_overlap_hidden_ns": 0,
+            "sa_energy_accounting": "padded_tiles",
+            "charged_sa_macs": 46170898432,
+            "padding_macs": 0,
+            "sram_read_accounting": "padded_tiles",
+            "padding_sram_read_bytes": 0
+          },
+          "sram_bytes": 7577010176,
+          "charged_sa_macs": 46170898432,
+          "useful_macs": 46170898432,
+          "charged_to_useful_macs": 1.0
+        }
+      }
+    },
+    {
+      "operator_id": "4056",
+      "kind": "graph",
+      "invocations": 1984,
+      "tessera_extra_sram_bytes": 161171835453440,
+      "tessera_extra_charged_macs": 79886391705600,
+      "mappings": {
+        "native_tail/WS-independent-8": {
+          "mapping": {
+            "geometry": [
+              8,
+              8,
+              true,
+              256,
+              8,
+              8
+            ],
+            "memory_tile": [
+              64,
+              172,
+              1024
+            ],
+            "engine": "SA",
+            "B": 1,
+            "M": 64,
+            "N": 22016,
+            "K": 4096,
+            "sram_bandwidth_model": "per_pe_double_buffer",
+            "sram_bandwidth_bytes_per_ns": 131072.0,
+            "sram_service_time_ns": 102538,
+            "sram_overlap_hidden_ns": 0,
+            "sa_energy_accounting": "padded_tiles",
+            "charged_sa_macs": 5905580032,
+            "padding_macs": 134217728,
+            "sram_read_accounting": "padded_tiles",
+            "padding_sram_read_bytes": 4194304
+          },
+          "sram_bytes": 13439860736,
+          "charged_sa_macs": 5905580032,
+          "useful_macs": 5771362304,
+          "charged_to_useful_macs": 1.0232558139534884
+        },
+        "native_tail/Tessera-8": {
+          "mapping": {
+            "memory_tile": [
+              64,
+              22016,
+              1
+            ],
+            "phase_plans": [
+              {
+                "native_tail": true,
+                "engine": "SA",
+                "M": 64,
+                "N": 22016,
+                "K": 4096,
+                "B": 1,
+                "memory_tile": [
+                  64,
+                  22016,
+                  1
+                ],
+                "producer_planes": 1,
+                "family": "Tessera",
+                "sa_ns": 3530752
+              }
+            ],
+            "engine": "SA",
+            "B": 1,
+            "M": 64,
+            "N": 22016,
+            "K": 4096,
+            "sram_bandwidth_model": "per_pe_double_buffer",
+            "sram_bandwidth_bytes_per_ns": 131072.0,
+            "sram_service_time_ns": 722318,
+            "sram_overlap_hidden_ns": 0,
+            "sa_energy_accounting": "padded_tiles",
+            "charged_sa_macs": 46170898432,
+            "padding_macs": 40399536128,
+            "sram_read_accounting": "padded_tiles",
+            "padding_sram_read_bytes": 1893728256
+          },
+          "sram_bytes": 94675664896,
+          "charged_sa_macs": 46170898432,
+          "useful_macs": 5771362304,
+          "charged_to_useful_macs": 8.0
+        },
+        "joint_edp/WS-independent-8": {
+          "mapping": {
+            "geometry": [
+              8,
+              8,
+              true,
+              256,
+              8,
+              8
+            ],
+            "memory_tile": [
+              64,
+              128,
+              4096
+            ],
+            "engine": "SA",
+            "B": 1,
+            "M": 64,
+            "N": 22016,
+            "K": 4096,
+            "sram_bandwidth_model": "per_pe_double_buffer",
+            "sram_bandwidth_bytes_per_ns": 131072.0,
+            "sram_service_time_ns": 102426,
+            "sram_overlap_hidden_ns": 0,
+            "sa_energy_accounting": "padded_tiles",
+            "charged_sa_macs": 5771362304,
+            "padding_macs": 0,
+            "sram_read_accounting": "padded_tiles",
+            "padding_sram_read_bytes": 0
+          },
+          "sram_bytes": 13425180672,
+          "charged_sa_macs": 5771362304,
+          "useful_macs": 5771362304,
+          "charged_to_useful_macs": 1.0
+        },
+        "joint_edp/Tessera-8": {
+          "mapping": {
+            "geometry": [
+              128,
+              32,
+              false,
+              1,
+              32,
+              128
+            ],
+            "memory_tile": [
+              64,
+              1376,
+              2048
+            ],
+            "engine": "SA",
+            "B": 1,
+            "M": 64,
+            "N": 22016,
+            "K": 4096,
+            "sram_bandwidth_model": "per_pe_double_buffer",
+            "sram_bandwidth_bytes_per_ns": 131072.0,
+            "sram_service_time_ns": 10986,
+            "sram_overlap_hidden_ns": 0,
+            "sa_energy_accounting": "padded_tiles",
+            "charged_sa_macs": 5771362304,
+            "padding_macs": 0,
+            "sram_read_accounting": "padded_tiles",
+            "padding_sram_read_bytes": 0
+          },
+          "sram_bytes": 1439956992,
+          "charged_sa_macs": 5771362304,
+          "useful_macs": 5771362304,
+          "charged_to_useful_macs": 1.0
+        }
+      }
+    },
+    {
+      "operator_id": "4064",
+      "kind": "graph",
+      "invocations": 1248,
+      "tessera_extra_sram_bytes": 99822722088960,
+      "tessera_extra_charged_macs": 49465943654400,
+      "mappings": {
+        "native_tail/WS-independent-8": {
+          "mapping": {
+            "geometry": [
+              8,
+              8,
+              true,
+              256,
+              8,
+              8
+            ],
+            "memory_tile": [
+              63,
+              172,
+              1024
+            ],
+            "engine": "SA",
+            "B": 1,
+            "M": 63,
+            "N": 22016,
+            "K": 4096,
+            "sram_bandwidth_model": "per_pe_double_buffer",
+            "sram_bandwidth_bytes_per_ns": 131072.0,
+            "sram_service_time_ns": 100980,
+            "sram_overlap_hidden_ns": 0,
+            "sa_energy_accounting": "padded_tiles",
+            "charged_sa_macs": 5813305344,
+            "padding_macs": 132120576,
+            "sram_read_accounting": "padded_tiles",
+            "padding_sram_read_bytes": 4194304
+          },
+          "sram_bytes": 13235564544,
+          "charged_sa_macs": 5813305344,
+          "useful_macs": 5681184768,
+          "charged_to_useful_macs": 1.0232558139534884
+        },
+        "native_tail/Tessera-8": {
+          "mapping": {
+            "memory_tile": [
+              63,
+              22016,
+              1
+            ],
+            "phase_plans": [
+              {
+                "native_tail": true,
+                "engine": "SA",
+                "M": 63,
+                "N": 22016,
+                "K": 4096,
+                "B": 1,
+                "memory_tile": [
+                  63,
+                  22016,
+                  1
+                ],
+                "producer_planes": 1,
+                "family": "Tessera",
+                "sa_ns": 3485696
+              }
+            ],
+            "engine": "SA",
+            "B": 1,
+            "M": 63,
+            "N": 22016,
+            "K": 4096,
+            "sram_bandwidth_model": "per_pe_double_buffer",
+            "sram_bandwidth_bytes_per_ns": 131072.0,
+            "sram_service_time_ns": 711226,
+            "sram_overlap_hidden_ns": 0,
+            "sa_energy_accounting": "padded_tiles",
+            "charged_sa_macs": 45449478144,
+            "padding_macs": 39768293376,
+            "sram_read_accounting": "padded_tiles",
+            "padding_sram_read_bytes": 1883865088
+          },
+          "sram_bytes": 93221720064,
+          "charged_sa_macs": 45449478144,
+          "useful_macs": 5681184768,
+          "charged_to_useful_macs": 8.0
+        },
+        "joint_edp/WS-independent-8": {
+          "mapping": {
+            "geometry": [
+              8,
+              8,
+              true,
+              256,
+              8,
+              8
+            ],
+            "memory_tile": [
+              63,
+              128,
+              4096
+            ],
+            "engine": "SA",
+            "B": 1,
+            "M": 63,
+            "N": 22016,
+            "K": 4096,
+            "sram_bandwidth_model": "per_pe_double_buffer",
+            "sram_bandwidth_bytes_per_ns": 131072.0,
+            "sram_service_time_ns": 100869,
+            "sram_overlap_hidden_ns": 0,
+            "sa_energy_accounting": "padded_tiles",
+            "charged_sa_macs": 5681184768,
+            "padding_macs": 0,
+            "sram_read_accounting": "padded_tiles",
+            "padding_sram_read_bytes": 0
+          },
+          "sram_bytes": 13221048320,
+          "charged_sa_macs": 5681184768,
+          "useful_macs": 5681184768,
+          "charged_to_useful_macs": 1.0
+        },
+        "joint_edp/Tessera-8": {
+          "mapping": {
+            "geometry": [
+              128,
+              32,
+              false,
+              1,
+              32,
+              128
+            ],
+            "memory_tile": [
+              63,
+              1376,
+              2048
+            ],
+            "engine": "SA",
+            "B": 1,
+            "M": 63,
+            "N": 22016,
+            "K": 4096,
+            "sram_bandwidth_model": "per_pe_double_buffer",
+            "sram_bandwidth_bytes_per_ns": 131072.0,
+            "sram_service_time_ns": 10858,
+            "sram_overlap_hidden_ns": 0,
+            "sa_energy_accounting": "padded_tiles",
+            "charged_sa_macs": 5681184768,
+            "padding_macs": 0,
+            "sram_read_accounting": "padded_tiles",
+            "padding_sram_read_bytes": 0
+          },
+          "sram_bytes": 1423093760,
+          "charged_sa_macs": 5681184768,
+          "useful_macs": 5681184768,
+          "charged_to_useful_macs": 1.0
+        }
+      }
+    },
+    {
+      "operator_id": "3508",
+      "kind": "graph",
+      "invocations": 1760,
+      "tessera_extra_sram_bytes": 98987383193600,
+      "tessera_extra_charged_macs": 48721035264000,
+      "mappings": {
+        "native_tail/WS-independent-8": {
+          "mapping": {
+            "geometry": [
+              8,
+              8,
+              true,
+              256,
+              8,
+              8
+            ],
+            "memory_tile": [
+              44,
+              172,
+              4096
+            ],
+            "engine": "SA",
+            "B": 1,
+            "M": 44,
+            "N": 22016,
+            "K": 4096,
+            "sram_bandwidth_model": "per_pe_double_buffer",
+            "sram_bandwidth_bytes_per_ns": 131072.0,
+            "sram_service_time_ns": 71365,
+            "sram_overlap_hidden_ns": 0,
+            "sa_energy_accounting": "padded_tiles",
+            "charged_sa_macs": 4060086272,
+            "padding_macs": 92274688,
+            "sram_read_accounting": "padded_tiles",
+            "padding_sram_read_bytes": 4194304
+          },
+          "sram_bytes": 9353936896,
+          "charged_sa_macs": 4060086272,
+          "useful_macs": 3967811584,
+          "charged_to_useful_macs": 1.0232558139534884
+        },
+        "native_tail/Tessera-8": {
+          "mapping": {
+            "memory_tile": [
+              44,
+              22016,
+              1
+            ],
+            "phase_plans": [
+              {
+                "native_tail": true,
+                "engine": "SA",
+                "M": 44,
+                "N": 22016,
+                "K": 4096,
+                "B": 1,
+                "memory_tile": [
+                  44,
+                  22016,
+                  1
+                ],
+                "producer_planes": 1,
+                "family": "Tessera",
+                "sa_ns": 2629632
+              }
+            ],
+            "engine": "SA",
+            "B": 1,
+            "M": 44,
+            "N": 22016,
+            "K": 4096,
+            "sram_bandwidth_model": "per_pe_double_buffer",
+            "sram_bandwidth_bytes_per_ns": 131072.0,
+            "sram_service_time_ns": 500464,
+            "sram_overlap_hidden_ns": 0,
+            "sa_energy_accounting": "padded_tiles",
+            "charged_sa_macs": 31742492672,
+            "padding_macs": 27774681088,
+            "sram_read_accounting": "padded_tiles",
+            "padding_sram_read_bytes": 1696464896
+          },
+          "sram_bytes": 65596768256,
+          "charged_sa_macs": 31742492672,
+          "useful_macs": 3967811584,
+          "charged_to_useful_macs": 8.0
+        },
+        "joint_edp/WS-independent-8": {
+          "mapping": {
+            "geometry": [
+              8,
+              8,
+              true,
+              256,
+              8,
+              8
+            ],
+            "memory_tile": [
+              44,
+              128,
+              4096
+            ],
+            "engine": "SA",
+            "B": 1,
+            "M": 44,
+            "N": 22016,
+            "K": 4096,
+            "sram_bandwidth_model": "per_pe_double_buffer",
+            "sram_bandwidth_bytes_per_ns": 131072.0,
+            "sram_service_time_ns": 71278,
+            "sram_overlap_hidden_ns": 0,
+            "sa_energy_accounting": "padded_tiles",
+            "charged_sa_macs": 3967811584,
+            "padding_macs": 0,
+            "sram_read_accounting": "padded_tiles",
+            "padding_sram_read_bytes": 0
+          },
+          "sram_bytes": 9342533632,
+          "charged_sa_macs": 3967811584,
+          "useful_macs": 3967811584,
+          "charged_to_useful_macs": 1.0
+        },
+        "joint_edp/Tessera-8": {
+          "mapping": {
+            "geometry": [
+              128,
+              32,
+              false,
+              1,
+              32,
+              128
+            ],
+            "memory_tile": [
+              44,
+              2752,
+              1024
+            ],
+            "engine": "SA",
+            "B": 1,
+            "M": 44,
+            "N": 22016,
+            "K": 4096,
+            "sram_bandwidth_model": "per_pe_double_buffer",
+            "sram_bandwidth_bytes_per_ns": 131072.0,
+            "sram_service_time_ns": 8391,
+            "sram_overlap_hidden_ns": 0,
+            "sa_energy_accounting": "padded_tiles",
+            "charged_sa_macs": 3967811584,
+            "padding_macs": 0,
+            "sram_read_accounting": "padded_tiles",
+            "padding_sram_read_bytes": 0
+          },
+          "sram_bytes": 1099808768,
+          "charged_sa_macs": 3967811584,
+          "useful_macs": 3967811584,
+          "charged_to_useful_macs": 1.0
+        }
+      }
+    },
+    {
+      "operator_id": "4052",
+      "kind": "graph",
+      "invocations": 1984,
+      "tessera_extra_sram_bytes": 89973088845824,
+      "tessera_extra_charged_macs": 44736379355136,
+      "mappings": {
+        "native_tail/WS-independent-8": {
+          "mapping": {
+            "geometry": [
+              8,
+              8,
+              true,
+              256,
+              8,
+              8
+            ],
+            "memory_tile": [
+              64,
+              128,
+              4096
+            ],
+            "engine": "SA",
+            "B": 1,
+            "M": 64,
+            "N": 12288,
+            "K": 4096,
+            "sram_bandwidth_model": "per_pe_double_buffer",
+            "sram_bandwidth_bytes_per_ns": 131072.0,
+            "sram_service_time_ns": 57168,
+            "sram_overlap_hidden_ns": 0,
+            "sa_energy_accounting": "padded_tiles",
+            "charged_sa_macs": 3221225472,
+            "padding_macs": 0,
+            "sram_read_accounting": "padded_tiles",
+            "padding_sram_read_bytes": 0
+          },
+          "sram_bytes": 7493124096,
+          "charged_sa_macs": 3221225472,
+          "useful_macs": 3221225472,
+          "charged_to_useful_macs": 1.0
+        },
+        "native_tail/Tessera-8": {
+          "mapping": {
+            "memory_tile": [
+              64,
+              12288,
+              1
+            ],
+            "phase_plans": [
+              {
+                "native_tail": true,
+                "engine": "SA",
+                "M": 64,
+                "N": 12288,
+                "K": 4096,
+                "B": 1,
+                "memory_tile": [
+                  64,
+                  12288,
+                  1
+                ],
+                "producer_planes": 1,
+                "family": "Tessera",
+                "sa_ns": 2220032
+              }
+            ],
+            "engine": "SA",
+            "B": 1,
+            "M": 64,
+            "N": 12288,
+            "K": 4096,
+            "sram_bandwidth_model": "per_pe_double_buffer",
+            "sram_bandwidth_bytes_per_ns": 131072.0,
+            "sram_service_time_ns": 403156,
+            "sram_overlap_hidden_ns": 0,
+            "sa_energy_accounting": "padded_tiles",
+            "charged_sa_macs": 25769803776,
+            "padding_macs": 22548578304,
+            "sram_read_accounting": "padded_tiles",
+            "padding_sram_read_bytes": 1056964608
+          },
+          "sram_bytes": 52842463232,
+          "charged_sa_macs": 25769803776,
+          "useful_macs": 3221225472,
+          "charged_to_useful_macs": 8.0
+        },
+        "joint_edp/WS-independent-8": {
+          "mapping": {
+            "geometry": [
+              8,
+              8,
+              true,
+              256,
+              8,
+              8
+            ],
+            "memory_tile": [
+              64,
+              128,
+              4096
+            ],
+            "engine": "SA",
+            "B": 1,
+            "M": 64,
+            "N": 12288,
+            "K": 4096,
+            "sram_bandwidth_model": "per_pe_double_buffer",
+            "sram_bandwidth_bytes_per_ns": 131072.0,
+            "sram_service_time_ns": 57168,
+            "sram_overlap_hidden_ns": 0,
+            "sa_energy_accounting": "padded_tiles",
+            "charged_sa_macs": 3221225472,
+            "padding_macs": 0,
+            "sram_read_accounting": "padded_tiles",
+            "padding_sram_read_bytes": 0
+          },
+          "sram_bytes": 7493124096,
+          "charged_sa_macs": 3221225472,
+          "useful_macs": 3221225472,
+          "charged_to_useful_macs": 1.0
+        },
+        "joint_edp/Tessera-8": {
+          "mapping": {
+            "geometry": [
+              128,
+              32,
+              false,
+              1,
+              32,
+              128
+            ],
+            "memory_tile": [
+              64,
+              4096,
+              512
+            ],
+            "engine": "SA",
+            "B": 1,
+            "M": 64,
+            "N": 12288,
+            "K": 4096,
+            "sram_bandwidth_model": "per_pe_double_buffer",
+            "sram_bandwidth_bytes_per_ns": 131072.0,
+            "sram_service_time_ns": 6108,
+            "sram_overlap_hidden_ns": 0,
+            "sa_energy_accounting": "padded_tiles",
+            "charged_sa_macs": 3221225472,
+            "padding_macs": 0,
+            "sram_read_accounting": "padded_tiles",
+            "padding_sram_read_bytes": 0
+          },
+          "sram_bytes": 800587776,
+          "charged_sa_macs": 3221225472,
+          "useful_macs": 3221225472,
+          "charged_to_useful_macs": 1.0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+model,action,original_pj,original_unit,equivalent_bits,derived_pj_per_bit,source,note
+paper/revision modeled-word energy,read,0.95,modeled word,16,0.059375,/data2/chenyi9/fracturableT3/FissionSA/fissionsa/modes/combo6_edp.py,Per-bit equivalent using revision byte accounting; inherited word coefficients are not per-bit macro measurements.
+paper/revision modeled-word energy,write,2.2,modeled word,32,0.06875,/data2/chenyi9/fracturableT3/FissionSA/fissionsa/modes/combo6_edp.py,Per-bit equivalent using revision byte accounting; inherited word coefficients are not per-bit macro measurements.
+older multitenant/Qwen macro energy,read,2.0,128-bit access,128,0.015625,/data2/chenyi9/fracturableT3/FissionSA/multitenant/profile_nn_tables.py,Recorded CACTI 32-nm 4-KB 128-bit macro estimate; fractional full-width access convention.
+older multitenant/Qwen macro energy,write,5.24,128-bit access,128,0.0409375,/data2/chenyi9/fracturableT3/FissionSA/multitenant/profile_nn_tables.py,Recorded CACTI 32-nm 4-KB 128-bit macro estimate; fractional full-width access convention.

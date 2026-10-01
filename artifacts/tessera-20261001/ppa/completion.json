@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "policies": [
+    "native_tail",
+    "joint_edp"
+  ],
+  "records": 312,
+  "cpu_budget": 64,
+  "memory_budget_GB": 200
+}

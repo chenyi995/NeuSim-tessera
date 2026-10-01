@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "mapping_policy": "native_tail",
+  "elapsed_seconds": 1172.2702612369903,
+  "configurations": 13,
+  "workloads": 12,
+  "records": 156
+}

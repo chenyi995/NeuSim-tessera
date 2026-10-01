@@ -1,0 +1,14 @@
+[
+  {"workload_id":"llama2_conv","dataset":"llama2_vidur","cohort":"full_trace","label":"L2-7B\nConv","name":"Llama-2-7B / conversation","group":"Serving traces"},
+  {"workload_id":"llama3_conv","dataset":"llama3_vidur","cohort":"full_trace","label":"L3-8B\nConv","name":"Llama-3-8B / conversation","group":"Serving traces"},
+  {"workload_id":"llama2_70b_conv","dataset":"llama2_70b_tp4_vidur","cohort":"full_trace","label":"L2-70B\nTP4","name":"Llama-2-70B TP4 / conversation","group":"Serving traces"},
+  {"workload_id":"phi2_conv","dataset":"phi2_vidur","cohort":"full_trace","label":"Phi-2\nConv","name":"Phi-2 / conversation","group":"Serving traces"},
+  {"workload_id":"llama2_code","dataset":"llama2_code_vidur","cohort":"full_trace","label":"L2-7B\nCode","name":"Llama-2-7B / code","group":"Serving traces"},
+  {"workload_id":"llama2_arxiv","dataset":"llama2_arxiv_vidur","cohort":"full_trace","label":"L2-7B\narXiv","name":"Llama-2-7B / arXiv","group":"Serving traces"},
+  {"workload_id":"gqa_decode","dataset":"flashinfer_attention","cohort":"gqa_decode","label":"GQA\nDecode","name":"GQA decode","group":"Attention decode"},
+  {"workload_id":"single_kv_decode","dataset":"flashinfer_attention","cohort":"single_kv_head_decode","label":"1-KV\nDecode","name":"Single KV-head decode","group":"Attention decode"},
+  {"workload_id":"cacheblend_samsum","dataset":"upstream_reuse_prefill","cohort":"CacheBlend_samsum","label":"CB\nSAMSum","name":"CacheBlend SAMSum","group":"Reuse prefill"},
+  {"workload_id":"cacheblend_wikimqa","dataset":"upstream_reuse_prefill","cohort":"CacheBlend_wikimqa","label":"CB\nWikiMQA","name":"CacheBlend WikiMQA","group":"Reuse prefill"},
+  {"workload_id":"epic_hotpotqa","dataset":"upstream_reuse_prefill","cohort":"EPIC_hotpotqa","label":"EPIC\nHotpotQA","name":"EPIC HotpotQA","group":"Reuse prefill"},
+  {"workload_id":"epic_multi_news","dataset":"upstream_reuse_prefill","cohort":"EPIC_multi_news","label":"EPIC\nMultiNews","name":"EPIC Multi-News","group":"Reuse prefill"}
+]

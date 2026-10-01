@@ -1,0 +1,439 @@
+\section{Strip Partitioning and Mapping}
+
+% JW (acted, archived 2026-07-22 -- retitled, and the architecture
+% figure sits with this section):
+% \JW{title should be Tessera Architecture, move figure 2 here to this section}
+\label{sec:design}
+
+
+
+\figreal{3tesseraarch}{arch}{1.0}{%
+\textsc{Tessera} architecture and weight mappings at $D{=}4$, $d{=}2$.}{%
+(a)~The placed array: strips of stacked $d{\times}d$ blocks,
+flanked by strip memories, with twist and strip boundary PEs.
+(b)~A square $4{\times}4$ weight maps onto all the blocks, the
+strips merging as one array. (c)~A tall $4{\times}2$ and (d)~a wide
+$2{\times}4$ weight matrix each map onto a two-block band.}
+
+
+
+The fabric streams an orthogonal wavefront: weights and activations
+enter at one edge, and results drain at the opposite edge. Each strip
+therefore reads its activations and weights from its left edge and
+writes its outputs at its right edge, so the wavefront control stays
+simple and adjacent strips can share a strip memory. Because
+everything moves in that one horizontal direction, the array is
+partitioned along columns into vertical strips, with a strip memory
+interleaved between adjacent strips to serve the activation, weight,
+and output traffic of the strips it flanks. The chip lays the strips
+out horizontally and backs them with a main SRAM buffer.
+
+Each strip is a $D{\times}d$ block of PEs running the twist-torus
+dataflow of \S\ref{sec:ttsa:torus}, built from $d{\times}d$ PE
+blocks stacked along the column, and the buffers on its two sides
+serve operand reads and partial-sum writes. Composing strips
+exposes partition points in both directions, between adjacent strips and
+between the stacked blocks. Each boundary carries one binary
+choice, partition or merge, and the controller sets the choice per
+boundary. The fold timing of \S\ref{sec:ttsa:anchors} applies per
+square, with $D$ replaced by the square side.
+
+The unit this section builds toward is the flex compute region
+(FCR), a rectangle bounded by those cuts at $d$ granularity in
+both directions, rows $n_1 d$ to $n_2 d$ of a contiguous strip
+group. The twist boundary PE (TBPE) cuts the FCR's row edges. The
+strip boundary PE (SBPE) decides whether data crosses to the next
+strip for reuse or drains into the strip memory. Each region is
+reserved for one workload between two reform points, the moments
+the partitioning changes, and multiple regions co-exist and are
+reformed between GEMMs.
+
+\subsection{Strip memory}
+\label{sec:design:mem}
+To the array, each flanking strip memory is one logical bank,
+shown in Fig.~\ref{fig:arch}a, and every strip memory connects
+downward to the main buffer over the system interconnect.
+Internally it holds two single-port R/W banks in double-buffered
+ping-pong. At any time one bank serves the activation and weight
+reads and the output writes, while the other fetches new data from the
+main buffer, and the roles swap between tiled GEMMs. A merging boundary reuses activations and
+partial sums in-array through the
+boundary-enable muxes, so only outputs
+need to reach the SRAM, and fresh activations feed the next strip
+directly. Each bank is divided into $D/d$ lanes at the
+partition granularity, one lane per $d$-row block, and lane $y$
+wires directly to array rows $[yd, yd{+}d)$.
+A lane holds $d$ operand words of $16$ bits or $d$ partial sums of
+$32$ bits and serves them in one SRAM access. The array therefore
+reads its $D$ operands and drains its $D$
+partial sums each cycle from $D/d$ disjoint macros in parallel,
+without a bank conflict. Aggregate bandwidth scales with the strip
+count because it is distributed across these private lanes rather
+than gated by a shared port.
+
+The same ping-pong hides the reloads. Whichever bank the array is
+not reading is filled or drained through an independent back port
+to the main buffer. Refill therefore overlaps compute whenever a
+tiled GEMM streams at least
+as long as its reload, the same $M{\ge}d$ condition that hides a
+fold's preload (\S\ref{sec:ttsa:anchors}), and a boundary-partitioned strip
+drains its partial sums into the neighboring output lane rather than
+off-chip. The banks are compiled SRAM
+macros, and their per-lane glue is the memory-logic area and power
+counted in \S\ref{sec:eval:tradeoff}.
+
+% Placement: declared here so the [!t] float lands on the \S IV-B
+% page (user 2026-07-29: Fig 5 on p5).
+\figreal{4PEs}{pes}{1.0}{%
+The PE micro-architecture and datapaths.}{%
+(a)~TTSA PE: a fused multiply--add core plus a weight-bypass
+register and a lock register (L). (b)~Strip boundary PE (SBPE):
+enable (E) forwards the partial sum to the next strip or drains it
+to strip memory.
+(c),~(d)~Twist boundary PE (TBPE), odd/even-column forms.}
+
+\subsection{Partitioning or merging: boundary PEs}
+\label{sec:design:boundary}
+\label{sec:design:cut}
+
+% Placement: moved to the \S IV-B head (2026-07-31) so Fig 6/7 land one
+% page earlier.  5Tallandwide = the weight loads, 6areuseandpreuse =
+% the two reuse paths, both from fig/new/.
+\figrealstar{5Tallandwide}{tallwide}{1.0}{%
+Weight load for tall and wide weight matrix.}{%
+(a)~Tall weight matrix ($K{=}8$, $N{=}4$): each strip memory holds one
+depth-$d$ chunk of $B$, locked into its strip in the twist
+permutation order. (b)~Wide weight matrix ($K{=}4$, $N{=}8$): the two
+width-$d$ chunks load the same way, one per strip.}
+
+\figreal{6areuseandpreuse}{reuse}{1.0}{%
+In-array reuse across a merging strip boundary.}{%
+(a)~Partial-sum reuse for a tall weight matrix: partial sums cross the
+boundary and accumulate to a single $C$ exit. (b)~Activation reuse for a wide weight matrix:
+the activation forwards across the boundary, and each strip drains
+its own $C$ columns.}
+
+Fig.~\ref{fig:pes}b--d shows the two types of
+boundary PEs that implement the partition-or-merge choice, one per
+direction of an FCR, and the muxes and demuxes each
+carries on the paths that cross the partition line. In each, a
+boundary-enable register steers those paths, while the FMA, weight, and lock registers are those of an interior PE. The
+controller sets both enables per region.
+
+\paragraph{Twist boundary PE.}
+The TBPE sits on the strip-internal activation chain at
+every $d$-row block boundary along $D$, in an odd- and an even-column
+form, drawn in Fig.~\ref{fig:pes}c,d. The twist's crossing links
+alternate sides with column parity. The two forms therefore carry
+their muxes on complementary path sets. The TBPE's choice sets a region's top
+and bottom row at $d$ granularity. To merge, the TBPE's mux selects the
+across-boundary activation, so that the blocks above and below the line
+run as one taller region. To partition, the TBPE selects the in-strip predecessor
+and restarts the chain, which opens a new region edge. Either choice
+preserves the torus-link timing of \S\ref{sec:ttsa:torus}.
+
+\paragraph{Strip boundary PE.}
+The SBPE sits at the end of a PE row on the strip's
+memory-facing edge. The SBPE chooses whether the dataflow crosses the
+boundary for reuse or exchanges its data with the intervening
+strip memory.
+The SBPE's output fans out to a pipeline flop forwarding to the next strip when
+merging, and to a direct write into the adjacent strip memory when
+partitioned, as Fig.~\ref{fig:pes}b shows. When merging, the two strips run
+as one wider array. When partitioned, the crossing links go inactive and each
+strip runs independently, with the left strip draining into the strip
+memory that serves the right strip's operand reads.
+
+Either boundary therefore carries one binary decision, and the
+same one-bit enable drives every mux along it. A partition at a strip
+boundary is then a row of multiplexers,
+each with an optional pipeline flop. The per-PE datapath, per-strip
+accumulator,
+and in-strip torus links are untouched. \textsc{Tessera}'s boundary cost
+grows only with the number of boundaries, one mux row per strip
+boundary and per block edge, and is independent of the array side. On
+the classical mesh, the skew registers and per-PE multiplexers
+replicated into every sub-array multiply as the granularity
+becomes finer.
+
+Fine granularity is therefore cheap in silicon, but each
+boundary still carries a data-reuse decision. Partitioned regions no longer
+share operands or chain partial sums in-array. A shared
+activation is read once per region instead of once per array, and
+partial sums that once accumulated across the boundary detour through
+the strip memory, so energy per operation rises at finer
+granularity (\S\ref{sec:eval:tradeoff} measures this balance).
+Partitioning the array is therefore only part of the problem. A
+mapping and schedule must still feed the regions and accumulate
+each GEMM across them, and the rest of this section builds both.
+
+\subsection{Mirror-chain: mapping non-square weight matrices}
+\label{sec:design:mapping}
+
+A weight matrix is the $K{\times}N$ weight ($B$) block of a tiled GEMM,
+$K$ its reduction depth and $N$ its output width. The weight matrix is
+\emph{wide} when $N{>}K$ and \emph{tall} when $K{>}N$, the square
+$K{=}N$ being the special case. Non-square weight matrices are the common case
+in serving. The projections and attention of an LLM are naturally
+non-square, splitting a large GEMM in $D{\times}D$ units leaves
+non-square edge remainders, and the
+partition minimizing the energy--delay product (EDP) often lands
+at a non-square granularity.
+
+On a partitioned array, each weight matrix takes its own region of the
+array. Prior work on this
+dataflow~\cite{Abdelmaksoud_2026} pads every non-square weight to the
+full $D{\times}D$ square, which lowers utilization. Cutting a non-square weight matrix into regions naively
+breaks the reuse a classical systolic array would give it. A partition along $K$
+stops the partial sums from flowing region to region, so every
+region writes its partial sums to SRAM and the results are
+re-accumulated. A partition along $N$ stops the activation from flowing,
+so every region reads the same $A$ from SRAM again. \textsc{Tessera} is the
+first to map non-square weight matrices onto this dataflow with the in-array
+reuse intact.
+
+Prior partitioned designs add hardware to adapt non-square shapes to
+the diagonal wavefront, such as the omni-directional multiplexers of
+Planaria~\cite{ghodrati2020planaria}. Our orthogonal wavefront instead
+handles them in the mapping alone, with no added hardware.
+The \emph{mirror-chain} mapping does this in two steps. A $K{\times}N$ weight matrix first pads
+to the nearest $s{\times}l$ rectangle, where the short side $s$ is
+a multiple of $d$ and the long side $l$ is a multiple of $s$, and
+the padded weight matrix then further splits into $s{\times}s$ square blocks, laid horizontally
+across the strips on a band of rows. The weight load runs in parallel
+for each $s{\times}s$ block as the tiled weight matrix is split. As
+Fig.~\ref{fig:tallwide} shows, the leading block loads in the twist
+permutation order and the trailing block in the reversed order, so
+their weight layouts are mirror-symmetric. This mirrored layout is what
+lets neighboring $s{\times}s$ blocks reuse partial sums and activations
+across the boundary. A split along $K$ gives a tall weight matrix,
+whose blocks chain their partial sums. A split along $N$ gives a
+wide weight matrix, whose blocks share the activation
+(Fig.~\ref{fig:reuse}). The two cases give
+the two mappings below, partial-sum reuse for tall weight matrices and
+activation reuse for wide ones.
+
+% chenyi9: addition start -- general mirror-chain definition; preserve submitted text.
+\begingroup
+\textcolor{red}{For an arbitrary chain, number the square weight blocks $B_b$ from
+$b=0$. Let $J$ be the $s\times s$ reversal matrix, with $J^2=I$.
+The weight matrix passed to the existing twist-order loader is}
+
+\begin{equation}
+\color{red}
+ \widehat B_b=J^b B_b J^b.
+ \label{eq:full-mirror}
+\end{equation}
+
+\textcolor{red}{Even blocks use regular order. Odd blocks reverse both local $K$ and
+$N$ indices: $(JB_bJ)_{k,n}=(B_b)_{s-1-k,s-1-n}$.
+Thus ``reverse order'' specifies the weight indices, rather than
+only the direction in which a buffer is drawn.}
+
+\textcolor{red}{Across an $s$-column square, including its outgoing edge, both routes
+reverse physical row order. The alternating adjacent swaps move a
+token toward an endpoint, pause it for one cycle, and reverse its
+direction. This reflected walk has period $2s$; after $s$ edges,
+row $r$ becomes $s-1-r$, for either starting phase and either parity
+of $s$. Each connection therefore applies $J$, changing the order
+from $J^b$ to $J^{b+1}$. The same alternation extends to any number
+of connected blocks.}
+\par
+\endgroup
+% chenyi9: addition end
+
+\subsubsection{Tall weight matrices, partial-sum reuse}
+\label{sec:design:mapping:klarge}
+Figure~\ref{fig:tallwide}a shows a tall weight matrix, $K{=}8$, $N{=}4$, on a
+$4$-row band across two strips of width $4$. The $K$ side splits
+into two $4{\times}4$ blocks laid along the strips. The left strip holds
+$B_{0..3}$ stationary and the right strip $B_{4..7}$, each preloaded
+from its adjacent strip memory, the left strip in the regular twist
+permutation order and the right strip in the reversed order. The activation also splits
+along $K$ into an upper and a lower half, one per strip. Each
+strip receives its own $K$-slice of the activation at its left
+boundary, the second half $A_{04}$ to $A_{07}$ entering from the strip
+memory at the strip boundary. Partial sums chain rightward across the
+merging boundary, accumulating through the second strip to generate
+the output matrix $C$ at the rightmost strip memory (Fig.~\ref{fig:reuse}a).
+
+% chenyi9: addition start -- tall alignment identity; preserve submitted text.
+\begingroup
+\textcolor{red}{For the general tall case, let $A_b$ contain the activation columns
+matching $B_b$, and let $S_b$ be the partial sum before block $b$,
+with $S_0=0$. Incoming partial sums and fresh activations have orders
+$S_bJ^b$ and $A_bJ^b$. Computation followed by the outgoing edge gives}
+
+\begin{equation}
+\color{red}
+ \bigl[S_bJ^b+(A_bJ^b)\widehat B_b\bigr]J
+   =(S_b+A_bB_b)J^{b+1}.
+ \label{eq:tall-invariant}
+\end{equation}
+
+\textcolor{red}{The updated sum has exactly the next block's required order.
+Each partial sum therefore continues to accumulate weights with the
+same output-column index $n$, proving the chain invariant by induction.}
+\par
+\endgroup
+% chenyi9: addition end
+
+\subsubsection{Wide weight matrices, activation reuse}
+\label{sec:design:mapping:ksmall}
+Figure~\ref{fig:tallwide}b shows the transposed case, a wide weight matrix of
+$K{=}4$, $N{=}8$ on the same band. The $N$ side splits into two
+$4{\times}4$ blocks laid along the strips. The left strip holds
+columns $0$--$3$ stationary and the right strip columns $4$--$7$, each
+preloaded from its adjacent strip
+memory, the left strip in the regular twist permutation order and the
+right strip in the reversed order. The activation enters once at the left edge, crosses strip 0,
+and is forwarded over the merging boundary. Every block
+therefore reuses the same $A$ (Fig.~\ref{fig:reuse}b). The left strip drains output columns $C_0$ to $C_3$ and the right
+strip columns $C_7$ down to $C_4$, strip 0 into the
+strip memory at the strip boundary and strip 1 at its right edge.
+
+% chenyi9: addition start -- wide alignment identity and comparison; preserve submitted text.
+\begingroup
+\textcolor{red}{In the wide case, every block uses the same activation matrix $A$.
+Block $b$ receives $AJ^b$ and computes}
+
+\begin{equation}
+\color{red}
+ (AJ^b)\widehat B_b=(AB_b)J^b.
+ \label{eq:wide-invariant}
+\end{equation}
+
+\textcolor{red}{The outgoing activation becomes $AJ^{b+1}$, which is the next block's
+required input. Here the $K$ mirror preserves the reduction-index
+alignment, whereas in the tall case the $N$ mirror preserves the
+partial-sum alignment. The wide case's $N$ mirror accounts for the
+reversed output-column order. Regular weights in every block would
+break these respective alignments.}
+\par
+\endgroup
+% chenyi9: addition end
+
+Either orientation retires useful MACs at the same operand bandwidth
+as a $D{\times}D$ square reading the same shape padded to $D$, while the
+fixed square fills the remaining cycles with padded zeros. Both
+mappings advance at one MAC per PE per cycle, so a GEMM's run time
+is set by the volume its mapping executes, the padded volume on the
+fixed square against only the useful volume on the band. The
+speed-up on an underutilized shape is therefore the ratio of padded
+to useful MACs, the reciprocal of the $\min(M,N,K)/D$ utilization of
+\S\ref{sec:bg:llm}, and $D$-aligned shapes perform equally.
+
+\subsection{Mapping and scheduling}
+\label{sec:design:batch}
+\label{sec:design:modes}
+\label{sec:design:algo}
+
+A GEMM larger than the array is split the same way: with a
+$K{\times}N$ weight matrix, $K$ splits
+into $h$ blocks of size $k$ and $N$ into $w$ strips of size $n$,
+with $k$ and $n$ dividing $D$, and each $k{\times}n$ weight matrix maps
+onto an FCR through the two patterns of
+\S\ref{sec:design:mapping}.
+
+The choice of $(k,n)$ is made per GEMM by EDP, and a finer
+granularity admits more candidates. Modern systolic accelerators
+back the array with a large on-chip SRAM~\cite{jouppi2023tpu},
+so the energy that moves with the choice is the SRAM traffic. A
+smaller $n$ splits $N$ into more strips and rereads the activation
+once per strip, so read energy grows with the strip count
+$w{=}\lceil N/n\rceil$. A smaller $k$ splits $K$ into more blocks
+and writes one partial sum per block, so write-and-reduction
+energy grows with the block count $h{=}\lceil K/k\rceil$. For
+example, with a large $M$ the choice leans to a larger $n$, saving
+rereads of the $M$-row activation stream; with a small $M$ it
+leans to a larger $k$, saving partial-sum writes and
+re-accumulation.
+
+The delay side, for a chosen array size, comes from the per-weight-matrix
+fold time of a weight-stationary array~\cite{samajdar2020systematic}: under
+the mirror-chain mapping a padded
+$k{\times}n$ weight matrix of $H$ rows $\times$ $W$ columns, $H$ the
+shorter edge, is a chain of $W/H$ square blocks and folds skew-free
+in $H{+}M{+}W{-}1$ cycles. Across a GEMM's $R$ rounds only the
+last exposes its traverse tail. Every round uses the same $(k,n)$, so
+$H$ and $W$ stay constant, and
+\[
+  T_{\mathrm{GEMM}}
+    \;=\; H \;+\; R\,\max(M, H) \;+\; W \;-\; 1 ,
+\]
+where each round costs $H$ when the fold tail cannot be hidden and $M$
+when double buffering hides it ($M{\ge}H$).
+
+% chenyi9: addition start -- timing interpretation; preserve submitted text.
+\begingroup
+\textcolor{red}{This expression reserves a full $\max(M,H)$ interval for each round.
+When $M<H$, the last valid output precedes the end of the final
+reserved interval by $H-M$ cycles. Extra boundary pipeline stages,
+if present, add their latency to the traverse tail.}
+\par
+\endgroup
+% chenyi9: addition end
+
+% Placement: [!ht] so the float lands beside its prose (user placement
+% rule 2026-07-22: keep it next to this subsection, not forced to a page
+% top/bottom).
+% Codex: float color guard start -- preserve the submitted algorithm color.
+\begingroup
+\makeatletter
+\let\TesseraSavedFloatMakebox\float@makebox
+\def\float@makebox#1{\color@vbox\normalcolor\TesseraSavedFloatMakebox{#1}\color@endbox}
+\makeatother
+\begin{algorithm}[t]
+\footnotesize
+\caption{Per-GEMM EDP-optimal mapping.}
+\label{alg:tessera-sched}
+\begin{algorithmic}[1]
+\REQUIRE GEMMs $(M_\ell,K_\ell,N_\ell)_{\ell=1}^{L}$; array side $D$;
+granularity $d$; sizes $\mathcal{S}{=}\{s : s{=}d\cdot 2^n,\ n{=}0,1,\ldots,\log_2(D/d)\}$
+\ENSURE rounds $\mathcal{R}$ with per-weight-matrix placements
+\FORALL{GEMMs $\ell$}
+  \STATE $(k,n) \gets \arg\min_{(k,n)\in\mathcal{S}^2}\mathrm{EDP}_\ell(k,n)$
+  \STATE split into $k{\times}n$ weight matrices:
+         $h{=}\lceil K_\ell/k\rceil$ blocks $\times\ w{=}\lceil N_\ell/n\rceil$ strips
+\ENDFOR
+\STATE $r \gets$ empty $D{\times}D$ round
+\FORALL{weight matrices $t$ in arrival order}
+  \IF{$t$ fits a free $k{\times}n$ slot in $r$}
+    \STATE place $t$ in $r$
+  \ELSE
+    \STATE close $r$;\ open a new $D{\times}D$ round;\ place $t$
+  \ENDIF
+\ENDFOR
+\RETURN all rounds $\mathcal{R}$
+\end{algorithmic}
+\end{algorithm}
+\endgroup
+% Codex: float color guard end
+
+
+Algorithm~\ref{alg:tessera-sched} picks per GEMM, over $\mathcal{S}^2$,
+the $(k,n)$ minimizing the energy--delay product $\mathrm{EDP}$. Weight matrices are then first-fit into $D{\times}D$ rounds and packed
+across GEMMs, and a partly-filled round stays open for the next
+independent GEMM.
+
+Finer granularity runs faster, as a smaller weight matrix fills more of the array
+and $T$ falls, but it loses reuse and thus energy. \textsc{Tessera} can still go
+finer than prior designs because on serving's small, non-square shapes the
+EDP keeps improving at finer granularity, so the per-GEMM $\arg\min$
+lands well below the full array. EDP stops shrinking the weight matrix once
+the utilization recovered no longer outweighs the reuse lost.
+
+\subsection{Scale-up}
+\label{sec:scale}
+\label{sec:scale:strip}
+% fig 6 (4scaleupview, fig:scaleup, chip-scale view) deleted
+% 2026-07-29 per author note; 4scaleupview.pdf stays in fig/.
+Growing $D$ stacks more
+$d{\times}d$ PE blocks inside each strip, growing the number of strips appends another
+strip and strip-memory pair, and a strip's merging neighbor is always
+adjacent. The critical path therefore stays at one pipeline stage and
+the minimum partition size at $d$ for any $D$ and $n$. The two directions
+scale independently. Because the EDP optimum needs only a short
+strip, a chip can grow by replicating strips
+horizontally rather than raising $D$, keeping the array short and
+its physical implementation simple.

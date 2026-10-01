@@ -1,0 +1,19 @@
+[
+  "/data2/chenyi9/fracturableT3/simulators/NeuSim/.venv/bin/python",
+  "-B",
+  "-m",
+  "neusim.run_scripts.run_tessera_joint",
+  "--base",
+  "results/tessera/archived/0929/20260929_paper_sram_per_pe",
+  "--verification",
+  "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/combined_verification.json",
+  "--equal-pe-ppa",
+  "--ppa-tiling",
+  "joint_edp",
+  "--workers",
+  "32",
+  "--memory-gb",
+  "96",
+  "--out",
+  "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/joint_edp/main_costs"
+]

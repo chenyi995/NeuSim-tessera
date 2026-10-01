@@ -1,0 +1,10 @@
+[
+  "/data2/chenyi9/fracturableT3/simulators/NeuSim/.venv/bin/python",
+  "-B",
+  "-m",
+  "neusim.run_scripts.report_tessera_ppa",
+  "--run",
+  "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/joint_edp",
+  "--out",
+  "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/joint_edp/analysis"
+]

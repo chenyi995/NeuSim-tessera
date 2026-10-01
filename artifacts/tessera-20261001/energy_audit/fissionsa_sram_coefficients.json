@@ -1,0 +1,52 @@
+{
+  "status": "PASS",
+  "coefficients": [
+    {
+      "model": "paper/revision modeled-word energy",
+      "action": "read",
+      "original_pj": "0.95",
+      "original_unit": "modeled word",
+      "equivalent_bits": 16,
+      "derived_pj_per_bit": "0.059375",
+      "source": "/data2/chenyi9/fracturableT3/FissionSA/fissionsa/modes/combo6_edp.py",
+      "note": "Per-bit equivalent using revision byte accounting; inherited word coefficients are not per-bit macro measurements."
+    },
+    {
+      "model": "paper/revision modeled-word energy",
+      "action": "write",
+      "original_pj": "2.2",
+      "original_unit": "modeled word",
+      "equivalent_bits": 32,
+      "derived_pj_per_bit": "0.06875",
+      "source": "/data2/chenyi9/fracturableT3/FissionSA/fissionsa/modes/combo6_edp.py",
+      "note": "Per-bit equivalent using revision byte accounting; inherited word coefficients are not per-bit macro measurements."
+    },
+    {
+      "model": "older multitenant/Qwen macro energy",
+      "action": "read",
+      "original_pj": "2.0",
+      "original_unit": "128-bit access",
+      "equivalent_bits": 128,
+      "derived_pj_per_bit": "0.015625",
+      "source": "/data2/chenyi9/fracturableT3/FissionSA/multitenant/profile_nn_tables.py",
+      "note": "Recorded CACTI 32-nm 4-KB 128-bit macro estimate; fractional full-width access convention."
+    },
+    {
+      "model": "older multitenant/Qwen macro energy",
+      "action": "write",
+      "original_pj": "5.24",
+      "original_unit": "128-bit access",
+      "equivalent_bits": 128,
+      "derived_pj_per_bit": "0.0409375",
+      "source": "/data2/chenyi9/fracturableT3/FissionSA/multitenant/profile_nn_tables.py",
+      "note": "Recorded CACTI 32-nm 4-KB 128-bit macro estimate; fractional full-width access convention."
+    }
+  ],
+  "separate_reduction_memory_pj_per_output_word": "2.98",
+  "source_sha256": {
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_independent_ws8_energy_audit/fissionsa_coefficients.py": "f1303cf648cfe39c17ece9fe62f94c758f89b05be35671b18eec1befe95b99bd",
+    "/data2/chenyi9/fracturableT3/FissionSA/fissionsa/modes/combo6_edp.py": "52ae9bdeadafe90477ee8176ae8a7cfac03df35fa3a542c470a172a616054c69",
+    "/data2/chenyi9/fracturableT3/FissionSA/multitenant/profile_nn_tables.py": "6cb7d9c97da5a7d73f8e466d40f677ac3c4e9facdc0264f534e0284dcf3cdf51",
+    "/data2/chenyi9/fracturableT3/FissionSA/Tessera-revision/experiments/ad_cycle/config.json": "7b08d22dc6895967cfe09b864482775f5594250a1b8043bfbeb0ed07c01b6a3f"
+  }
+}

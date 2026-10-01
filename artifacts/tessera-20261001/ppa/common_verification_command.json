@@ -1,0 +1,9 @@
+[
+  "/data2/chenyi9/fracturableT3/simulators/NeuSim/.venv/bin/python",
+  "-B",
+  "-m",
+  "neusim.run_scripts.run_tessera_ppa",
+  "verify",
+  "--out",
+  "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/common_verification"
+]

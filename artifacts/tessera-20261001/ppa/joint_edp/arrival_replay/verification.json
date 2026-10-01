@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "jobs": 156,
+  "records": 156,
+  "source_sha256": {
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/execute.py": "268bd53f00affdd53a7396d62ceebac6bc128a7e073fa0d07294360e5642ac82",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/run_scripts/replay_tessera_arrivals.py": "82406a2cc7261049f041a2cb283eed2840fd3f204927d8253fa9faa562e79649",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/run_scripts/tessera_request_dispatch.py": "24e8945b4df2f04331a8a21da8d630b95ed83e64a8f5e34183751c9baca250ad",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/tessera_native_tail.py": "b714c35b29d8d4c114e6ab08069ec7923586ea2ca63bbe7a52ff8c52dc806df8",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/joint_edp/main_costs/manifest.json": "03e7bdad58920b28380ca194c6e9e2b1bcebc743cbce7010d4e2d7d9d1aced9f",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/joint_edp/main_costs/configs.json": "03989a1d1e2ccd6262f2f483d95715fd5e456f5990a615196251a514ad25037e",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260930_energy_corrected_v1/trace_programs_v2/verification.json": "068721500c485df41bbfb84f53ee1e9523d4497f3ac1b1bcd6bc0d924d5858ea",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/joint_edp/cost_store/verification.json": "36821c6a6c1d30c3614921bf570838a8a1312eff26caae7a4063dff7fd312ea4"
+  },
+  "artifacts": {
+    "scenario.json": "a550ec3fc18d0951bf4773d45400d85fc3714d62e08abf779cdc6f515b156f8f",
+    "totals.csv": "ae772e861a642b9c19b39a0c99d9e0afc84ab727ee024d78d4d570ee21dc6527"
+  }
+}

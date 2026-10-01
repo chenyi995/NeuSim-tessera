@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "hash_checks": 48,
+  "shape_architecture_checks": 276021,
+  "source_trace_batches": 41023,
+  "trace_architecture_checks": 369207,
+  "independent_summary_field_checks": 7830,
+  "bandwidth_monotonicity": "PASS",
+  "input_mac_conservation": "PASS",
+  "reference_histogram_time_conservation": "PASS",
+  "reused_graph_inventory_conservation": "PASS",
+  "unique_graph_operators": 28021,
+  "csv_readback": "PASS",
+  "run_manifest_sha256": "8ce94a6576086bc9f70938cc39a5c7173e295bdcdf3daa9f6f9cb4b88c13bc01"
+}

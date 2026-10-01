@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "configurations": 13,
+  "workloads": 12,
+  "workload_rows": 156,
+  "source_sha256": {
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/run_scripts/report_tessera_ppa.py": "5cb433880e6727a096464b04d70774f3ac2782667496eac81b284670bdeff569",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/native_tail/main_costs/ppa_configurations.json": "bda0525ddbf5695f4bd52777043e78c82b6d52dd0024ee33e1d4bc7ddc46482d",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/native_tail/main_costs/configs.json": "913b75581a4df45a7c8708f2a5f9f855f183cd72a2c26bcc26801f290ddeac7f",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/native_tail/main_costs/totals.csv": "9f1a6efabb9d29b12098001deea6d720b5dd31b2aa177215987e3bc851e5f297",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/native_tail/arrival_replay/verification.json": "c02cb18042960e6212b2bbb6ca8cda7276471c49e82f087f111618df119054e8",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/native_tail/arrival_replay/totals.csv": "6a51daac32141e35a6e58c78ff9c6bdc8590e1d352b14bc609eae4d8a62669da",
+    "/data2/chenyi9/fracturableT3/Tessera-HPCA-2026/fig/plotting/make_area_figs.py": "8bf3baf784f4f5be5934011557ca636abdc78e6530b9b7df93eecb02be10d529",
+    "/data2/chenyi9/fracturableT3/SA-rtl/docs/SYN22_ARRAY_CHIP_DATA.md": "f937bbd4d1bcb81b1ad469bb600ebfb599cb7b18fa51d8a32b272ad1419bcaa8",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/configs/chips/tessera_joules_energy.json": "4e9fe956096070d8ccdc8ca04bb7302ff7b37843472a619d53cdb64a8ec16d2c",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260930_energy_corrected_v1/paper_data_2dp/workload_sources.csv": "e0087de10ad0c725f017e1e1a38a71e092e534aaff17e68e4728bca89fc6940a"
+  },
+  "artifacts": {
+    "workload_metrics.csv": "850b60cea44ae1c24289476252a7d96f33f924b8db39b25776a8876a44978686",
+    "geomean.csv": "12b33207aea92085a9566343f2d3b289cc95731ac7fe9f27ce69304abf9d0208",
+    "energy_efficiency_vs_performance_area.pdf": "85d4266fe702dc4f7d9197ba04173ddbd2d00c79a4db470623be0d85a6e384c9",
+    "energy_efficiency_vs_performance_area.png": "70f5c72a380422312a2b5102dc43c498a8aa9d458dd0f900009a9c098b9eb0f9",
+    "energy_efficiency_vs_performance_area.svg": "4f24f95019c0958df7e7ec896fb00f026aa30a9d5afdb40abd91397cf3c4f162",
+    "README.md": "01820d4a836d066c19db7a5dbc3d7ccaf9e500c0482d1da2e2c5a747334ae039"
+  },
+  "accounting": "Equal-PE, equal-workload-weight geometric mean; native_tail; revision NeuSim compute/SRAM/HBM/static/regulator energy; RTL-scaled area only."
+}

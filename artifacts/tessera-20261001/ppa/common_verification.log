@@ -1,0 +1,14 @@
+PASS WS {'source_kernel': 22, 'vector_scalar': 21, 'native_energy': 3, 'full_grid': 1, 'revision_energy_configurations': 13}
+PASS WS-independent-64 {'source_kernel': 44, 'vector_scalar': 42, 'native_energy': 6, 'full_grid': 2, 'revision_energy_configurations': 13}
+PASS WS-independent-32 {'source_kernel': 66, 'vector_scalar': 63, 'native_energy': 9, 'full_grid': 3, 'revision_energy_configurations': 13}
+PASS WS-independent-16 {'source_kernel': 88, 'vector_scalar': 84, 'native_energy': 12, 'full_grid': 4, 'revision_energy_configurations': 13}
+PASS WS-independent-8 {'source_kernel': 110, 'vector_scalar': 105, 'native_energy': 15, 'full_grid': 5, 'revision_energy_configurations': 13}
+PASS Planaria-64 {'source_kernel': 242, 'vector_scalar': 231, 'native_energy': 33, 'full_grid': 6, 'revision_energy_configurations': 13}
+PASS Tessera-64 {'source_kernel': 242, 'vector_scalar': 406, 'native_energy': 58, 'full_grid': 6, 'revision_energy_configurations': 13}
+PASS Planaria-32 {'source_kernel': 572, 'vector_scalar': 721, 'native_energy': 103, 'full_grid': 7, 'revision_energy_configurations': 13}
+PASS Tessera-32 {'source_kernel': 572, 'vector_scalar': 1295, 'native_energy': 185, 'full_grid': 7, 'revision_energy_configurations': 13}
+PASS Planaria-16 {'source_kernel': 1188, 'vector_scalar': 1883, 'native_energy': 269, 'full_grid': 8, 'revision_energy_configurations': 13}
+PASS Tessera-16 {'source_kernel': 1188, 'vector_scalar': 3171, 'native_energy': 453, 'full_grid': 8, 'revision_energy_configurations': 13}
+PASS Planaria-8 {'source_kernel': 2178, 'vector_scalar': 4116, 'native_energy': 588, 'full_grid': 9, 'revision_energy_configurations': 13}
+PASS Tessera-8 {'source_kernel': 2178, 'vector_scalar': 6517, 'native_energy': 931, 'full_grid': 9, 'revision_energy_configurations': 13}
+{"source_kernel": 2178, "vector_scalar": 6517, "native_energy": 931, "full_grid": 9, "revision_energy_configurations": 13, "large_candidate_overflow": 1}

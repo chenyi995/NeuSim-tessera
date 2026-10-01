@@ -1,0 +1,138 @@
+{
+  "status": "PASS",
+  "started_utc": "2026-09-30T00:21:49.078982+00:00",
+  "base_git_commit": "72056f1e173538a64ff36fa987c1eb1112a670d7",
+  "python_version": "3.10.13 (main, Apr 22 2025, 21:46:31) [GCC 8.5.0 20210514 (Red Hat 8.5.0-26)]",
+  "dependencies": {
+    "numpy": "2.2.6",
+    "pydantic": "2.10.6"
+  },
+  "input_root": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/inputs_snapshot",
+  "workers": 16,
+  "affinity": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "per_process_address_space": 5647058823,
+  "architectures": [
+    "WS",
+    "Planaria-32",
+    "SOSA",
+    "FlexSA",
+    "SISA",
+    "Tessera-32",
+    "Tessera-8",
+    "Tessera-32-skew",
+    "Tessera-8-skew"
+  ],
+  "bandwidth_bytes_per_second": [
+    394000000000,
+    600000000000,
+    800000000000,
+    1000000000000,
+    1200000000000,
+    1400000000000,
+    1600000000000,
+    1800000000000,
+    2000000000000,
+    2200000000000,
+    2400000000000,
+    2600000000000,
+    2800000000000
+  ],
+  "selection": "Native NeuSim per-GEMM EDP at HBM4; all mappings/traffic fixed across bandwidth",
+  "metric": "Time only; speedup=T_baseline/T_design. Full model or invocation-weighted single-operator E2E.",
+  "reused_reference_costs": {
+    "sources": [
+      "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/grain8_recovered"
+    ],
+    "excluded": [
+      {
+        "run": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/grain32",
+        "reason": "engine source differs",
+        "paths": [
+          "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/tessera_partitioned.py"
+        ]
+      }
+    ],
+    "unique_costs": 112012
+  },
+  "native_hbm_latency_ns": 500,
+  "source_sha256": {
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/inputs_snapshot/inputs/workloads.csv": "7f43220302ddf347214590491f8aafb8b0d906bade7d0c717f1e7438ba7dca25",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/inputs_snapshot/workload_metadata.json": "e3cd5d9235f5764adce249f43c7e2257270d9596b76c365ffeba059842843145",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/baseline_verification/bandwidth_grid.json": "8faea75bd38161db95d9942b4a61384da7fe121aff41ba0b5f53bf3522b50aa6",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/speed_reuse_sources.json": "1af187580ab0e658b5fa2f1cb8b7511e5470b9754f0479cd30feb8327bd4461c",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/grain32/manifest.json": "9963592e38bb26baa7936f97ed87a1de1f28af8522613426f82a816616f17841",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/grain32/analysis/verification.json": "e396242d2f190eeb90b7257e8e83d8e0dc9ce7001aa9359a310445be0fcd656b",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/grain32/chip_config.json": "81e2ab90736cdf2e5935d7bf69220a62efe32927425fc7fbfd311b2786338796",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/grain32/workload_metadata.json": "e3cd5d9235f5764adce249f43c7e2257270d9596b76c365ffeba059842843145",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/grain8_recovered/manifest.json": "c903e0f86cf54441f69cb61fb3cbd7ca3fabf08aa0d1542e8f53c6aefbe905ff",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/grain8_recovered/analysis/verification.json": "0f8159f0da90d73bbedbd8ae37e0306b28f59e12a23694acd380bab49da3df73",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/grain8_recovered/chip_config.json": "4b2c2bfc8e4f76c417f159d6b7a85622489e8dbd4e4d467c8c41209069906860",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/grain8_recovered/workload_metadata.json": "e3cd5d9235f5764adce249f43c7e2257270d9596b76c365ffeba059842843145",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/grain8_recovered/shape_results.csv": "f53c25afe3b41b6c0ceb19c21c8d5b384c1d7bc151f0685ae087661955265a87",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/grain8_recovered/graph_operators.jsonl": "62825fd6f46e176bca720a3b53f648c1052b9528724a31341e3957a9addd9953",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/grain8_recovered/graph_costs.csv": "1882c44651e9e1142ccc3ef3a58a7db368acb1d72672feebdecfea13d8baab47",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_conv300/mnk_trace.csv": "b92a327626fa9c888ea65cbc900a32267af59a4a2350b5656e8ed7b02746c622",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama3-8b_conv300/mnk_trace.csv": "f8eb65ff5d41b06150c00418d86e9a00f36188556bf3a97d8405b66984231f50",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-70b-tp4_conv300/mnk_trace.csv": "6bdf75f6b438a64ba5318efa3c5b37dbf8f6c53f6f36ba85fdba802341e2ceeb",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/phi2_conv300/mnk_trace.csv": "265161ce99ed6950778870a674a56c7ce24bbe94d3802182ffa4a0b0fecab04c",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_code300/mnk_trace.csv": "249fffbfb68b73032538cf65ee6e08ff409bcad7cca31397ed1dd76374474b2e",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/inputs_snapshot/trace_sources/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_arxiv-qps1/mnk_trace.csv": "33b9c52a04360f0e286dd466dc8e051ce782cb0be84566f9eec4ee90300ed2a9",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/dvfs_policy_lib.py": "0e38da94574466522a3befc5b6d42501e31249d8c51601e1315d3e40663b504b",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/dvfs_power_getter.py": "692bd2a52882f105420703c455915cd9f900236c499bcb8ef2f2003f544b5354",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/npusim_lib.py": "7049c1304446adb21ceb6e83c1c413b6e1ee2ae88af803c159d30a95e7612277",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/power_model.py": "62c41f870c55053f6628a9aab904ace68799acbfd44ff098ab08dbe076b2c4a5",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/util.py": "b0fdd9709e40980a923eefe0233bf8b0b920ec2be918f6ea9ed6df47dd864af9",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/tessera.py": "262d02f2e1da7e38488886112932bdc44eb88d969fc460eef6d76c5e932f4af9",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/tessera_native.py": "c39fe24490ad558a37a84ae7600b2d9cec8f22fead9d2c6c3c96305681d46684",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/tessera_partitioned.py": "e7f0ddfde98fc58bf9a6b3d5edaceda4d96b0e7e669027ed73d4645b306ae5bf",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/tessera_baselines.py": "9dcb002ea1b86e280ab7312e36208d9265b3b5bb634dfa1559ded7bee49e8f88",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/frontend/op_analysis_lib.py": "aded4af65d7e41f2cddb21f4c7246113c3e455feb7a83f3c025a00da4dc5d1df",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/frontend/llm_ops_lib.py": "e126d825207d33375a9d279a30e35235f0297061dd05bbd915f3d7ed0acf4a7b",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/frontend/power_analysis_lib.py": "2ff57da1bdf0a683c65234137e28c0f6f26541e5bb39bcd58da562ae2aa882fe",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/frontend/tessera_workloads.py": "a146266a8c77d059e3ea545390a3d849254b73230bf5dab9bdf15fb4928206cc",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/frontend/Operator.py": "fed51e693aefd8fa4478982102f08a1f81a75e8b7012c74c82a284c12102835d",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/configs/chips/ChipConfig.py": "05f7bf5aaa04613e2d72e6473cbb73f12c02466e5e00fc43d79e009a9cdfd2e0",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/run_scripts/run_tessera_speed.py": "a675ca9c8127e4a7d1b1d858a16fecfb4c0e9ede3d67bb0a452133711309407f",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/run_scripts/run_tessera_partitioned.py": "b79ed5f3fc2270b6da9bc163a2f53e7891a9f737043d9cca465a3c2f7c23eede"
+  },
+  "operator_shapes": 30669,
+  "e2e_batches": 41023,
+  "unique_graph_operators": 28021,
+  "deduplicated_graph_verification": {
+    "status": "PASS",
+    "real_model_architecture_checks": 54,
+    "native_component_histograms": "bit-exact",
+    "batch_times_and_macs": "bit-exact",
+    "saved_reference_cost_checks": 192
+  },
+  "elapsed_seconds": 729.4821741699998,
+  "output_sha256": {
+    "dedup_verification.json": "68e39712904921e1b8a9f3679dbcc02ba7348cb8cffd5a6f62b4124b64ad1de2",
+    "configs.json": "9df76796ece39fbb49e35643a29d4a8031e150775f9f50c51060416f7d0636c7",
+    "shape_reference.csv": "1bb5f061e6cc15df6c3b4f401eb3a202840e92742c6e18b526ff8ddb402e515a",
+    "operator_bandwidth_totals.csv": "4e1f76bea82d0b95b46dc84309623aec90cd0e548c8641e0ffd999db2e6387ec",
+    "trace_graph_operators.jsonl": "33dfed0eb846b1f95fb62c6527e0de9f90c1ef3efb46e52ebdc90c9bc12bb07c",
+    "trace_graph_batches.jsonl": "85c1eeeb8129726d8da2394c2474533706e2c66554841f1c3f78fc0e53a5755f",
+    "trace_graph_costs.csv": "438b79fb910e1b8621121be25d139fbfea96f5b294acbb34f77e3ba5399b8c7d",
+    "trace_batch_checks.csv": "24dd44eff4ce80a6a58cea7aa6582a3af59a95e3ed100c3eef0ec4a886840579",
+    "trace_operator_histogram.csv": "642794366ba251ee8dacb9f4526279b1b544c67c7de3bb7ce034cc9e403b1da6",
+    "e2e_bandwidth_totals.csv": "66d5c8c4ee8d77e5bd5c751e64dc3ccc7430f1193e65268617a4df51ecbeefd3"
+  }
+}

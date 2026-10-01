@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/verify_native_tail.py", line 98, in main
+    r=native_record(op,chip);records[oid]=r
+  File "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/run_scripts/run_tessera_partitioned.py", line 70, in native_record
+    vu_fallback_calls=int(d.get("engine") == "VU" or any(p["engine"] == "VU" for p in d.get("phase_plans", []))),
+  File "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/run_scripts/run_tessera_partitioned.py", line 70, in <genexpr>
+    vu_fallback_calls=int(d.get("engine") == "VU" or any(p["engine"] == "VU" for p in d.get("phase_plans", []))),
+KeyError: 'engine'

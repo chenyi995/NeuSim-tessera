@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "mapping_policy": "joint_edp",
+  "elapsed_seconds": 1056.413865709008,
+  "configurations": 13,
+  "workloads": 12,
+  "records": 156
+}

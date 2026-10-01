@@ -1,0 +1,15 @@
+[
+  "/data2/chenyi9/fracturableT3/simulators/NeuSim/.venv/bin/python",
+  "-B",
+  "-m",
+  "neusim.run_scripts.replay_tessera_arrivals",
+  "index",
+  "--costs",
+  "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/joint_edp/main_costs",
+  "--out",
+  "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/joint_edp/cost_store",
+  "--workers",
+  "1",
+  "--memory-gb",
+  "4"
+]

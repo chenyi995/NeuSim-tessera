@@ -1,0 +1,39 @@
+{
+  "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20260929_paper_sram_per_pe/baseline_verification/run_batch6.py",
+  "source_fields": [
+    "BW_GRID",
+    "FREQ"
+  ],
+  "words_per_cycle": [
+    197,
+    300,
+    400,
+    500,
+    600,
+    700,
+    800,
+    900,
+    1000,
+    1100,
+    1200,
+    1300,
+    1400
+  ],
+  "frequency_hz": 1000000000,
+  "bytes_per_word": 2,
+  "bytes_per_second": [
+    394000000000,
+    600000000000,
+    800000000000,
+    1000000000000,
+    1200000000000,
+    1400000000000,
+    1600000000000,
+    1800000000000,
+    2000000000000,
+    2200000000000,
+    2400000000000,
+    2600000000000,
+    2800000000000
+  ]
+}

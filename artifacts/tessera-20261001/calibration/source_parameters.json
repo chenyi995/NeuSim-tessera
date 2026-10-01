@@ -1,0 +1,66 @@
+[
+  {
+    "source": "/data2/chenyi9/fracturableT3/SA-rtl/tessera-hpca/array_joules_v5/run_array_gemm_power_v5.sh",
+    "sha256": "a093faeae1f7beffcff672f19ab12d42eb2bf069479ccac74fed4257b7d63290",
+    "fields": {
+      "clock_period_ns": 1.428
+    }
+  },
+  {
+    "source": "/data2/chenyi9/fracturableT3/SA-rtl/tessera-hpca/array_joules_v5/tb/tb_array_gemm_power_tessera0.sv",
+    "sha256": "ca6e67e82dffd8062870224a91eaaf3650a85be6e2ffba6133eadc25da7f9977",
+    "fields": {
+      "array_side": 32.0,
+      "half_period_ns": 0.714
+    }
+  },
+  {
+    "source": "/data2/chenyi9/fracturableT3/SA-rtl/tessera-hpca/array_joules_v5/plot_power_timeline_all.py",
+    "sha256": "387204221f05aa5ba9bf5631300d68ac418f0c4e9102c2fde7bcdb0d6be8fbd8",
+    "fields": {
+      "plateau_threshold": 0.9
+    }
+  },
+  {
+    "source": "/data2/chenyi9/fracturableT3/Tessera-HPCA-2026/fig/plotting/make_area_figs.py",
+    "sha256": "8bf3baf784f4f5be5934011557ca636abdc78e6530b9b7df93eecb02be10d529",
+    "fields": {
+      "A_FMA": [
+        1.831,
+        1.831,
+        1.831,
+        1.831,
+        1.831,
+        1.831,
+        1.831,
+        1.831,
+        1.831,
+        1.831
+      ],
+      "A_LOG": [
+        0.18,
+        0.199,
+        0.433,
+        0.218,
+        0.605,
+        0.251,
+        0.75,
+        0.317,
+        1.206,
+        0.443
+      ],
+      "A_SRAM": [
+        1.389,
+        1.389,
+        1.594,
+        1.594,
+        2.004,
+        2.004,
+        2.823,
+        2.823,
+        4.462,
+        4.462
+      ]
+    }
+  }
+]

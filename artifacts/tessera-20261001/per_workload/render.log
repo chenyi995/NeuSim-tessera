@@ -1,0 +1,11 @@
+/home/chenyi9/.config/matplotlib is not a writable directory
+Matplotlib created a temporary cache directory at /tmp/matplotlib-u_dzrgww because there was an issue with the default path (/home/chenyi9/.config/matplotlib); it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+{
+  "status": "PASS",
+  "workloads": 12,
+  "individual_figures": 24,
+  "comparison_figures": 12,
+  "pdf_pages": 12,
+  "plotted_records": 312,
+  "accounting": "Existing full E2E simulation data; absolute linear axes; wider display only; no fitting."
+}

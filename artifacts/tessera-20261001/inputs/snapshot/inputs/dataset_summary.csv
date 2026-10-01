@@ -1,0 +1,13 @@
+dataset,cohort,model,workload_label,trace_tag,input_group,records,source_records,logical_gemms,logical_macs,unique_shapes
+llama2_vidur,full_trace,meta-llama/Llama-2-7b-hf,Llama-2-7B / conv,llama2-7b_conv300,original_six,172492,172492,159140224,2336079548252160,6339
+llama3_vidur,full_trace,meta-llama/Meta-Llama-3-8B,Llama-3-8B / conv,llama3-8b_conv300,original_six,175574,175574,159218240,2510837432451072,6249
+llama2_70b_tp4_vidur,full_trace,meta-llama/Llama-2-70b-hf,Llama-2-70B TP4 / conv,llama2-70b-tp4_conv300,original_six,161022,161022,198919600,6039385722060800,6464
+phi2_vidur,full_trace,microsoft/phi-2,Phi-2 / conv,phi2_conv300,original_six,191788,191788,159504384,930808782356480,6040
+llama2_code_vidur,full_trace,meta-llama/Llama-2-7b-hf,Llama-2-7B / code,llama2-7b_code300,original_six,23190,23190,16964832,3680899126788096,7976
+llama2_arxiv_vidur,full_trace,meta-llama/Llama-2-7b-hf,Llama-2-7B / arXiv-1QPS,llama2-7b_arxiv-qps1,original_six,252708,252708,184732896,6095867705556992,10495
+flashinfer_attention,gqa_decode,,GQA decode,,new_six,1732,3040,22528,8132045824,1542
+flashinfer_attention,single_kv_head_decode,,Single KV-head decode,,new_six,844,1054,1054,241561600,563
+upstream_reuse_prefill,CacheBlend_samsum,mistralai/Mistral-7B-Instruct-v0.2,CacheBlend SAMSum,,new_six,3800,3800,128200,1338672013606912,2045
+upstream_reuse_prefill,CacheBlend_wikimqa,mistralai/Mistral-7B-Instruct-v0.2,CacheBlend WikiMQA,,new_six,3800,3800,128200,2417073639137280,1913
+upstream_reuse_prefill,EPIC_hotpotqa,mistralai/Mistral-7B-Instruct-v0.2,EPIC HotpotQA,,new_six,1400,1400,128200,1327882322837504,797
+upstream_reuse_prefill,EPIC_multi_news,mistralai/Mistral-7B-Instruct-v0.2,EPIC Multi-News,,new_six,1393,1393,127559,321636498145280,427

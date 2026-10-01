@@ -1,0 +1,180 @@
+\section{Experimental Methodology}
+\label{sec:method}
+
+\subsection{Area, Power, Energy, Scalability}
+\label{sec:method:ppa}
+\subsubsection{RTL Implementation}
+Matched \textsc{Tessera} and Planaria~\cite{ghodrati2020planaria} chips were implemented
+in RTL at every granularity tier, with the same PE count, granularity
+$d$, and on-chip SRAM: four $32{\times}32$ tiers ($1024$ PEs,
+$d{=}16$ to $2$). The $16$-sub-array tier reproduces the Planaria
+paper's configuration. All designs are
+BF16 input with FP32 accumulate and include the strip, sub-array, or
+pod memory (one per 4 sub-arrays), the main buffer, and the off-chip
+channel models, accounted separately. The classical WS and
+unpartitioned TTSA
+monoliths calibrated the array level. The Planaria reproduction
+implements the full partitioning logic of \S\ref{sec:bg:taxes}
+following the released code~\cite{ghodrati2020planaria}.
+
+\subsubsection{Synthesis and Power}
+All designs are synthesized with Cadence Genus~\cite{cadence_genus} at
+$700$\,MHz in a TSMC 28nm process. We use TSMC 28nm memory compiler to generate SRAM macros.
+% The BF16 FMA core was synthesized once and locked as a macro, and every On-chip SRAM is a TSMC N28 memory-compiler macro with its compiler-generated timing and power views.
+Each $32$-scale chip ran a
+$128{\times}32{\times}32$ GEMM in gate-level simulation, and
+Cadence Joules~\cite{cadence_joules} integrated the per-cycle
+timeline.
+
+
+
+\figreal[t]{eval-ppa.pdf}{eval-area}{1.0}{%
+The $32$-scale synthesis, normalized to the
+WS-monolith array: (left)~area and (right)~power.}{%
+Array-only and full-chip ($+M$ SRAM) totals.}
+
+\figreal[t]{power-timeline.pdf}{power-timeline}{1.0}{%
+Array-only dynamic power over one GEMM pass for
+WS, Planaria, and \textsc{Tessera}.}{}
+
+\figreal{eval-grainfloor.pdf}{grainfloor}{1.0}{%
+Geomean EDP over each layer's own optimum as the minimum partition
+granularity coarsens, at HBM4.}{%
+Each bar is the geomean over all $259$ layers; the arrow bar spans the
+per-benchmark geomeans. Chosen $d{=}8$ in blue.}
+
+\figreal[t]{eval-suite.pdf}{eval-suite}{1.0}{%
+Per-network speed-up over the monolithic WS systolic array with HBM4.}{}
+
+
+
+\subsection{Cycle-Level Model and Workloads}
+\label{sec:method:cycle}
+\subsubsection{Cycle-Level Model}
+The DNN and multi-tenant experiments use
+SCALE-Sim-derived models~\cite{samajdar2020systematic}, extended with the
+twist-torus fold timing of \S\ref{sec:ttsa:anchors} and
+Algorithm~\ref{alg:tessera-sched}. The twelve-cohort main comparison
+uses per-GEMM array timing and a DRAM-cadence model at $1$\,GHz with
+HBM4 bandwidth ($2.8$\,TB/s)~\cite{micronhbm}: one logical A/B load and final C store,
+without an SRAM capacity limit. Each design uses its own configuration
+rule for each stored $(M,N,K)$. With invocation count $r_i$, we report
+\begin{equation}
+ T_w=\sum_i r_i T_i,\qquad E_w=\sum_i r_i E_i,\qquad
+ \mathrm{EDP}_w=E_w T_w.
+ \label{eq:workload-service}
+\end{equation}
+Speed-up is $T_{\rm WS}/T_w$. This measures GEMM service cycles, excluding
+arrival-time idle, cross-GEMM packing, and non-GEMM operators. The EDP
+ablations below use a separate capacity-aware model.
+
+\subsubsection{Compared Designs}
+The designs ran at matched PE count ($128{\times}128$ PEs),
+differing in partitioning granularity, dataflow,
+and memory organization:
+the monolithic classical WS systolic array; Planaria at its published
+sixteen $32{\times}32$ sub-arrays;
+SOSA~\cite{yuzuguler2022scale}, sixteen partitioned
+$32{\times}32$ sub-arrays; FlexSA~\cite{lym2020flexsa}, four $64{\times}64$
+quadrants; SISA~\cite{altamura2026sisa}, eight output-stationary
+$128{\times}16$ slabs; and \textsc{Tessera} at minimum granularities
+$32$ and $8$, denoted \textsc{Tessera}-128-32 and
+\textsc{Tessera}-128-8. The latter uses sixteen $128{\times}8$ strips.
+For each GEMM, \textsc{Tessera} chooses the EDP minimum among the
+$9$ or $25$ logical $(k,n)$ candidates at its respective granularity,
+using compute/SRAM/reduction energy.
+Planaria-32 uses the composition selected by its native per-GEMM
+HBM4 EDP search; the service-cadence Planaria array model then evaluates
+that composition at $1$\,GHz.
+WS and SOSA have fixed partitions; FlexSA and SISA retain their
+phase and slab-fusion rules. Reported cycles correspond to
+these choices rather than a separate minimum-cycle search.
+The granularity study of
+\S\ref{sec:eval:tradeoff} additionally swept \textsc{Tessera} and Planaria
+across granularity scales from $d{=}128$ to $2$.
+
+\subsubsection{Workloads}
+We evaluate the Planaria network suite and its multi-tenant QoS
+scenarios~\cite{ghodrati2020planaria}, and six
+Vidur serving traces~\cite{agrawal2024vidur}:
+Llama-2-7B~\cite{touvron2023llama2openfoundation},
+Llama-3-8B~\cite{grattafiori2024llama3herdmodels},
+Llama-2-70B (TP$=$4), and Phi-2~\cite{javaheripi2023phi2} over
+the opening $300$ requests of
+the Splitwise~\cite{patel2024splitwise} conversation trace plus Llama-2-7B
+over the Splitwise code trace and an arXiv
+summarization~\cite{cohan2018discourseawareattentionmodelabstractive}
+trace at $1$ query per second (QPS). Their saved prefill/decode GEMMs
+retain the simulated batch composition and invocation weights.
+Phi-2 supplies head dimension $80$, divisible by neither $32$ nor $128$.
+
+Six additional cohorts cover attention and KV-reuse prefill.
+Two FlashInfer input collections~\cite{flashinfertrace} contain GQA
+decode with $H_q/H_{kv}\in\{4,5\}$ and multi-query attention (MQA)
+decode with $H_q=5$ and $H_{kv}=1$, respectively. These are operator-input
+snapshots with actual context lengths. MQA names the recorded
+single-KV-head operator; its source may be a GQA parallel shard,
+so it does not establish a complete MQA model trace. Within each request, the
+grouped-head mapping uses QK $(M,N,K)=(qH_q/H_{kv},L,D_h)$ and PV
+$(qH_q/H_{kv},D_h,L)$, where $q$ is the query-token count, $L$ the
+context length, and $D_h$ the head dimension. Batch and KV-head counts
+enter $r_i$ once; requests with private KV caches remain separate. This
+distinguishes grouped attention GEMMs from single-token projection/FFN
+GEMVs with $M=1$.
+
+The other four cohorts use CacheBlend SAMSum and WikiMQA~\cite{cacheblendcode},
+and EPIC HotpotQA and Multi-News~\cite{epiccode,longbenchdata}.
+We tokenize the upstream requests using the pinned
+Mistral-7B-Instruct-v0.2 configuration~\cite{mistralv02config} and derive
+all decoder GEMMs from each framework's recomputation policy, including
+QKV, output projection, fused gate/up, down projection, attention, and
+the final one-row vocabulary projection. Each source contributes its
+first $200$ requests: $799$ of $800$ are valid; one Multi-News request
+has out-of-range upstream gather indices. Its input and failure reason
+are retained. These are source-derived prefill plans at batch~1 and TP~1.
+The artifact records versions, tokens, exclusions, and repeat counts.
+Each cohort is reported separately: snapshots establish operator
+shapes, simulated traces supply serving GEMMs, and source-derived plans
+supply reuse GEMMs; none supplies measured end-to-end GPU latency.
+
+\subsubsection{EDP Ablation Controls}
+The capacity-aware ablation model uses $16{,}384$ PEs at each minimum granularity
+$d\in\{32,8\}$. Independent WS arrays number $16$ at $d=32$ and $256$
+at $d=8$. The physical-square variant permits unequal logical
+$(k,n)$ tiles but pads each physical region to a square; the free
+variant includes those candidates and also permits rectangles.
+Padding consumes PE area and cycles, not additional useful MACs or
+operand accesses. Each variant independently minimizes modeled EDP.
+
+Each GEMM receives the HBM traffic of its EDP-selected native
+Planaria-32 configuration: unrestricted, square-composed, and independent
+cores for the free, physical-square, and independent variants,
+respectively. Each record is fixed across that variant's candidate
+search at both granularities. It retains native private-buffer reuse,
+padded transfers, initial output reads, and 64-bit off-chip partials.
+This external traffic sensitivity does not transplant native thread
+scheduling or run Planaria-8. \textsc{Tessera}'s compute/SRAM candidates use
+$12{,}000{,}000$~B, whereas the saved native traffic comes from
+$12$~MiB. Its on-chip partial sums remain FP32.
+
+For initial, middle, and final transfer bytes, $I,X,F$ are the
+separately rounded transfer times at $2800$~B/cycle. With compute time
+$C$, the aggregate overlap model is $T=I+\max(C,X)+F$; it does not
+validate event-level operand arrival. Energy retains $6$~pJ per operation,
+$0.95/2.2$~pJ per input/output SRAM word, and the existing analytic
+reduction cost. HBM reads and writes each cost $32$~pJ/B, an inherited
+modeling assumption rather than a measured HBM4 value.
+SRAM-port bandwidth is unconstrained. These coefficients are separate
+from the gate-level measurements in
+\S\ref{sec:method:ppa}.
+
+The skew ablation fixes the free variant's selected mapping, packing,
+issue interval, bank release, traffic, and energy. It adds only the
+exposed skew tail to $C$ before recomputing overlap: $H-1$ for a
+uniform $H{\times}W$ compute chunk, or
+$\max(H_i+W_i-2)-\max(W_i-1)$ over its last round for mixed shapes.
+Intermediate-round tails remain hidden under the model;
+this changes the tail term alone, not the complete WS schedule.
+
+% eval figure declarations moved to the \S V end (2026-08-01) so
+% Fig 8--11 float onto the eval pages from an early declaration point.

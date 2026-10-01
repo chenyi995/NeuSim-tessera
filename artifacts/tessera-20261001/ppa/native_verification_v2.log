@@ -1,0 +1,13 @@
+PASS WS {'status': 'RUNNING', 'native_tiles': 0, 'literal_counter_cases': 0, 'physical_lane_checks': 0, 'native_operators': 6, 'attention_cases': 2, 'source_segments': 0, 'concurrent_replays': 0}
+PASS WS-independent-64 {'status': 'RUNNING', 'native_tiles': 0, 'literal_counter_cases': 0, 'physical_lane_checks': 0, 'native_operators': 12, 'attention_cases': 4, 'source_segments': 0, 'concurrent_replays': 0}
+PASS WS-independent-32 {'status': 'RUNNING', 'native_tiles': 0, 'literal_counter_cases': 0, 'physical_lane_checks': 0, 'native_operators': 18, 'attention_cases': 6, 'source_segments': 0, 'concurrent_replays': 0}
+PASS WS-independent-16 {'status': 'RUNNING', 'native_tiles': 0, 'literal_counter_cases': 0, 'physical_lane_checks': 0, 'native_operators': 24, 'attention_cases': 8, 'source_segments': 0, 'concurrent_replays': 0}
+PASS WS-independent-8 {'status': 'RUNNING', 'native_tiles': 0, 'literal_counter_cases': 0, 'physical_lane_checks': 0, 'native_operators': 30, 'attention_cases': 10, 'source_segments': 0, 'concurrent_replays': 0}
+PASS Planaria-64 {'status': 'RUNNING', 'native_tiles': 6, 'literal_counter_cases': 6, 'physical_lane_checks': 28, 'native_operators': 36, 'attention_cases': 12, 'source_segments': 0, 'concurrent_replays': 0}
+PASS Tessera-64 {'status': 'RUNNING', 'native_tiles': 12, 'literal_counter_cases': 12, 'physical_lane_checks': 56, 'native_operators': 42, 'attention_cases': 14, 'source_segments': 7, 'concurrent_replays': 2}
+PASS Planaria-32 {'status': 'RUNNING', 'native_tiles': 18, 'literal_counter_cases': 18, 'physical_lane_checks': 127, 'native_operators': 48, 'attention_cases': 16, 'source_segments': 7, 'concurrent_replays': 2}
+PASS Tessera-32 {'status': 'RUNNING', 'native_tiles': 24, 'literal_counter_cases': 24, 'physical_lane_checks': 198, 'native_operators': 54, 'attention_cases': 18, 'source_segments': 14, 'concurrent_replays': 4}
+PASS Planaria-16 {'status': 'RUNNING', 'native_tiles': 30, 'literal_counter_cases': 30, 'physical_lane_checks': 343, 'native_operators': 60, 'attention_cases': 20, 'source_segments': 14, 'concurrent_replays': 4}
+PASS Tessera-16 {'status': 'RUNNING', 'native_tiles': 36, 'literal_counter_cases': 36, 'physical_lane_checks': 488, 'native_operators': 66, 'attention_cases': 22, 'source_segments': 21, 'concurrent_replays': 6}
+PASS Planaria-8 {'status': 'RUNNING', 'native_tiles': 42, 'literal_counter_cases': 42, 'physical_lane_checks': 882, 'native_operators': 72, 'attention_cases': 24, 'source_segments': 21, 'concurrent_replays': 6}
+PASS Tessera-8 {'status': 'RUNNING', 'native_tiles': 48, 'literal_counter_cases': 48, 'physical_lane_checks': 1276, 'native_operators': 78, 'attention_cases': 26, 'source_segments': 28, 'concurrent_replays': 8}

@@ -1,0 +1,19 @@
+{
+  "status": "FAIL",
+  "native_tiles": 0,
+  "literal_counter_cases": 0,
+  "physical_lane_checks": 0,
+  "native_operators": 30,
+  "attention_cases": 10,
+  "source_segments": 0,
+  "concurrent_replays": 0,
+  "source_sha256": {
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_ppa_two_tilings_v1/verify_native_tail.py": "de35820317cf58b56f250e0e3fd932e1fd8b325107c3eba252ae65ceb21aade2",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/tessera_native_tail.py": "f5b22c19e7a294ee2d230d830b9d4429493a6f606a55138546b3cfd4f11f2553",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/tessera_partitioned.py": "91b9afabe35a2daba5ab68d46940ac58fe5de16937cd88d034002d029a11fa2f",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/run_scripts/tessera_request_dispatch.py": "24e8945b4df2f04331a8a21da8d630b95ed83e64a8f5e34183751c9baca250ad",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/run_scripts/run_tessera_ppa.py": "200260d484488899c497e3ceda32ef1ca1e77df0b3b8300a49b6bfb6f22e28be",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/run_scripts/run_tessera_joint.py": "a3bd7ab094adf1a758d57db74252ffb1efd6863feded38b2c29cb51ae7c5b6df",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/npusim_lib.py": "7049c1304446adb21ceb6e83c1c413b6e1ee2ae88af803c159d30a95e7612277"
+  }
+}

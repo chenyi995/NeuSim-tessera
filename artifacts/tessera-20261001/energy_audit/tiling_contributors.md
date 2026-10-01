@@ -1,0 +1,30 @@
+# Normal-tiling SRAM contributors: Llama-2-7B chat
+
+Source: completed per-operator profiles and invocation weights. Weighted SRAM, HBM, useful MAC and charged MAC totals were reconstructed independently and matched the recorded workload totals exactly.
+
+The five largest positive operator contributions account for 78.14% of the net Tessera-8 minus independent-WS8 SRAM gap.
+
+| Operator | Policy / architecture | M,N,K | SRAM tile M,N,K | Charged/useful MACs |
+|---|---|---|---|---:|
+| 89 | native_tail/WS-independent-8 | [512, 22016, 4096] | [64, 172, 1024] | 1.02 |
+| 89 | native_tail/Tessera-8 | [512, 22016, 4096] | [512, 2752, 1] | 8.00 |
+| 89 | joint_edp/WS-independent-8 | [512, 22016, 4096] | [128, 64, 4096] | 1.00 |
+| 89 | joint_edp/Tessera-8 | [512, 22016, 4096] | [512, 1024, 1024] | 1.00 |
+| 4056 | native_tail/WS-independent-8 | [64, 22016, 4096] | [64, 172, 1024] | 1.02 |
+| 4056 | native_tail/Tessera-8 | [64, 22016, 4096] | [64, 22016, 1] | 8.00 |
+| 4056 | joint_edp/WS-independent-8 | [64, 22016, 4096] | [64, 128, 4096] | 1.00 |
+| 4056 | joint_edp/Tessera-8 | [64, 22016, 4096] | [64, 1376, 2048] | 1.00 |
+| 4064 | native_tail/WS-independent-8 | [63, 22016, 4096] | [63, 172, 1024] | 1.02 |
+| 4064 | native_tail/Tessera-8 | [63, 22016, 4096] | [63, 22016, 1] | 8.00 |
+| 4064 | joint_edp/WS-independent-8 | [63, 22016, 4096] | [63, 128, 4096] | 1.00 |
+| 4064 | joint_edp/Tessera-8 | [63, 22016, 4096] | [63, 1376, 2048] | 1.00 |
+| 3508 | native_tail/WS-independent-8 | [44, 22016, 4096] | [44, 172, 4096] | 1.02 |
+| 3508 | native_tail/Tessera-8 | [44, 22016, 4096] | [44, 22016, 1] | 8.00 |
+| 3508 | joint_edp/WS-independent-8 | [44, 22016, 4096] | [44, 128, 4096] | 1.00 |
+| 3508 | joint_edp/Tessera-8 | [44, 22016, 4096] | [44, 2752, 1024] | 1.00 |
+| 4052 | native_tail/WS-independent-8 | [64, 12288, 4096] | [64, 128, 4096] | 1.00 |
+| 4052 | native_tail/Tessera-8 | [64, 12288, 4096] | [64, 12288, 1] | 8.00 |
+| 4052 | joint_edp/WS-independent-8 | [64, 12288, 4096] | [64, 128, 4096] | 1.00 |
+| 4052 | joint_edp/Tessera-8 | [64, 12288, 4096] | [64, 4096, 512] | 1.00 |
+
+The native rule ranks HBM traffic and uses SRAM footprint as a final tie-breaker. The two architectures reserve different partial-sum workspaces, so their capacity-feasible native tiles differ. This can make the connected design select a much smaller K tile and pay more padding than the fixed small arrays. That is a mapping consequence, not a reduction in the disconnected arrays' intrinsic communication requirements.
