@@ -326,6 +326,9 @@ class OperatorStatistics(BaseModel):
     Contains simulation/analysis statistics for a single operator.
     '''
     count: int = 1
+    # chenyi9: decision start — retain Tessera mapping and energy provenance in operator results.
+    tessera_details: dict = {}
+    # chenyi9: decision end
     '''Count'''
     bounded_by: str = ""
     '''Bounded-by'''
@@ -579,6 +582,9 @@ class Operator(BaseModel):
     '''
 
     stats: OperatorStatistics = OperatorStatistics()
+    # chenyi9: decision start — allow explicit tensor identities for capacity-aware E2E replay.
+    tessera_spec: dict | None = None
+    # chenyi9: decision end
     '''Statistics for the operator'''
 
     fusion_id: int = 0

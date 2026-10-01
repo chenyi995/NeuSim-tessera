@@ -531,6 +531,14 @@ def compute_bytes_accessed_from_vmem_size_for_matmul(
     node_cost: Operator.Operator,
     config: ChipConfig,
 ) -> int:
+    # Codex: decision start — use this candidate's actual shared-SRAM working set.
+    if config.array_backend == "tessera_partitioned" and (
+        node_cost.stats.tessera_details.get("engine") == "SA" or (node_cost.tessera_spec or {}).get("resident", False)):
+        detail = node_cost.stats.tessera_details
+        node_cost.stats.tile_shapes_str = str(detail["memory_tile"])
+        node_cost.stats.max_vmem_demand_bytes = detail["peak_live_bytes"]
+        return detail["hbm_bytes"]
+    # Codex: decision end
     lhs, rhs, output = get_best_tile_shapes_for_matmul_from_vmem_size(
         I, node_cost, config, update_tile_size_in_axes=True
     )
@@ -639,6 +647,14 @@ def compute_bytes_accessed_from_vmem_size_for_flash_attention(
     node_cost: Operator.Operator,
     config: ChipConfig,
 ) -> int:
+    # Codex: decision start — fused attention keeps the native traffic equation
+    # with the selected capacity-feasible score/partial-sum tile.
+    if config.array_backend == "tessera_partitioned":
+        detail = node_cost.stats.tessera_details
+        node_cost.stats.tile_shapes_str = str(detail["memory_tile"])
+        node_cost.stats.max_vmem_demand_bytes = detail["peak_live_bytes"]
+        return detail["hbm_bytes"]
+    # Codex: decision end
     '''
     Side effect: Set node_cost["tile_shapes"] to be [Bc, Br].
     '''
@@ -1237,6 +1253,11 @@ def compute_node_cost_compute_time_for_matmul(
     m = int(np.prod([ax.size for ax in lhs_non_reduct_axes]))
     n = int(np.prod([ax.size for ax in rhs_non_reduct_axes]))
     k = int(np.prod([ax.size for ax in reduction_axes]))
+    # Codex: decision start — extend native GEMM scheduling with partition counts.
+    if config.array_backend == "tessera_partitioned":
+        from neusim.npusim.backend.tessera_partitioned import compute_matmul
+        return compute_matmul(I, node_cost, config, b, m, n, k)
+    # Codex: decision end
     assert isinstance(node_cost, Operator.EinsumOperator), \
         f"node_cost must be a EinsumOperator, got {type(node_cost)}"
     node_cost.stats.einsum_B_size = b
@@ -1260,6 +1281,12 @@ def compute_node_cost_compute_time_for_matmul(
         total_mxu_time = compute_node_cost_mxu_time_from_num_ops(
             total_mxu_ops, config
         )
+        # Codex: decision start — replace only SA timing, before native VU
+        # fallback selection; retain native memory, overlap and power analysis.
+        if config.array_backend == "tessera_native_replay":
+            from neusim.npusim.backend.tessera_native import replay_sa_time
+            total_mxu_time = replay_sa_time(node_cost, config, b, m, n, k)
+        # Codex: decision end
         total_vpu_time = compute_node_cost_vpu_time_from_num_ops(
             total_vpu_ops, config
         )
@@ -1330,6 +1357,11 @@ def compute_node_cost_compute_time_for_flash_attention(
     Assumes the inputs are in the order of Q, K, V in @param I.
     Assumes the dimensions of each input is [batch, seqlen, num_heads, d_head]
     '''
+    # Codex: decision start — schedule both fused GEMMs with partition-aware reuse.
+    if config.array_backend == "tessera_partitioned":
+        from neusim.npusim.backend.tessera_partitioned import compute_attention
+        return compute_attention(I, node_cost, config)
+    # Codex: decision end
     batch, q_seqlen, kv_seqlen, num_q_heads, num_kv_heads, d_head = get_axes_size_for_flash_attention(I, node_cost)
     sa_dim = config.sa_dim
 
@@ -1453,6 +1485,14 @@ def compute_node_cost_compute_time(
     Op type is given by the 'OpType' entry in the base_op dict.
     '''
     # print("compute time op:", I, I.metadata)
+    # Codex: decision start — explicit graph vector work uses native VU issue
+    # throughput; tensor traffic and power continue through native functions.
+    if config.array_backend == "tessera_partitioned" and (node_cost.tessera_spec or {}).get("kind") == "native_vector":
+        from neusim.npusim.backend.tessera_partitioned import issue_ns
+        work = int(node_cost.tessera_spec["vector_ops"])
+        node_cost.stats.tessera_details = {"vu_arithmetic_ops": work}
+        return 0, issue_ns(work, config)
+    # Codex: decision end
     op_type = I.metadata["op_type"]
     node_cost.stats.parsed_op_type = op_type
     if I.isConvolution():

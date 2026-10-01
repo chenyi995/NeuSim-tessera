@@ -37,8 +37,17 @@ def calculate_vmem_time_ns(
     '''
     Calculate the vmem time in nanoseconds for the given operator.
     '''
-
-    if op.op_type == OpType.MXU:
+    # Codex: decision start — retain native traffic accounting as the energy reference.
+    detail = op.stats.tessera_details
+    if config.array_backend == "tessera_partitioned" and detail.get("model") == "tessera_partitioned":
+        if detail.get("engine") == "SA":
+            native_time = np.ceil(detail["sram_bytes"] / config.vmem_bw_GBps)
+        else:
+            # Native VU execution has no array traffic; retain the native VU port model.
+            vu_bandwidth = npusim_util.calculate_vpu_bandwidth_GBps(128, 8, config.num_vu_ports, config.freq_GHz)
+            native_time = (vpu_time_ns * vu_bandwidth + memory_time_ns * config.hbm_bw_GBps) / config.vmem_bw_GBps
+    # Codex: decision end
+    elif op.op_type == OpType.MXU:
         # For MXU ops
         sa_bandwidth = npusim_util.calculate_sa_bandwidth_GBps(
             sa_input_width = config.sa_dim,
@@ -50,7 +59,7 @@ def calculate_vmem_time_ns(
         # formula T_sram_utilization =  (T_sa * sa_bandwidth + T_hbm * HBM_size_GB) / vmem_bw_GBps
         t_mxu_vmem = (mxu_time_ns * sa_bandwidth + memory_time_ns * config.hbm_bw_GBps) / config.vmem_bw_GBps
 
-        return t_mxu_vmem
+        native_time = t_mxu_vmem
     elif op.op_type == OpType.VPU:
         # For VPU ops
         vpu_bandwidth = npusim_util.calculate_vpu_bandwidth_GBps(
@@ -62,8 +71,37 @@ def calculate_vmem_time_ns(
         # formula T_sram_utilization =  (T_vpu * vpu_bandwidth + T_hbm * HBM_size_GB) / vmem_bw_GBps
         t_vpu_vmem = (vpu_time_ns * vpu_bandwidth + memory_time_ns * config.hbm_bw_GBps) / config.vmem_bw_GBps
 
-        return t_vpu_vmem
-    return 0
+        native_time = t_vpu_vmem
+    else:
+        native_time = 0
+
+    # chenyi9: decision start — provision 16-bit input + 16-bit weight + 32-bit
+    # psum per PE per cycle, with ideal double buffering and no SRAM bandwidth stall.
+    # Source: chenyi9's SRAM modeling instruction in this conversation (2026-09-29).
+    if config.array_backend != "tessera_partitioned":
+        return native_time
+    mode = config.tessera_parameters.get("sram_bandwidth_model", "per_pe_double_buffer")
+    if mode == "native":
+        return native_time
+    if mode != "per_pe_double_buffer":
+        raise ValueError(f"unknown Tessera SRAM bandwidth model: {mode}")
+    if detail.get("model") == "tessera_partitioned" and detail.get("engine") == "SA":
+        traffic = detail["sram_bytes"]
+    else:
+        # Preserve the original VU/vector traffic estimate before changing time.
+        traffic = int(np.ceil(native_time * config.vmem_bw_GBps))
+    bytes_per_pe_cycle = (16 + 16 + 32) // 8
+    bandwidth = config.num_sa * config.sa_dim**2 * bytes_per_pe_cycle * config.freq_GHz
+    service_time = int(np.ceil(traffic / bandwidth))
+    overlap_time = int(np.ceil(max(mxu_time_ns, vpu_time_ns, memory_time_ns, op.stats.ici_time_ns)))
+    # The uncapped service demand is retained for audit. Visible SRAM activity
+    # fits in the other components' interval by the requested ideal-overlap rule.
+    detail.update(sram_bytes=traffic, sram_bandwidth_model=mode,
+                  sram_bandwidth_bytes_per_ns=bandwidth,
+                  sram_service_time_ns=service_time,
+                  sram_overlap_hidden_ns=max(0, service_time - overlap_time))
+    return min(service_time, overlap_time)
+    # chenyi9: decision end
 
 
 def fill_operators_execution_info(
@@ -74,6 +112,11 @@ def fill_operators_execution_info(
     '''
     Fill in the execution info (exe time, flops, bytes accessed, etc.) for each op.
     '''
+    # chenyi9: decision start — route both GEMM and fused attention through the selected backend.
+    if config.array_backend == "tessera":
+        from neusim.npusim.frontend.tessera_analysis import analyze_operators
+        return analyze_operators(ops, config, analyze_energy=analyze_energy)
+    # chenyi9: decision end
     converted_ops = []
 
     # hlo_module = mem_util.construct_hlo_module_from_node_costs(node_costs)
@@ -97,6 +140,14 @@ def fill_operators_execution_info(
             memory_time = 0
 
         vmem_time = calculate_vmem_time_ns(converted_op, mxu_time, vpu_time, memory_time, config)
+        # Codex: decision start — record actual native VU traffic after fallback,
+        # without charging the unused candidate's array/SRAM activity.
+        detail = converted_op.stats.tessera_details
+        if config.array_backend == "tessera_partitioned" and detail.get("engine") == "VU":
+            detail["hbm_bytes"] = bytes_accessed
+            if detail.get("sram_bandwidth_model") != "per_pe_double_buffer":
+                detail["sram_bytes"] = int(np.ceil(vmem_time * config.vmem_bw_GBps))
+        # Codex: decision end
         print(f"Calculated vmem_time_ns: {vmem_time} for op: {converted_op.name}")
 
         ici_time = converted_op.stats.ici_time_ns
@@ -125,6 +176,16 @@ def fill_operators_execution_info(
 
     if analyze_energy:
         for op in converted_ops:
+            # Codex: decision start — use native per-component configuration to
+            # honor the explicitly requested chip frequency in this opt-in model.
+            if config.array_backend == "tessera_partitioned" and config.tessera_parameters.get("frequency_policy", "chip") == "chip":
+                from neusim.npusim.frontend.Operator import DVFSConfig
+                power_lib.configure_dvfs_for_op(op, config, DVFSConfig())
+                for component in ("sa", "vu", "sram", "hbm", "ici"):
+                    getattr(op, "dvfs_" + component).frequency_GHz = config.freq_GHz
+                power_lib.analyze_operator_energy(op, config, set_dvfs_config_for_op=False)
+                continue
+            # Codex: decision end
             power_lib.analyze_operator_energy(
                 op, config
             )

@@ -1,0 +1,232 @@
+{
+  "parameters": {
+    "side": 128,
+    "grain": 8,
+    "frequency_hz": 1000000000,
+    "sram_bytes": 12000000,
+    "staging_bytes": 262144,
+    "operand_bytes": 2,
+    "accumulator_bytes": 4,
+    "hbm_bytes_per_second": 2800000000000,
+    "hbm_read_pj_per_byte": 32.0,
+    "hbm_write_pj_per_byte": 32.0,
+    "array_pj_per_op": 6.0,
+    "sram_read_pj_per_operand": 0.95,
+    "sram_write_pj_per_accumulator": 2.2,
+    "vector_ops_per_cycle": 6144,
+    "vector_pj_per_op": 6.0,
+    "background_power_W": 3.3746080000000003,
+    "seam_cycles": 1,
+    "ingress_cycles_per_row": 1,
+    "ici_bytes_per_second": 214748364800,
+    "ici_latency_ns": 3330,
+    "ici_pj_per_byte": 16.45940608344972
+  },
+  "sources": {
+    "/data2/chenyi9/fracturableT3/FissionSA/Tessera-revision/experiments/ad_cycle/config_dnn_padding_v2.json": {
+      "sha256": "d509e7656dc3107f1dde33630ff2b2c773bc4d1349fb30211974b7fb293fa6c3"
+    },
+    "/data2/chenyi9/fracturableT3/FissionSA/fissionsa/modes/combo6_edp.py": {
+      "sha256": "52ae9bdeadafe90477ee8176ae8a7cfac03df35fa3a542c470a172a616054c69"
+    },
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/configs/chips/ChipConfig.py": {
+      "sha256": "05f7bf5aaa04613e2d72e6473cbb73f12c02466e5e00fc43d79e009a9cdfd2e0"
+    },
+    "/data2/chenyi9/fracturableT3/Tessera-HPCA2027-revision/fig/plotting/data/power-timeline/tessera0_32/arr_tessera0_32_gemm_timeline.csv": {
+      "sha256": "91478b6d0fcfb25ae94caf5611bf08652375252f792ebe2b4efc1ff678b9443c"
+    },
+    "/data2/chenyi9/fracturableT3/tessera_repro/out/llama27b_conv/vidur_out/2026-07-27_10-57-25-216351/config.json": {
+      "sha256": "14e4ab533f5348ea6013ab30ec5c7473b3c793aa57373a30574673db00d5f2fa"
+    },
+    "/data2/chenyi9/fracturableT3/FissionSA/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_conv300/mnk_trace.csv": {
+      "sha256": "b92a327626fa9c888ea65cbc900a32267af59a4a2350b5656e8ed7b02746c622"
+    },
+    "/data2/chenyi9/fracturableT3/tessera_repro/out/llama38b_conv/vidur_out/2026-07-27_10-57-25-075531/config.json": {
+      "sha256": "0e02b59d15f44872a7f4e9a71bdc93b6d5cf205bba0d538d09a4024d5b7c1828"
+    },
+    "/data2/chenyi9/fracturableT3/FissionSA/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama3-8b_conv300/mnk_trace.csv": {
+      "sha256": "f8eb65ff5d41b06150c00418d86e9a00f36188556bf3a97d8405b66984231f50"
+    },
+    "/data2/chenyi9/fracturableT3/tessera_repro/out/llama270b_conv/vidur_out/2026-07-27_10-57-25-108272/config.json": {
+      "sha256": "88a06cc2a6f16240a252f219d616876ddc1a3aa74ef64a367f41f86c06434f1c"
+    },
+    "/data2/chenyi9/fracturableT3/FissionSA/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-70b-tp4_conv300/mnk_trace.csv": {
+      "sha256": "6bdf75f6b438a64ba5318efa3c5b37dbf8f6c53f6f36ba85fdba802341e2ceeb"
+    },
+    "/data2/chenyi9/fracturableT3/tessera_repro/out/phi2_conv/vidur_out/2026-07-27_10-57-25-079294/config.json": {
+      "sha256": "800e2387d2a08c1a5e1ff108d1dba909a21f177aa1a1b0f93a827f57981d8a29"
+    },
+    "/data2/chenyi9/fracturableT3/FissionSA/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/phi2_conv300/mnk_trace.csv": {
+      "sha256": "265161ce99ed6950778870a674a56c7ce24bbe94d3802182ffa4a0b0fecab04c"
+    },
+    "/data2/chenyi9/fracturableT3/tessera_repro/out/llama27b_code/vidur_out/2026-07-27_11-02-12-654311/config.json": {
+      "sha256": "4ae0ac7af85abf714276c5e3a1e77c9c091fb893d8b1b3dd2160804b373de609"
+    },
+    "/data2/chenyi9/fracturableT3/FissionSA/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_code300/mnk_trace.csv": {
+      "sha256": "249fffbfb68b73032538cf65ee6e08ff409bcad7cca31397ed1dd76374474b2e"
+    },
+    "/data2/chenyi9/fracturableT3/tessera_repro/out/llama27b_arxiv/vidur_out/2026-07-27_11-02-12-691975/config.json": {
+      "sha256": "c7cdebd5b0ebc8e0dd0c2e4739b5531d31f92b3e2e4bc670da61d08aa0454cf9"
+    },
+    "/data2/chenyi9/fracturableT3/FissionSA/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_arxiv-qps1/mnk_trace.csv": {
+      "sha256": "33b9c52a04360f0e286dd466dc8e051ce782cb0be84566f9eec4ee90300ed2a9"
+    }
+  },
+  "assumptions": {
+    "resource_and_hbm_fields": "/data2/chenyi9/fracturableT3/FissionSA/Tessera-revision/experiments/ad_cycle/config_dnn_padding_v2.json",
+    "array_pj_per_op": "/data2/chenyi9/fracturableT3/FissionSA/fissionsa/modes/combo6_edp.py: E_OP_PJ; two operations per MAC; includes array transport approximately",
+    "sram_coefficients": "/data2/chenyi9/fracturableT3/FissionSA/fissionsa/modes/combo6_edp.py: E_READ_PJ / E_WRITE_PJ; 16-bit read / 32-bit write convention",
+    "vector_pj_per_op": "coarse shared arithmetic coefficient from E_OP_PJ, not measured VU power",
+    "vector_ops_per_cycle": "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/configs/chips/ChipConfig.py: num_vu * 8 * 128, NeuSim VU convention; common across variants",
+    "background_power_W": "observed idle array timeline frames 1..4, linear PE-count projection; excludes uncalibrated controller/SRAM/HBM static power",
+    "seam_cycles": "gemmini/partition/TIMING_AUDIT.md: one register per strip seam",
+    "ingress_cycles_per_row": "gemmini/partition/TIMING_AUDIT.md: transpose first fill takes H cycles; subsequent fills double-buffered",
+    "ici": "NeuSim ChipConfig common communication parameters; coarse borrowed model, not N28 silicon measurement",
+    "hbm": "32 pJ/byte inherited rough HBM assumption, not measured HBM4; replaces native HBM energy",
+    "timing": "1 GHz architectural scenario, not a claim of RTL timing closure",
+    "padding": "uniform dyadic physical slots retain their size on tail rounds; no padded arithmetic energy"
+  },
+  "models": {
+    "llama2-7b_conv300": {
+      "num_layers": 32,
+      "num_q_heads": 32,
+      "num_kv_heads": 32,
+      "embedding_dim": 4096,
+      "mlp_hidden_dim": 11008,
+      "max_position_embeddings": 4096,
+      "use_gated_mlp": true,
+      "use_bias": false,
+      "use_qkv_bias": false,
+      "activation": 1,
+      "norm": 1,
+      "post_attn_norm": true,
+      "vocab_size": 32768,
+      "is_neox_style": true,
+      "rope_theta": 10000,
+      "rope_scaling": null,
+      "partial_rotary_factor": 1.0,
+      "no_tensor_parallel": false,
+      "name": "meta-llama/Llama-2-7b-hf",
+      "tensor_parallel_size": 1
+    },
+    "llama3-8b_conv300": {
+      "num_layers": 32,
+      "num_q_heads": 32,
+      "num_kv_heads": 8,
+      "embedding_dim": 4096,
+      "mlp_hidden_dim": 14336,
+      "max_position_embeddings": 4096,
+      "use_gated_mlp": true,
+      "use_bias": false,
+      "use_qkv_bias": false,
+      "activation": 1,
+      "norm": 1,
+      "post_attn_norm": true,
+      "vocab_size": 128256,
+      "is_neox_style": true,
+      "rope_theta": 500000,
+      "rope_scaling": null,
+      "partial_rotary_factor": 1.0,
+      "no_tensor_parallel": false,
+      "name": "meta-llama/Meta-Llama-3-8B",
+      "tensor_parallel_size": 1
+    },
+    "llama2-70b-tp4_conv300": {
+      "num_layers": 80,
+      "num_q_heads": 64,
+      "num_kv_heads": 8,
+      "embedding_dim": 8192,
+      "mlp_hidden_dim": 28672,
+      "max_position_embeddings": 4096,
+      "use_gated_mlp": true,
+      "use_bias": false,
+      "use_qkv_bias": false,
+      "activation": 1,
+      "norm": 1,
+      "post_attn_norm": true,
+      "vocab_size": 32768,
+      "is_neox_style": true,
+      "rope_theta": 10000,
+      "rope_scaling": null,
+      "partial_rotary_factor": 1.0,
+      "no_tensor_parallel": false,
+      "name": "meta-llama/Llama-2-70b-hf",
+      "tensor_parallel_size": 4
+    },
+    "phi2_conv300": {
+      "num_layers": 32,
+      "num_q_heads": 32,
+      "num_kv_heads": 32,
+      "embedding_dim": 2560,
+      "mlp_hidden_dim": 10240,
+      "max_position_embeddings": 2048,
+      "use_gated_mlp": false,
+      "use_bias": true,
+      "use_qkv_bias": true,
+      "activation": 0,
+      "norm": 0,
+      "post_attn_norm": false,
+      "vocab_size": 51200,
+      "is_neox_style": true,
+      "rope_theta": 10000,
+      "rope_scaling": null,
+      "partial_rotary_factor": 0.4,
+      "no_tensor_parallel": true,
+      "name": "microsoft/phi-2",
+      "tensor_parallel_size": 1
+    },
+    "llama2-7b_code300": {
+      "num_layers": 32,
+      "num_q_heads": 32,
+      "num_kv_heads": 32,
+      "embedding_dim": 4096,
+      "mlp_hidden_dim": 11008,
+      "max_position_embeddings": 4096,
+      "use_gated_mlp": true,
+      "use_bias": false,
+      "use_qkv_bias": false,
+      "activation": 1,
+      "norm": 1,
+      "post_attn_norm": true,
+      "vocab_size": 32768,
+      "is_neox_style": true,
+      "rope_theta": 10000,
+      "rope_scaling": null,
+      "partial_rotary_factor": 1.0,
+      "no_tensor_parallel": false,
+      "name": "meta-llama/Llama-2-7b-hf",
+      "tensor_parallel_size": 1
+    },
+    "llama2-7b_arxiv-qps1": {
+      "num_layers": 32,
+      "num_q_heads": 32,
+      "num_kv_heads": 32,
+      "embedding_dim": 4096,
+      "mlp_hidden_dim": 11008,
+      "max_position_embeddings": 4096,
+      "use_gated_mlp": true,
+      "use_bias": false,
+      "use_qkv_bias": false,
+      "activation": 1,
+      "norm": 1,
+      "post_attn_norm": true,
+      "vocab_size": 32768,
+      "is_neox_style": true,
+      "rope_theta": 10000,
+      "rope_scaling": null,
+      "partial_rotary_factor": 1.0,
+      "no_tensor_parallel": false,
+      "name": "meta-llama/Llama-2-7b-hf",
+      "tensor_parallel_size": 1
+    }
+  },
+  "traces": {
+    "llama2-7b_conv300": "/data2/chenyi9/fracturableT3/FissionSA/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_conv300/mnk_trace.csv",
+    "llama3-8b_conv300": "/data2/chenyi9/fracturableT3/FissionSA/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama3-8b_conv300/mnk_trace.csv",
+    "llama2-70b-tp4_conv300": "/data2/chenyi9/fracturableT3/FissionSA/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-70b-tp4_conv300/mnk_trace.csv",
+    "phi2_conv300": "/data2/chenyi9/fracturableT3/FissionSA/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/phi2_conv300/mnk_trace.csv",
+    "llama2-7b_code300": "/data2/chenyi9/fracturableT3/FissionSA/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_code300/mnk_trace.csv",
+    "llama2-7b_arxiv-qps1": "/data2/chenyi9/fracturableT3/FissionSA/out/tessera-hpca/Batch6-BW-Sweep/workload/traces/llama2-7b_arxiv-qps1/mnk_trace.csv"
+  },
+  "workspace": "/data2/chenyi9/fracturableT3"
+}

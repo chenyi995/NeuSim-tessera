@@ -53,8 +53,14 @@ def compute_sa_flops_util(op: Operator.Operator, config: ChipConfig, dvfs: Compo
     sa_time_ns = op.stats.sa_time_ns
     if sa_time_ns > 0:  # op.op_type == Operator.OpType.MXU:
         # assert sa_time_ns > 0, f"SA time is 0 for op: {op.to_csv_dict()}"
+        # Codex: decision start — fused softmax/reductions belong to VU, while
+        # the SA power term counts only useful matrix arithmetic.
+        work = op.stats.flop_count
+        if config.array_backend == "tessera_partitioned":
+            work = op.stats.tessera_details.get("sa_arithmetic_ops", work)
+        # Codex: decision end
         sa_flops_util = min(
-            (op.stats.flop_count / sa_time_ns * 1e9) / peak_sa_flops_per_sec,
+            (work / sa_time_ns * 1e9) / peak_sa_flops_per_sec,
             1.0,
         )
     else:
@@ -68,6 +74,14 @@ def compute_vu_flops_util(op: Operator.Operator, config: ChipConfig, dvfs: Compo
     """
     peak_vu_flops_per_sec = compute_peak_vu_flops_per_sec_from_dvfs_config(config, dvfs)
     vu_time_ns = op.stats.vu_time_ns
+    # Codex: decision start — partitioned reductions provide an explicit scalar
+    # instruction count instead of the native fixed FLOP/8 accumulation proxy.
+    detail = op.stats.tessera_details
+    if config.array_backend == "tessera_partitioned" and "vu_arithmetic_ops" in detail:
+        if vu_time_ns <= 0 or peak_vu_flops_per_sec <= 0:
+            return 0
+        return min(detail["vu_arithmetic_ops"] / vu_time_ns * 1e9 / peak_vu_flops_per_sec, 1.0)
+    # Codex: decision end
     if op.op_type == Operator.OpType.MXU:
         # assert peak_vu_flops_per_sec > 0, f"Peak VU FLOPS is {peak_vu_flops_per_sec} for op: {op.to_csv_dict()}"
         # assert vu_time_ns > 0, f"VU time is {vu_time_ns} for op: {op.to_csv_dict()}"
@@ -183,6 +197,15 @@ def analyze_dynamic_energy(
     op.stats.dynamic_energy_sa_J = sa_dyn_W * sa_time_ns / 1e9 * sa_flops_util
     op.stats.dynamic_energy_vu_J = vu_dyn_W * vu_time_ns / 1e9 * vu_flops_util
     op.stats.dynamic_energy_sram_J = sram_dyn_W * vmem_time_ns / 1e9
+    # Codex: decision start — preserve native SRAM energy per transferred byte
+    # under chenyi9's ideal-bandwidth assumption; shorter service is not less work.
+    # Reference coefficient: native sram_dyn_W / native vmem bandwidth at this V/f.
+    detail = op.stats.tessera_details
+    if config.array_backend == "tessera_partitioned" and detail.get("sram_bandwidth_model") == "per_pe_double_buffer":
+        frequency = op.dvfs_sram.frequency_GHz or config.freq_GHz
+        reference_bandwidth = config.vmem_bw_GBps * frequency / config.freq_GHz
+        op.stats.dynamic_energy_sram_J = sram_dyn_W * detail["sram_bytes"] / reference_bandwidth / 1e9
+    # Codex: decision end
     op.stats.dynamic_energy_ici_J = ici_dyn_W * ici_time_ns / 1e9
     op.stats.dynamic_energy_hbm_J = hbm_dyn_W * hbm_time_ns / 1e9
     op.stats.dynamic_energy_other_J = other_dyn_W * exe_time_ns / 1e9

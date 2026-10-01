@@ -22,10 +22,7 @@ class ChipConfig(BaseModel):
     num_vu_ports: int = 6
     hbm_bw_GBps: float = 2765
     hbm_latency_ns: int = 500
-    # Codex: decision start — represent proportional QoS shares without rounding.
-    # Source: full SRAM divided among the user-approved native allocation units.
-    vmem_size_MB: float = 128
-    # Codex: decision end
+    vmem_size_MB: int = 128
     freq_GHz: float = 1.75
 
     sa_dim: int = 128

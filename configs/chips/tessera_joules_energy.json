@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "clock_period_ns": 1.428,
+  "ops_per_cycle": 2048,
+  "designs": {
+    "WS": {
+      "pj_per_op": 6.301800226474718,
+      "display_pj_per_op": "6.302",
+      "plateau_mW": 9037.875955056179,
+      "plateau_frames": 89,
+      "source_csv": "/data2/chenyi9/fracturableT3/SA-rtl/tessera-hpca/array_joules_v5/results/ws2_32/arr_ws2_32_gemm_timeline.csv"
+    },
+    "Tessera": {
+      "pj_per_op": 6.302743158143938,
+      "display_pj_per_op": "6.303",
+      "plateau_mW": 9039.228282828282,
+      "plateau_frames": 99,
+      "source_csv": "/data2/chenyi9/fracturableT3/SA-rtl/tessera-hpca/array_joules_v5/results/tessera0_32/arr_tessera0_32_gemm_timeline.csv"
+    },
+    "Planaria": {
+      "pj_per_op": 6.484595569010417,
+      "display_pj_per_op": "6.485",
+      "plateau_mW": 9300.036222222223,
+      "plateau_frames": 90,
+      "source_csv": "/data2/chenyi9/fracturableT3/SA-rtl/tessera-hpca/array_joules_v5/results/planaria2_direct_32/arr_planaria2_direct_32_gemm_timeline.csv"
+    }
+  },
+  "operations_per_MAC": 2,
+  "accounting": "Period-corrected non-SRAM total plateau per arithmetic op; used as the existing rough NeuSim activity-energy proxy. Native static power and regulator accounting are retained. This is not an isolated FMA or separately calibrated dynamic-only measurement.",
+  "proxy_groups": {
+    "SISA": "Planaria",
+    "SOSA": "Planaria",
+    "FlexSA": "Planaria"
+  },
+  "source_sha256": {
+    "/data2/chenyi9/fracturableT3/SA-rtl/tessera-hpca/array_joules_v5/run_array_gemm_power_v5.sh": "a093faeae1f7beffcff672f19ab12d42eb2bf069479ccac74fed4257b7d63290",
+    "/data2/chenyi9/fracturableT3/SA-rtl/tessera-hpca/array_joules_v5/tb/tb_array_gemm_power_tessera0.sv": "ca6e67e82dffd8062870224a91eaaf3650a85be6e2ffba6133eadc25da7f9977",
+    "/data2/chenyi9/fracturableT3/SA-rtl/tessera-hpca/array_joules_v5/plot_power_timeline_all.py": "387204221f05aa5ba9bf5631300d68ac418f0c4e9102c2fde7bcdb0d6be8fbd8",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/run_scripts/calibrate_tessera_energy.py": "b020f8a563cf2961a5fd8be192804cca50ba8f345ae87c0e0e0f80bffd715428",
+    "/data2/chenyi9/fracturableT3/SA-rtl/tessera-hpca/array_joules_v5/results/ws2_32/arr_ws2_32_gemm_timeline.csv": "7ab00dca8cb2f22a8af956eab354cf5923a8d5fe862ad926069adcc79189fa9f",
+    "/data2/chenyi9/fracturableT3/SA-rtl/tessera-hpca/array_joules_v5/results/tessera0_32/arr_tessera0_32_gemm_timeline.csv": "91478b6d0fcfb25ae94caf5611bf08652375252f792ebe2b4efc1ff678b9443c",
+    "/data2/chenyi9/fracturableT3/SA-rtl/tessera-hpca/array_joules_v5/results/planaria2_direct_32/arr_planaria2_direct_32_gemm_timeline.csv": "02e744b412d238dc1c3d05000d4b901f2eec45e42a4c022439bb39a8122a79b3"
+  }
+}
