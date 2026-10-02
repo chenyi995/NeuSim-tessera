@@ -3,11 +3,10 @@
 This fork adds Tessera mapping, equal-PE baselines, finite-SRAM energy accounting and request replay to NeuSim. The default upstream backend remains available.
 
 - [Tessera changes, energy coefficients and reproduction](docs/tessera_reproduction.md)
-- [Latest results: labeled LLM candidate overview](artifacts/tessera-20261001/llm_candidates/figures_labeled/overview.pdf)
-- [Latest candidate inputs, costs, conclusions and per-workload figures](artifacts/tessera-20261001/llm_candidates/README.md)
-- [Historical workload artifact and source inputs](artifacts/tessera-20261001/README.md)
+- [Current results: one two-panel figure per workload](artifacts/tessera-20261001/per_workload/figures/all_workloads.pdf)
+- [Complete current artifact and workload sources](artifacts/tessera-20261001/README.md)
 
-The latest publication is the attention-operator E2E candidate experiment, with both tiling policies and explicit fission labels. It retains all candidates, including those that do not show the desired curve ordering. The historical artifact predates the current transfer-tiling and array-timing fixes. Array coefficients are in pJ per multiply or add; SRAM coefficients are in pJ per transferred bit, not per arithmetic op. The detailed accounting and limitations are documented above.
+The current artifact corresponds only to the requested `all_workloads.pdf` run. Earlier performance results are archived locally. Array coefficients are in pJ per multiply or add; SRAM coefficients are in pJ per transferred bit, not per arithmetic op. The detailed accounting and limitations are documented above.
 
 ---
 

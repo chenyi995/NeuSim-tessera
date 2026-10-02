@@ -1,8 +1,6 @@
 # Tessera extension and current experiment
 
-This fork preserves NeuSim's default backend and adds a partition-aware array backend. The latest published result is the [labeled LLM candidate overview](../artifacts/tessera-20261001/llm_candidates/figures_labeled/overview.pdf). Its [artifact](../artifacts/tessera-20261001/llm_candidates/README.md) includes source case identities, full operator costs, saved configurations, area estimates and plotting scripts. It uses the corrected independent-WS SRAM area proxy, transfer-only execution and merged-load array timing described below.
-
-The candidate experiment measures complete attention-operator E2E service, including QK, softmax, PV and memory. It does not measure whole-model inference. CacheBlend WikiMQA and EPIC HotpotQA are closer to the requested curve ordering, but neither proves complete Pareto dominance. Falcon MQA and Phi-2 remain in the report as counterexamples. Falcon uses a model-config-derived KV trajectory, not a captured Falcon GPU run. The [historical workload artifact](../artifacts/tessera-20261001/README.md) is preserved separately and predates these timing fixes.
+This fork preserves NeuSim's default backend and adds a partition-aware array backend. The published snapshot is the per-workload comparison in [all_workloads.pdf](../artifacts/tessera-20261001/per_workload/figures/all_workloads.pdf). Its inputs, operator costs, arrivals, configurations, energy counters and plotting scripts are included in the [artifact](../artifacts/tessera-20261001/README.md). That snapshot predates the SRAM transfer-boundary correction described below. The corrected local rerun is tracked in [the transfer-tiling run](../results/tessera/20261001_ppa_transfer_tiles_v2/README.md), whose verification records determine completion status.
 
 ## Implementation
 
@@ -46,53 +44,9 @@ This follows NeuSim's analytical separation of compute and overlapped memory ser
 
 Tessera enables within-round packing and asynchronous admission of independent adjacent requests. Arrival idle, batch boundaries, autoregressive dependencies, pinned partials and shared HBM/vector service remain. Other arrays use serial request replay. Workloads without independent request metadata retain the complete sourced operator invocation sum. These are analytical E2E workload estimates, not RTL cycle traces or host scheduler measurements.
 
-### Whole-region loading and the array timing boundary
-
-chenyi9 ruled that a merged Planaria H×W region loads as one H-row array, and that
-Tessera's external transpose fill overlaps HBM-to-SRAM transfer. The current mode is
-`array_timing_model=merged_load_v2`. It uses the existing two-bank resource recurrence
-with load duration H for both merged Planaria and independent WS. Tessera no longer
-adds H cycles of exposed transpose fill. Its strip registers still contribute one
-final traverse tail, without changing the initiation interval. M/K/N orientation,
-padding activity and finite SRAM transfer accounting are unchanged.
-
-The timing boundary is the first weight beat entering the array through the last
-valid result, matching the paper's Section III-D and `gemmini/partition/TIMING_AUDIT.md`.
-For one square fold without strip registers, TTSA costs M+2D−1 and WS costs M+3D−2;
-the difference is D−1. Repeated folds additionally respect bank ownership. Transpose
-overlap is the user's analytical modeling assumption, not a new RTL overlap measurement.
-HBM bytes, SRAM accesses and their energy remain charged; only the exposed transpose
-latency is removed. Both tiling policies and asynchronous replay use the same mode.
-
-The earlier `bank_events_v1` mode used local grain-sized Planaria loads and included
-Tessera transpose fill. It remains available to reproduce historical results, but its
-curves do not represent the current common-loading comparison. The original reference
-path is also retained. `test_merged_load.py` verifies whole-region resource schedules,
-the single-fold paper boundary, one-time seams, scalar/vector EDP costs, and replay
-agreement on GEMM and attention workloads. `test_bank_timing.py` retains the historical
-resource-model checks.
-
 ## Reproduction
 
-The published candidate configurations retain the corrected area accounting. chenyi9 ruled that independent
-WS arrays use the matching Planaria fission tier's SRAM area, with WS FMA and Logic area
-scaled to the same PE count. The source is `Tessera-HPCA-2026/fig/plotting/make_area_figs.py`:
-`A_FMA[0] + A_LOG[0]` supplies the WS array, and `A_SRAM` supplies the matching Planaria
-tier. Both are multiplied by the total-PE ratio. This is an area estimate derived from
-the submitted RTL figure, not a new synthesis measurement. Logic includes WS interconnect
-and other non-FMA logic; no Planaria interconnect subtraction is inferred. Controllers
-remain excluded as in the source figure. Area scaling does not change NeuSim SRAM energy
-coefficients or capacity. Saved historical area metadata remains reproducible; the report
-accepts an explicit `--area-configurations` override for this correction.
-
-Install the package following the upstream README. Verify and restore the latest candidate snapshot from the repository root:
-
-```bash
-python tools/publish_llm_candidate_artifact.py verify
-python tools/publish_llm_candidate_artifact.py restore --out results/tessera/llm-candidates-restored
-```
-
-The artifact README describes figure regeneration from saved results. The following commands reproduce the historical full-workload inputs, with optional current timing corrections:
+Install the package following the upstream README. From the repository root:
 
 ```bash
 python tools/tessera_artifact.py verify
@@ -104,6 +58,6 @@ python tools/tessera_artifact.py replay --restored results/tessera/restored \
   --out results/tessera/new-edp-replay
 ```
 
-Use `native_tail` for the other policy. Add `--transfer-only --merged-load` to the `profile` command for the current whole-region loading and hidden-transpose model; both policies must use the same settings. `--merged-load` also selects the corrected independent-WS SRAM area proxy. `--bank-timing` alone reproduces the earlier local-load model. Omit `--costs` to replay the bundled historical operator profiles. Profiling and replay require fresh output paths. `--limit` is an explicit incomplete smoke test, never a complete workload result. The resource arguments control workers and address-space limits; numerical libraries use one thread. Source-machine absolute paths in frozen manifests are provenance, while the portable adapter uses restored input paths and saved physical configurations.
+Use `native_tail` for the other policy. Add `--transfer-only` to the `profile` command for the repaired accounting; both policies must use the same setting. Omit `--costs` to replay the bundled historical operator profiles. Profiling and replay require fresh output paths. `--limit` is an explicit incomplete smoke test, never a complete workload result. The resource arguments control workers and address-space limits; numerical libraries use one thread. Source-machine absolute paths in frozen manifests are provenance, while the portable adapter uses restored input paths and saved physical configurations.
 
-Run active tests with `python -m pytest`; where pytest-cov is not installed, use `python -m pytest -o addopts=''`. Historical performance sweeps are not automatically launched by tests. Reference scheduler code and sourced CNN test inputs are included under `references/`. Artifact verification, restoration and figure regeneration use bundled files. The frozen candidate source-extraction script records the original sibling-repository paths.
+Run active tests with `python -m pytest`; where pytest-cov is not installed, use `python -m pytest -o addopts=''`. Historical performance sweeps are not automatically launched by tests. Reference scheduler code and sourced CNN test inputs are included under `references/`; the latest PPA workflow does not need sibling repositories.

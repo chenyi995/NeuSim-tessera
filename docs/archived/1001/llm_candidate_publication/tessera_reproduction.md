@@ -1,8 +1,6 @@
 # Tessera extension and current experiment
 
-This fork preserves NeuSim's default backend and adds a partition-aware array backend. The latest published result is the [labeled LLM candidate overview](../artifacts/tessera-20261001/llm_candidates/figures_labeled/overview.pdf). Its [artifact](../artifacts/tessera-20261001/llm_candidates/README.md) includes source case identities, full operator costs, saved configurations, area estimates and plotting scripts. It uses the corrected independent-WS SRAM area proxy, transfer-only execution and merged-load array timing described below.
-
-The candidate experiment measures complete attention-operator E2E service, including QK, softmax, PV and memory. It does not measure whole-model inference. CacheBlend WikiMQA and EPIC HotpotQA are closer to the requested curve ordering, but neither proves complete Pareto dominance. Falcon MQA and Phi-2 remain in the report as counterexamples. Falcon uses a model-config-derived KV trajectory, not a captured Falcon GPU run. The [historical workload artifact](../artifacts/tessera-20261001/README.md) is preserved separately and predates these timing fixes.
+This fork preserves NeuSim's default backend and adds a partition-aware array backend. The published snapshot is the per-workload comparison in [all_workloads.pdf](../artifacts/tessera-20261001/per_workload/figures/all_workloads.pdf). Its inputs, operator costs, arrivals, configurations, energy counters and plotting scripts are included in the [artifact](../artifacts/tessera-20261001/README.md). That snapshot predates the SRAM transfer-boundary and continuous-fold timing corrections described below. The latest local rerun is tracked in [the merged-load run](../results/tessera/20261001_ppa_merged_load_v1/README.md), whose verification records determine completion status. It retains the corrected independent-WS SRAM area proxy and the transfer-only execution model.
 
 ## Implementation
 
@@ -74,7 +72,8 @@ resource-model checks.
 
 ## Reproduction
 
-The published candidate configurations retain the corrected area accounting. chenyi9 ruled that independent
+The latest local [area-corrected plots](../results/tessera/20261001_ppa_ws_sram_area_v4/README.md)
+reuse the transfer-tiling run's latency, energy and mappings. chenyi9 ruled that independent
 WS arrays use the matching Planaria fission tier's SRAM area, with WS FMA and Logic area
 scaled to the same PE count. The source is `Tessera-HPCA-2026/fig/plotting/make_area_figs.py`:
 `A_FMA[0] + A_LOG[0]` supplies the WS array, and `A_SRAM` supplies the matching Planaria
@@ -85,14 +84,7 @@ remain excluded as in the source figure. Area scaling does not change NeuSim SRA
 coefficients or capacity. Saved historical area metadata remains reproducible; the report
 accepts an explicit `--area-configurations` override for this correction.
 
-Install the package following the upstream README. Verify and restore the latest candidate snapshot from the repository root:
-
-```bash
-python tools/publish_llm_candidate_artifact.py verify
-python tools/publish_llm_candidate_artifact.py restore --out results/tessera/llm-candidates-restored
-```
-
-The artifact README describes figure regeneration from saved results. The following commands reproduce the historical full-workload inputs, with optional current timing corrections:
+Install the package following the upstream README. From the repository root:
 
 ```bash
 python tools/tessera_artifact.py verify
@@ -106,4 +98,4 @@ python tools/tessera_artifact.py replay --restored results/tessera/restored \
 
 Use `native_tail` for the other policy. Add `--transfer-only --merged-load` to the `profile` command for the current whole-region loading and hidden-transpose model; both policies must use the same settings. `--merged-load` also selects the corrected independent-WS SRAM area proxy. `--bank-timing` alone reproduces the earlier local-load model. Omit `--costs` to replay the bundled historical operator profiles. Profiling and replay require fresh output paths. `--limit` is an explicit incomplete smoke test, never a complete workload result. The resource arguments control workers and address-space limits; numerical libraries use one thread. Source-machine absolute paths in frozen manifests are provenance, while the portable adapter uses restored input paths and saved physical configurations.
 
-Run active tests with `python -m pytest`; where pytest-cov is not installed, use `python -m pytest -o addopts=''`. Historical performance sweeps are not automatically launched by tests. Reference scheduler code and sourced CNN test inputs are included under `references/`. Artifact verification, restoration and figure regeneration use bundled files. The frozen candidate source-extraction script records the original sibling-repository paths.
+Run active tests with `python -m pytest`; where pytest-cov is not installed, use `python -m pytest -o addopts=''`. Historical performance sweeps are not automatically launched by tests. Reference scheduler code and sourced CNN test inputs are included under `references/`; the latest PPA workflow does not need sibling repositories.
