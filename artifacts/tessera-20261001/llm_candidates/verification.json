@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "cases": 1564,
+  "unique_operators": 1071,
+  "points": 104,
+  "workers": 24,
+  "worker_memory_cap_bytes": 5000000000,
+  "elapsed_s": 40.48526069597574,
+  "engine_sha256": {
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/tessera_partitioned.py": "173b66fd70ce0bf504ecdfb03a3d9a7010a63d581030dbff08ea68f1e0b275c4",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/tessera_joint.py": "f20ecbd50d55c3c796ec3b4be7bab0fbb3f772c55c57419a0d0cefae684936bb",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/tessera_baselines.py": "3e4e6d77042e346ce41eb4cede35d5492d69945bf54ef684c3a27417027a95e9",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/npusim/backend/tessera_native_tail.py": "bf6e3f094254b10d67d921b472eb11fcc922a255238a348a00ecd13f09f5c935",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/experiment.py": "02b200205fd45cc1a699e619e69379c0e8d7552ba7be29a914df30958df6a091",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/neusim/run_scripts/run_tessera_ppa.py": "487d0b12dff0c626b04ec7f1a99089eabe3b963bbcdbb3ece082e0db98de6121",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/configs/chips/tessera_joules_energy.json": "4e9fe956096070d8ccdc8ca04bb7302ff7b37843472a619d53cdb64a8ec16d2c"
+  },
+  "output_sha256": {
+    "cases.csv": "fab64e5c59043d89341c1c6a4dcf98f38a250c4f763b5594f3f55970126f44d8",
+    "shapes.json": "38f83cf0fd07cfe808d57df670a1865c04d193e3148fd9d18bf99410ae2d6d11",
+    "source_manifest.json": "72bc570b492e254fecd300494cbab264b9a84857a65df84f09935edaf9d60aa2",
+    "configs.json": "dfbeb516b100ac126b1ea1976d8b4e8954857b1566961ea880c3f6a1e522168f",
+    "area.json": "ca2c7a9c0aabc13dbb8f3d180d08bdd93b4b23e24e229e63528cb389237dc47f",
+    "operator_costs.csv": "a78a769b31ab5ebccaa4fd0704cc24db44bef3f8eae1a0ad2b593fc0b34cf0a0",
+    "all_points.csv": "3d9367ce00f05ac3fdf9b9ccbf5cb1bb130ffe7d809f5ad7ec1902e940161865"
+  }
+}

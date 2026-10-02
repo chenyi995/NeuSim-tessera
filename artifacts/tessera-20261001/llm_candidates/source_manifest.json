@@ -1,0 +1,169 @@
+{
+  "status": "PASS",
+  "workloads": [
+    {
+      "workload_id": "falcon_mqa_dolly_decode",
+      "workload": "Falcon-7B MQA decode",
+      "source_cases": 32,
+      "requests": 32,
+      "M_min": 71,
+      "M_max": 71,
+      "KV_min": 271,
+      "KV_max": 302,
+      "head_dimensions": [
+        64
+      ],
+      "evidence": "derived: Falcon config + complete recorded Dolly-long KV trajectory"
+    },
+    {
+      "workload_id": "phi2_chat_prefill",
+      "workload": "Phi-2 chat prefill",
+      "source_cases": 732,
+      "requests": 300,
+      "M_min": 1,
+      "M_max": 512,
+      "KV_min": 1,
+      "KV_max": 4069,
+      "head_dimensions": [
+        80
+      ],
+      "evidence": "source trace: all prefill requests; attention operator boundary"
+    },
+    {
+      "workload_id": "cacheblend_wikimqa_attention",
+      "workload": "CacheBlend WikiMQA",
+      "source_cases": 600,
+      "requests": 200,
+      "M_min": 4228,
+      "M_max": 30368,
+      "KV_min": 5869,
+      "KV_max": 7592,
+      "head_dimensions": [
+        128
+      ],
+      "evidence": "upstream source-derived reuse plan: all requests and layer classes; attention operator boundary"
+    },
+    {
+      "workload_id": "epic_hotpotqa_attention",
+      "workload": "EPIC HotpotQA",
+      "source_cases": 200,
+      "requests": 200,
+      "M_min": 732,
+      "M_max": 2944,
+      "KV_min": 2123,
+      "KV_max": 19874,
+      "head_dimensions": [
+        128
+      ],
+      "evidence": "upstream source-derived reuse plan: all requests and layer classes; attention operator boundary"
+    }
+  ],
+  "moe": {
+    "down": {
+      "M": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        24,
+        27,
+        31
+      ],
+      "KN": [
+        [
+          1024,
+          2048
+        ]
+      ]
+    },
+    "gate": {
+      "M": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        24,
+        27,
+        31
+      ],
+      "KN": [
+        [
+          2048,
+          1024
+        ]
+      ]
+    },
+    "up": {
+      "M": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        24,
+        27,
+        31
+      ],
+      "KN": [
+        [
+          2048,
+          1024
+        ]
+      ]
+    }
+  },
+  "source_sha256": {
+    "/data2/chenyi9/fracturableT3/FissionSA/Tessera-revision/sources/falcon/config.json": "ef0b96fb53bf7627eb115138bdfd36edb5661891816546f41ed91fb80f19ab31",
+    "/data2/chenyi9/fracturableT3/FissionSA/workloads/workloads-Qwen-models/Qwen2.5-7B-Instruct_bs1_seq268_long/full_trace.csv": "8baca6d6726c961ab5ae7f6063cd9fc641dd913abb1996508998bea80e60ae75",
+    "/data2/chenyi9/fracturableT3/simulators/NeuSim/artifacts/tessera-20261001/inputs/snapshot/workload_metadata.json": "e3cd5d9235f5764adce249f43c7e2257270d9596b76c365ffeba059842843145",
+    "/data2/chenyi9/fracturableT3/FissionSA/out/tes-old/continuous_batching/traces/phi2_conv300/batch_composition.csv": "5051f32b5ba16a72b0f57ba5577769e1a60daf0beca03c44a17131e97046f2d0",
+    "/data2/chenyi9/fracturableT3/FissionSA/out/tessera-revision/planaria_workloads/upstream_reuse_800/workloads.csv": "57eae8e5a749f2b28f31ae088d292525ee7199ff7405c0092ddd0901d95e2fdc",
+    "/data2/chenyi9/fracturableT3/FissionSA/out/tessera-revision/planaria_workloads/upstream_reuse/shared_model/config.json": "2e97da1b1d2b7e7669f0991c186904538c27d4ea56c4fc74e89215e2b2013922",
+    "/data2/chenyi9/fracturableT3/FissionSA/out/tessera-revision/planaria_workloads/upstream_reuse_800/eligible_cases.json": "96a538481244c97bd5b48951ed0a83ab047e718124038bf8debe9b46823ed7a1",
+    "/data2/chenyi9/fracturableT3/FissionSA/Tessera-revision/traces_checked/olmoe_decode/mnk_trace.csv": "c65422aae06a852caf32d89a38c3f70d32aa564709ddbe214e80d239718c6b45"
+  },
+  "selection": "Four source/model cohorts chosen before PPA profiling; no individual cases filtered by results.",
+  "accounting": "Complete attention-operator E2E invocation sum, including QK/softmax/PV, finite SRAM and HBM; not whole-model latency. All source layer/head multiplicities retained. No causal triangle skipping. No invented arrivals or cross-step overlap.",
+  "packing": "Current native within-round and tail packing retained. Single-operator invocations have no independent request-arrival contract for asynchronous overlap. Dependent decode steps remain serial."
+}

@@ -1,0 +1,105 @@
+workload_id,tiling_policy,architecture,label,x,y
+falcon_mqa_dolly_decode,native_tail,Tessera-64,Fission 64×64,96.8975654138356,30.52201730591856
+falcon_mqa_dolly_decode,native_tail,Tessera-32,Fission 32×32,108.51968774882263,35.39867809454077
+falcon_mqa_dolly_decode,native_tail,Tessera-16,Fission 16×16,101.35068225428849,37.88977917703002
+falcon_mqa_dolly_decode,native_tail,Tessera-8,Fission 8×8,78.69234875857853,37.97539665385322
+falcon_mqa_dolly_decode,native_tail,Planaria-64,Fission 64×64,68.25308147991564,24.947687616544464
+falcon_mqa_dolly_decode,native_tail,Planaria-32,Fission 32×32,77.32352605770328,30.026992573922332
+falcon_mqa_dolly_decode,native_tail,Planaria-16,Fission 16×16,74.90858070859618,33.08638786202749
+falcon_mqa_dolly_decode,native_tail,Planaria-8,Fission 8×8,59.290965571365795,34.120367203845355
+falcon_mqa_dolly_decode,native_tail,WS,1 × (128×128),61.44076115683756,16.97556354266302
+falcon_mqa_dolly_decode,native_tail,WS-independent-64,4 × (64×64),135.96577711678893,37.10279808463036
+falcon_mqa_dolly_decode,native_tail,WS-independent-32,16 × (32×32),162.1240348692403,43.27207253180651
+falcon_mqa_dolly_decode,native_tail,WS-independent-16,64 × (16×16),134.6561853537443,42.32452607684366
+falcon_mqa_dolly_decode,native_tail,WS-independent-8,256 × (8×8),100.56048200216281,40.0508439456597
+falcon_mqa_dolly_decode,joint_edp,Tessera-64,Fission 64×64,166.058652995458,41.569109687521106
+falcon_mqa_dolly_decode,joint_edp,Tessera-32,Fission 32×32,159.3069016152716,43.26992103735509
+falcon_mqa_dolly_decode,joint_edp,Tessera-16,Fission 16×16,130.94508147254072,42.32252229487096
+falcon_mqa_dolly_decode,joint_edp,Tessera-8,Fission 8×8,96.63420427553443,40.049074074559016
+falcon_mqa_dolly_decode,joint_edp,Planaria-64,Fission 64×64,127.04941070658998,36.780168406972315
+falcon_mqa_dolly_decode,joint_edp,Planaria-32,Fission 32×32,146.6054054054054,42.858948420362736
+falcon_mqa_dolly_decode,joint_edp,Planaria-16,Fission 16×16,120.45299777942262,41.93959053461143
+falcon_mqa_dolly_decode,joint_edp,Planaria-8,Fission 8×8,86.80197359647953,39.71063875543681
+falcon_mqa_dolly_decode,joint_edp,WS,1 × (128×128),61.44076115683756,16.97556354266302
+falcon_mqa_dolly_decode,joint_edp,WS-independent-64,4 × (64×64),135.96577711678893,37.10279808463036
+falcon_mqa_dolly_decode,joint_edp,WS-independent-32,16 × (32×32),162.1240348692403,43.27207253180651
+falcon_mqa_dolly_decode,joint_edp,WS-independent-16,64 × (16×16),134.6561853537443,42.32452607684366
+falcon_mqa_dolly_decode,joint_edp,WS-independent-8,256 × (8×8),100.56048200216281,40.0508439456597
+phi2_chat_prefill,native_tail,Tessera-64,Fission 64×64,253.78965123145346,49.35974680259406
+phi2_chat_prefill,native_tail,Tessera-32,Fission 32×32,305.37935203990173,65.71191773476662
+phi2_chat_prefill,native_tail,Tessera-16,Fission 16×16,262.54185787144854,72.70912403864662
+phi2_chat_prefill,native_tail,Tessera-8,Fission 8×8,197.48786700466627,69.56328878906744
+phi2_chat_prefill,native_tail,Planaria-64,Fission 64×64,186.61232890530604,43.635687289856385
+phi2_chat_prefill,native_tail,Planaria-32,Fission 32×32,236.04553796497123,60.1035794417501
+phi2_chat_prefill,native_tail,Planaria-16,Fission 16×16,214.01104808709408,67.96122030743412
+phi2_chat_prefill,native_tail,Planaria-8,Fission 8×8,161.23143915558236,65.96812249333011
+phi2_chat_prefill,native_tail,WS,1 × (128×128),195.35212296878618,42.61785791134616
+phi2_chat_prefill,native_tail,WS-independent-64,4 × (64×64),278.20430113259715,50.749722939117696
+phi2_chat_prefill,native_tail,WS-independent-32,16 × (32×32),355.9371109612539,68.05390117156412
+phi2_chat_prefill,native_tail,WS-independent-16,64 × (16×16),363.15680576361416,78.1145551075584
+phi2_chat_prefill,native_tail,WS-independent-8,256 × (8×8),282.2199375350905,71.41480190741962
+phi2_chat_prefill,joint_edp,Tessera-64,Fission 64×64,295.66703926910145,52.1561809995746
+phi2_chat_prefill,joint_edp,Tessera-32,Fission 32×32,363.55786716040166,69.17220064270253
+phi2_chat_prefill,joint_edp,Tessera-16,Fission 16×16,358.37938639452034,80.14880809071279
+phi2_chat_prefill,joint_edp,Tessera-8,Fission 8×8,268.1001071244099,79.93673979239661
+phi2_chat_prefill,joint_edp,Planaria-64,Fission 64×64,259.96021399248656,49.88198380505633
+phi2_chat_prefill,joint_edp,Planaria-32,Fission 32×32,321.86655416879165,66.90747333616967
+phi2_chat_prefill,joint_edp,Planaria-16,Fission 16×16,323.63032734463746,77.55955746559714
+phi2_chat_prefill,joint_edp,Planaria-8,Fission 8×8,237.25575056919968,77.39584428521694
+phi2_chat_prefill,joint_edp,WS,1 × (128×128),195.35212296878618,42.61785791134616
+phi2_chat_prefill,joint_edp,WS-independent-64,4 × (64×64),278.20430113259715,50.749722939117696
+phi2_chat_prefill,joint_edp,WS-independent-32,16 × (32×32),355.9371109612539,68.05390117156412
+phi2_chat_prefill,joint_edp,WS-independent-16,64 × (16×16),363.15680576361416,78.1145551075584
+phi2_chat_prefill,joint_edp,WS-independent-8,256 × (8×8),282.2199375350905,71.41480190741962
+cacheblend_wikimqa_attention,native_tail,Tessera-64,Fission 64×64,506.8471715240577,87.7950335342303
+cacheblend_wikimqa_attention,native_tail,Tessera-32,Fission 32×32,453.6991343613121,88.36503903721695
+cacheblend_wikimqa_attention,native_tail,Tessera-16,Fission 16×16,373.3512196880537,88.56623649214328
+cacheblend_wikimqa_attention,native_tail,Tessera-8,Fission 8×8,250.27057336253816,84.79095488706312
+cacheblend_wikimqa_attention,native_tail,Planaria-64,Fission 64×64,462.8403577863877,85.22546410026916
+cacheblend_wikimqa_attention,native_tail,Planaria-32,Fission 32×32,404.83963725101125,85.85940617465333
+cacheblend_wikimqa_attention,native_tail,Planaria-16,Fission 16×16,333.72910975825346,86.12364597769883
+cacheblend_wikimqa_attention,native_tail,Planaria-8,Fission 8×8,215.3111640903697,81.93306095670205
+cacheblend_wikimqa_attention,native_tail,WS,1 × (128×128),546.280676107539,87.09785665076113
+cacheblend_wikimqa_attention,native_tail,WS-independent-64,4 × (64×64),532.3601981702386,87.72569817429348
+cacheblend_wikimqa_attention,native_tail,WS-independent-32,16 × (32×32),485.4361062842368,86.01768572052545
+cacheblend_wikimqa_attention,native_tail,WS-independent-16,64 × (16×16),406.2355846259795,81.62437942328812
+cacheblend_wikimqa_attention,native_tail,WS-independent-8,256 × (8×8),290.7477648126345,72.18460340326457
+cacheblend_wikimqa_attention,joint_edp,Tessera-64,Fission 64×64,529.0889604726253,88.67038852052735
+cacheblend_wikimqa_attention,joint_edp,Tessera-32,Fission 32×32,474.2927433957988,88.78647859771515
+cacheblend_wikimqa_attention,joint_edp,Tessera-16,Fission 16×16,390.1071929349344,88.75798453138955
+cacheblend_wikimqa_attention,joint_edp,Tessera-8,Fission 8×8,274.2942520449793,85.67910949761283
+cacheblend_wikimqa_attention,joint_edp,Planaria-64,Fission 64×64,497.44907060749364,86.1479711980813
+cacheblend_wikimqa_attention,joint_edp,Planaria-32,Fission 32×32,435.2329908075403,86.2571335190184
+cacheblend_wikimqa_attention,joint_edp,Planaria-16,Fission 16×16,357.98018963572287,86.26901791117056
+cacheblend_wikimqa_attention,joint_edp,Planaria-8,Fission 8×8,243.216455658967,83.74909980648908
+cacheblend_wikimqa_attention,joint_edp,WS,1 × (128×128),546.280676107539,87.09785665076113
+cacheblend_wikimqa_attention,joint_edp,WS-independent-64,4 × (64×64),532.3601981702386,87.72569817429348
+cacheblend_wikimqa_attention,joint_edp,WS-independent-32,16 × (32×32),485.4361062842368,86.01768572052545
+cacheblend_wikimqa_attention,joint_edp,WS-independent-16,64 × (16×16),406.2355846259795,81.62437942328812
+cacheblend_wikimqa_attention,joint_edp,WS-independent-8,256 × (8×8),290.7477648126345,72.18460340326457
+epic_hotpotqa_attention,native_tail,Tessera-64,Fission 64×64,511.7360214718714,88.67589014014729
+epic_hotpotqa_attention,native_tail,Tessera-32,Fission 32×32,458.35100969445205,88.84988423040211
+epic_hotpotqa_attention,native_tail,Tessera-16,Fission 16×16,376.9404996815888,88.70682088925061
+epic_hotpotqa_attention,native_tail,Tessera-8,Fission 8×8,276.91715352928526,88.14742136463445
+epic_hotpotqa_attention,native_tail,Planaria-64,Fission 64×64,465.1378284052997,85.92754358205299
+epic_hotpotqa_attention,native_tail,Planaria-32,Fission 32×32,407.25761695635714,86.19630766120854
+epic_hotpotqa_attention,native_tail,Planaria-16,Fission 16×16,335.56061120594075,86.13541439539345
+epic_hotpotqa_attention,native_tail,Planaria-8,Fission 8×8,241.40244900580728,85.68585886653752
+epic_hotpotqa_attention,native_tail,WS,1 × (128×128),553.239972660842,88.70941875902255
+epic_hotpotqa_attention,native_tail,WS-independent-64,4 × (64×64),541.2996299825475,88.96868970368105
+epic_hotpotqa_attention,native_tail,WS-independent-32,16 × (32×32),494.90787528562964,86.86742994437945
+epic_hotpotqa_attention,native_tail,WS-independent-16,64 × (16×16),414.7077879946934,82.19134276282918
+epic_hotpotqa_attention,native_tail,WS-independent-8,256 × (8×8),310.6075866846524,73.74427634489722
+epic_hotpotqa_attention,joint_edp,Tessera-64,Fission 64×64,537.7006120003882,90.0831178145718
+epic_hotpotqa_attention,joint_edp,Tessera-32,Fission 32×32,482.602837261622,90.03744035968705
+epic_hotpotqa_attention,joint_edp,Tessera-16,Fission 16×16,399.8009433656652,89.2801589493188
+epic_hotpotqa_attention,joint_edp,Tessera-8,Fission 8×8,294.38564039687355,89.15531704953334
+epic_hotpotqa_attention,joint_edp,Planaria-64,Fission 64×64,505.80227218431423,87.36837436079803
+epic_hotpotqa_attention,joint_edp,Planaria-32,Fission 32×32,443.32344817201005,87.26371933671744
+epic_hotpotqa_attention,joint_edp,Planaria-16,Fission 16×16,364.445652493597,87.2581763321168
+epic_hotpotqa_attention,joint_edp,Planaria-8,Fission 8×8,262.16841947345824,87.17353669579714
+epic_hotpotqa_attention,joint_edp,WS,1 × (128×128),553.239972660842,88.70941875902255
+epic_hotpotqa_attention,joint_edp,WS-independent-64,4 × (64×64),541.2996299825475,88.96868970368105
+epic_hotpotqa_attention,joint_edp,WS-independent-32,16 × (32×32),494.90787528562964,86.86742994437945
+epic_hotpotqa_attention,joint_edp,WS-independent-16,64 × (16×16),414.7077879946934,82.19134276282918
+epic_hotpotqa_attention,joint_edp,WS-independent-8,256 × (8×8),310.6075866846524,73.74427634489722

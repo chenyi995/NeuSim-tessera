@@ -1,0 +1,427 @@
+{
+  "status": "PASS",
+  "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1",
+  "files": [
+    {
+      "file": "EXPERIMENT.md",
+      "restore": "README.md",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/README.md",
+      "compression": "none",
+      "sha256": "606742de219935b531a921eab204d2cfc60717f93bc6a8fca3ba5b7c39a20020",
+      "stored_sha256": "606742de219935b531a921eab204d2cfc60717f93bc6a8fca3ba5b7c39a20020",
+      "bytes": 6077,
+      "stored_bytes": 6077
+    },
+    {
+      "file": "all_points.csv",
+      "restore": "all_points.csv",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/all_points.csv",
+      "compression": "none",
+      "sha256": "3d9367ce00f05ac3fdf9b9ccbf5cb1bb130ffe7d809f5ad7ec1902e940161865",
+      "stored_sha256": "3d9367ce00f05ac3fdf9b9ccbf5cb1bb130ffe7d809f5ad7ec1902e940161865",
+      "bytes": 75585,
+      "stored_bytes": 75585
+    },
+    {
+      "file": "area.json",
+      "restore": "area.json",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/area.json",
+      "compression": "none",
+      "sha256": "ca2c7a9c0aabc13dbb8f3d180d08bdd93b4b23e24e229e63528cb389237dc47f",
+      "stored_sha256": "ca2c7a9c0aabc13dbb8f3d180d08bdd93b4b23e24e229e63528cb389237dc47f",
+      "bytes": 6362,
+      "stored_bytes": 6362
+    },
+    {
+      "file": "cases.csv",
+      "restore": "cases.csv",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/cases.csv",
+      "compression": "none",
+      "sha256": "fab64e5c59043d89341c1c6a4dcf98f38a250c4f763b5594f3f55970126f44d8",
+      "stored_sha256": "fab64e5c59043d89341c1c6a4dcf98f38a250c4f763b5594f3f55970126f44d8",
+      "bytes": 440839,
+      "stored_bytes": 440839
+    },
+    {
+      "file": "comparisons.csv",
+      "restore": "comparisons.csv",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/comparisons.csv",
+      "compression": "none",
+      "sha256": "c4f88fb3abd2f40f737dc74ff72a2b2ebfa0195ee052fd9074809fef7d04f29d",
+      "stored_sha256": "c4f88fb3abd2f40f737dc74ff72a2b2ebfa0195ee052fd9074809fef7d04f29d",
+      "bytes": 9357,
+      "stored_bytes": 9357
+    },
+    {
+      "file": "configs.json",
+      "restore": "configs.json",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/configs.json",
+      "compression": "none",
+      "sha256": "dfbeb516b100ac126b1ea1976d8b4e8954857b1566961ea880c3f6a1e522168f",
+      "stored_sha256": "dfbeb516b100ac126b1ea1976d8b4e8954857b1566961ea880c3f6a1e522168f",
+      "bytes": 69981,
+      "stored_bytes": 69981
+    },
+    {
+      "file": "dominance.csv",
+      "restore": "dominance.csv",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/dominance.csv",
+      "compression": "none",
+      "sha256": "b9f5d6f9ad3577ae5183ce3f5425dfe9faaa5a8bb41612124c8ca6aa2ef94944",
+      "stored_sha256": "b9f5d6f9ad3577ae5183ce3f5425dfe9faaa5a8bb41612124c8ca6aa2ef94944",
+      "bytes": 388,
+      "stored_bytes": 388
+    },
+    {
+      "file": "experiment.py",
+      "restore": "experiment.py",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/experiment.py",
+      "compression": "none",
+      "sha256": "02b200205fd45cc1a699e619e69379c0e8d7552ba7be29a914df30958df6a091",
+      "stored_sha256": "02b200205fd45cc1a699e619e69379c0e8d7552ba7be29a914df30958df6a091",
+      "bytes": 13728,
+      "stored_bytes": 13728
+    },
+    {
+      "file": "figures/all_workloads.pdf",
+      "restore": "figures/all_workloads.pdf",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures/all_workloads.pdf",
+      "compression": "none",
+      "sha256": "a542bdd1c38f9c9212aa40bb93e1e28fef5cc294afdabfb82e2ecaa73758ab5a",
+      "stored_sha256": "a542bdd1c38f9c9212aa40bb93e1e28fef5cc294afdabfb82e2ecaa73758ab5a",
+      "bytes": 44743,
+      "stored_bytes": 44743
+    },
+    {
+      "file": "figures/cacheblend_wikimqa_attention.pdf",
+      "restore": "figures/cacheblend_wikimqa_attention.pdf",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures/cacheblend_wikimqa_attention.pdf",
+      "compression": "none",
+      "sha256": "b8234e63b08f4d1a2554465db6d0ad641bcdf46b834a88758137a510956a06dc",
+      "stored_sha256": "b8234e63b08f4d1a2554465db6d0ad641bcdf46b834a88758137a510956a06dc",
+      "bytes": 21815,
+      "stored_bytes": 21815
+    },
+    {
+      "file": "figures/cacheblend_wikimqa_attention.png",
+      "restore": "figures/cacheblend_wikimqa_attention.png",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures/cacheblend_wikimqa_attention.png",
+      "compression": "none",
+      "sha256": "25091ba7815305ee580e70cae4106721d18bbf68e0e0f48f5ed12d76230bd822",
+      "stored_sha256": "25091ba7815305ee580e70cae4106721d18bbf68e0e0f48f5ed12d76230bd822",
+      "bytes": 134662,
+      "stored_bytes": 134662
+    },
+    {
+      "file": "figures/epic_hotpotqa_attention.pdf",
+      "restore": "figures/epic_hotpotqa_attention.pdf",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures/epic_hotpotqa_attention.pdf",
+      "compression": "none",
+      "sha256": "1ff8b2c24dbfefc40da9300a837e09bbdeefef1f30dfbea683196908f35e5c9e",
+      "stored_sha256": "1ff8b2c24dbfefc40da9300a837e09bbdeefef1f30dfbea683196908f35e5c9e",
+      "bytes": 21386,
+      "stored_bytes": 21386
+    },
+    {
+      "file": "figures/epic_hotpotqa_attention.png",
+      "restore": "figures/epic_hotpotqa_attention.png",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures/epic_hotpotqa_attention.png",
+      "compression": "none",
+      "sha256": "1d939747836ad20c41c056bbfeeb9fcd49364d42c6691e9a62fc1ee5d6484405",
+      "stored_sha256": "1d939747836ad20c41c056bbfeeb9fcd49364d42c6691e9a62fc1ee5d6484405",
+      "bytes": 125382,
+      "stored_bytes": 125382
+    },
+    {
+      "file": "figures/falcon_mqa_dolly_decode.pdf",
+      "restore": "figures/falcon_mqa_dolly_decode.pdf",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures/falcon_mqa_dolly_decode.pdf",
+      "compression": "none",
+      "sha256": "ecbdc778cdc7b37155b6dc3e01aaaee8f0f167f0cb2eda1f97d2e50c8c7bfdc3",
+      "stored_sha256": "ecbdc778cdc7b37155b6dc3e01aaaee8f0f167f0cb2eda1f97d2e50c8c7bfdc3",
+      "bytes": 22090,
+      "stored_bytes": 22090
+    },
+    {
+      "file": "figures/falcon_mqa_dolly_decode.png",
+      "restore": "figures/falcon_mqa_dolly_decode.png",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures/falcon_mqa_dolly_decode.png",
+      "compression": "none",
+      "sha256": "3e44a6f96e511871e9451be4ba301bd09175ca96840bc95ba4dafb079a979937",
+      "stored_sha256": "3e44a6f96e511871e9451be4ba301bd09175ca96840bc95ba4dafb079a979937",
+      "bytes": 136310,
+      "stored_bytes": 136310
+    },
+    {
+      "file": "figures/overview.pdf",
+      "restore": "figures/overview.pdf",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures/overview.pdf",
+      "compression": "none",
+      "sha256": "8bf995c7303a440b1362b78da5203976d560fc5601ffaa2699d20e4a4e97b64b",
+      "stored_sha256": "8bf995c7303a440b1362b78da5203976d560fc5601ffaa2699d20e4a4e97b64b",
+      "bytes": 27034,
+      "stored_bytes": 27034
+    },
+    {
+      "file": "figures/overview.png",
+      "restore": "figures/overview.png",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures/overview.png",
+      "compression": "none",
+      "sha256": "1ad464b4e7844b171dc3edb3f299811f70b8ef328d53ed8e516b08bc24e3ead1",
+      "stored_sha256": "1ad464b4e7844b171dc3edb3f299811f70b8ef328d53ed8e516b08bc24e3ead1",
+      "bytes": 328079,
+      "stored_bytes": 328079
+    },
+    {
+      "file": "figures/phi2_chat_prefill.pdf",
+      "restore": "figures/phi2_chat_prefill.pdf",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures/phi2_chat_prefill.pdf",
+      "compression": "none",
+      "sha256": "f3eca49ddd4b4f1666d6c527540a6dc6f3838181f76c716dd548b301f2c39a37",
+      "stored_sha256": "f3eca49ddd4b4f1666d6c527540a6dc6f3838181f76c716dd548b301f2c39a37",
+      "bytes": 21366,
+      "stored_bytes": 21366
+    },
+    {
+      "file": "figures/phi2_chat_prefill.png",
+      "restore": "figures/phi2_chat_prefill.png",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures/phi2_chat_prefill.png",
+      "compression": "none",
+      "sha256": "a6ab04c61a95d30c0523c081a57b8f3f8e8d99b76c9fa14a3fee404446a3a479",
+      "stored_sha256": "a6ab04c61a95d30c0523c081a57b8f3f8e8d99b76c9fa14a3fee404446a3a479",
+      "bytes": 150280,
+      "stored_bytes": 150280
+    },
+    {
+      "file": "figures_labeled/all_workloads.pdf",
+      "restore": "figures_labeled/all_workloads.pdf",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures_labeled/all_workloads.pdf",
+      "compression": "none",
+      "sha256": "fba481cd9d18f26117589df261749cb3dde48198ca6a1b757d6572ad5393f334",
+      "stored_sha256": "fba481cd9d18f26117589df261749cb3dde48198ca6a1b757d6572ad5393f334",
+      "bytes": 53002,
+      "stored_bytes": 53002
+    },
+    {
+      "file": "figures_labeled/cacheblend_wikimqa_attention.pdf",
+      "restore": "figures_labeled/cacheblend_wikimqa_attention.pdf",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures_labeled/cacheblend_wikimqa_attention.pdf",
+      "compression": "none",
+      "sha256": "2ec0343cfe0d14bc2804d99d25dbe3195f585e2f860cdce3a3dcffaf3b2e6fd0",
+      "stored_sha256": "2ec0343cfe0d14bc2804d99d25dbe3195f585e2f860cdce3a3dcffaf3b2e6fd0",
+      "bytes": 23807,
+      "stored_bytes": 23807
+    },
+    {
+      "file": "figures_labeled/cacheblend_wikimqa_attention.png",
+      "restore": "figures_labeled/cacheblend_wikimqa_attention.png",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures_labeled/cacheblend_wikimqa_attention.png",
+      "compression": "none",
+      "sha256": "92a0c2f61cf393e959ea6ec89a5cca86048c6d02222cc8aa4bdfdd122b2988a2",
+      "stored_sha256": "92a0c2f61cf393e959ea6ec89a5cca86048c6d02222cc8aa4bdfdd122b2988a2",
+      "bytes": 186055,
+      "stored_bytes": 186055
+    },
+    {
+      "file": "figures_labeled/epic_hotpotqa_attention.pdf",
+      "restore": "figures_labeled/epic_hotpotqa_attention.pdf",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures_labeled/epic_hotpotqa_attention.pdf",
+      "compression": "none",
+      "sha256": "1dd2c9789fa5a62985850053efa6d9b7ca230980febd1d92d608f3d3c1154e75",
+      "stored_sha256": "1dd2c9789fa5a62985850053efa6d9b7ca230980febd1d92d608f3d3c1154e75",
+      "bytes": 23542,
+      "stored_bytes": 23542
+    },
+    {
+      "file": "figures_labeled/epic_hotpotqa_attention.png",
+      "restore": "figures_labeled/epic_hotpotqa_attention.png",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures_labeled/epic_hotpotqa_attention.png",
+      "compression": "none",
+      "sha256": "255f425b459739bef036c4973b22d460abc94d9f610580a43652e57719824581",
+      "stored_sha256": "255f425b459739bef036c4973b22d460abc94d9f610580a43652e57719824581",
+      "bytes": 180058,
+      "stored_bytes": 180058
+    },
+    {
+      "file": "figures_labeled/falcon_mqa_dolly_decode.pdf",
+      "restore": "figures_labeled/falcon_mqa_dolly_decode.pdf",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures_labeled/falcon_mqa_dolly_decode.pdf",
+      "compression": "none",
+      "sha256": "d0bd4cafee4f9ad94cd0b4d2d1dfe2d05f109e2d115fd13c7fd3644a1ce31126",
+      "stored_sha256": "d0bd4cafee4f9ad94cd0b4d2d1dfe2d05f109e2d115fd13c7fd3644a1ce31126",
+      "bytes": 24348,
+      "stored_bytes": 24348
+    },
+    {
+      "file": "figures_labeled/falcon_mqa_dolly_decode.png",
+      "restore": "figures_labeled/falcon_mqa_dolly_decode.png",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures_labeled/falcon_mqa_dolly_decode.png",
+      "compression": "none",
+      "sha256": "3e01180edbc226d0f0386bfa14d7affcb5f7c7e76ab3209349969088612e7c96",
+      "stored_sha256": "3e01180edbc226d0f0386bfa14d7affcb5f7c7e76ab3209349969088612e7c96",
+      "bytes": 194121,
+      "stored_bytes": 194121
+    },
+    {
+      "file": "figures_labeled/overview.pdf",
+      "restore": "figures_labeled/overview.pdf",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures_labeled/overview.pdf",
+      "compression": "none",
+      "sha256": "f153f3041ad2dbf2725475470ef116664c8754c6394c088292a1d9e69ad72662",
+      "stored_sha256": "f153f3041ad2dbf2725475470ef116664c8754c6394c088292a1d9e69ad72662",
+      "bytes": 45428,
+      "stored_bytes": 45428
+    },
+    {
+      "file": "figures_labeled/overview.png",
+      "restore": "figures_labeled/overview.png",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures_labeled/overview.png",
+      "compression": "none",
+      "sha256": "ad0fd7e5ed44ba1d2dd54848aede2fc7083a3586fc56b7a8fe2038f3a3d2531f",
+      "stored_sha256": "ad0fd7e5ed44ba1d2dd54848aede2fc7083a3586fc56b7a8fe2038f3a3d2531f",
+      "bytes": 562448,
+      "stored_bytes": 562448
+    },
+    {
+      "file": "figures_labeled/phi2_chat_prefill.pdf",
+      "restore": "figures_labeled/phi2_chat_prefill.pdf",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures_labeled/phi2_chat_prefill.pdf",
+      "compression": "none",
+      "sha256": "9b4a90bd738ecdaec1d958acd8d78da0d888be2b0a911ba4d1ae093279a91604",
+      "stored_sha256": "9b4a90bd738ecdaec1d958acd8d78da0d888be2b0a911ba4d1ae093279a91604",
+      "bytes": 22946,
+      "stored_bytes": 22946
+    },
+    {
+      "file": "figures_labeled/phi2_chat_prefill.png",
+      "restore": "figures_labeled/phi2_chat_prefill.png",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures_labeled/phi2_chat_prefill.png",
+      "compression": "none",
+      "sha256": "278ce77a9975f3286e845c1908cf367023225f752bfee9744cd0e464c8741779",
+      "stored_sha256": "278ce77a9975f3286e845c1908cf367023225f752bfee9744cd0e464c8741779",
+      "bytes": 208195,
+      "stored_bytes": 208195
+    },
+    {
+      "file": "figures_labeled/point_labels.csv",
+      "restore": "figures_labeled/point_labels.csv",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures_labeled/point_labels.csv",
+      "compression": "none",
+      "sha256": "aaf8446b8f7106da85a7ad013e8eab26117c67f5e1c665bee6ab8b1ae2b7b5a0",
+      "stored_sha256": "aaf8446b8f7106da85a7ad013e8eab26117c67f5e1c665bee6ab8b1ae2b7b5a0",
+      "bytes": 10380,
+      "stored_bytes": 10380
+    },
+    {
+      "file": "figures_labeled/verification.json",
+      "restore": "figures_labeled/verification.json",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/figures_labeled/verification.json",
+      "compression": "none",
+      "sha256": "8cf487525cc728d1baa433c0c6d876527174781d7238f63044d934014002e9a1",
+      "stored_sha256": "8cf487525cc728d1baa433c0c6d876527174781d7238f63044d934014002e9a1",
+      "bytes": 1356,
+      "stored_bytes": 1356
+    },
+    {
+      "file": "operator_costs.csv.gz",
+      "restore": "operator_costs.csv",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/operator_costs.csv",
+      "compression": "gzip",
+      "sha256": "a78a769b31ab5ebccaa4fd0704cc24db44bef3f8eae1a0ad2b593fc0b34cf0a0",
+      "stored_sha256": "e585c748d308090b7cd08e890e17da53e231bac0a285695b7a07e887f9938b90",
+      "bytes": 57032214,
+      "stored_bytes": 5777170
+    },
+    {
+      "file": "plot.log",
+      "restore": "plot.log",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/plot.log",
+      "compression": "none",
+      "sha256": "24ee94e8bb0bf4eaced7c2b7bc0ef21bf995bafb8a304a97efd3ce5a873cfcc3",
+      "stored_sha256": "24ee94e8bb0bf4eaced7c2b7bc0ef21bf995bafb8a304a97efd3ce5a873cfcc3",
+      "bytes": 6484,
+      "stored_bytes": 6484
+    },
+    {
+      "file": "plot_and_report.py",
+      "restore": "plot_and_report.py",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/plot_and_report.py",
+      "compression": "none",
+      "sha256": "8fd251524d0169b2f4ab2e4a8c14f0af4e3442eeb1caed2d9e32e22191eae799",
+      "stored_sha256": "8fd251524d0169b2f4ab2e4a8c14f0af4e3442eeb1caed2d9e32e22191eae799",
+      "bytes": 15258,
+      "stored_bytes": 15258
+    },
+    {
+      "file": "plot_labeled.py",
+      "restore": "plot_labeled.py",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/plot_labeled.py",
+      "compression": "none",
+      "sha256": "49b02abdfcf89e4dfa957cf0903ad83e6f8584347805f4c846b607cf89e09619",
+      "stored_sha256": "49b02abdfcf89e4dfa957cf0903ad83e6f8584347805f4c846b607cf89e09619",
+      "bytes": 8427,
+      "stored_bytes": 8427
+    },
+    {
+      "file": "plot_verification.json",
+      "restore": "plot_verification.json",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/plot_verification.json",
+      "compression": "none",
+      "sha256": "e154d74a30cfc1ab8818f7bb650744060d2fe7c514f8d7df5487f9288ceae9ba",
+      "stored_sha256": "e154d74a30cfc1ab8818f7bb650744060d2fe7c514f8d7df5487f9288ceae9ba",
+      "bytes": 1340,
+      "stored_bytes": 1340
+    },
+    {
+      "file": "prepare_labeled_plot.py",
+      "restore": "prepare_labeled_plot.py",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/prepare_labeled_plot.py",
+      "compression": "none",
+      "sha256": "823d93075b8ab3f6e7a615c21f1946ca544942517365e0490781b8ba5b7e2a2d",
+      "stored_sha256": "823d93075b8ab3f6e7a615c21f1946ca544942517365e0490781b8ba5b7e2a2d",
+      "bytes": 3781,
+      "stored_bytes": 3781
+    },
+    {
+      "file": "run.log",
+      "restore": "run.log",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/run.log",
+      "compression": "none",
+      "sha256": "a7bc52633c58f7fddc34f16babc0b39be129d1c498d2c1de7b602ab518f5b231",
+      "stored_sha256": "a7bc52633c58f7fddc34f16babc0b39be129d1c498d2c1de7b602ab518f5b231",
+      "bytes": 2525,
+      "stored_bytes": 2525
+    },
+    {
+      "file": "shapes.json",
+      "restore": "shapes.json",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/shapes.json",
+      "compression": "none",
+      "sha256": "38f83cf0fd07cfe808d57df670a1865c04d193e3148fd9d18bf99410ae2d6d11",
+      "stored_sha256": "38f83cf0fd07cfe808d57df670a1865c04d193e3148fd9d18bf99410ae2d6d11",
+      "bytes": 54657,
+      "stored_bytes": 54657
+    },
+    {
+      "file": "source_manifest.json",
+      "restore": "source_manifest.json",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/source_manifest.json",
+      "compression": "none",
+      "sha256": "72bc570b492e254fecd300494cbab264b9a84857a65df84f09935edaf9d60aa2",
+      "stored_sha256": "72bc570b492e254fecd300494cbab264b9a84857a65df84f09935edaf9d60aa2",
+      "bytes": 4737,
+      "stored_bytes": 4737
+    },
+    {
+      "file": "verification.json",
+      "restore": "verification.json",
+      "source": "/data2/chenyi9/fracturableT3/simulators/NeuSim/results/tessera/20261001_llm_candidate_ppa_v1/verification.json",
+      "compression": "none",
+      "sha256": "efee28b7bdbdf3ca50bb6342b04a65a5d1d9ee2e08bb0001189dcf62405f6474",
+      "stored_sha256": "efee28b7bdbdf3ca50bb6342b04a65a5d1d9ee2e08bb0001189dcf62405f6474",
+      "bytes": 2016,
+      "stored_bytes": 2016
+    }
+  ],
+  "readme_sha256": "d9ad5236cc5cc2d6a114456850a5d1e21cf162c34d07332170eef12ed6cebe56"
+}

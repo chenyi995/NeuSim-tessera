@@ -1,0 +1,9 @@
+workload_id,tiling_policy,WS_points,Tessera,Planaria
+falcon_mqa_dolly_decode,native_tail,5,1,1
+falcon_mqa_dolly_decode,joint_edp,5,4,4
+phi2_chat_prefill,native_tail,5,2,1
+phi2_chat_prefill,joint_edp,5,4,3
+cacheblend_wikimqa_attention,native_tail,5,3,2
+cacheblend_wikimqa_attention,joint_edp,5,3,3
+epic_hotpotqa_attention,native_tail,5,3,2
+epic_hotpotqa_attention,joint_edp,5,3,3

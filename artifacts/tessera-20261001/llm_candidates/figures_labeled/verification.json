@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "points": 104,
+  "labels_per_view": 104,
+  "source_sha256": "3d9367ce00f05ac3fdf9b9ccbf5cb1bb130ffe7d809f5ad7ec1902e940161865",
+  "artifacts": {
+    "falcon_mqa_dolly_decode.pdf": "d0bd4cafee4f9ad94cd0b4d2d1dfe2d05f109e2d115fd13c7fd3644a1ce31126",
+    "falcon_mqa_dolly_decode.png": "3e01180edbc226d0f0386bfa14d7affcb5f7c7e76ab3209349969088612e7c96",
+    "all_workloads.pdf": "fba481cd9d18f26117589df261749cb3dde48198ca6a1b757d6572ad5393f334",
+    "phi2_chat_prefill.pdf": "9b4a90bd738ecdaec1d958acd8d78da0d888be2b0a911ba4d1ae093279a91604",
+    "phi2_chat_prefill.png": "278ce77a9975f3286e845c1908cf367023225f752bfee9744cd0e464c8741779",
+    "cacheblend_wikimqa_attention.pdf": "2ec0343cfe0d14bc2804d99d25dbe3195f585e2f860cdce3a3dcffaf3b2e6fd0",
+    "cacheblend_wikimqa_attention.png": "92a0c2f61cf393e959ea6ec89a5cca86048c6d02222cc8aa4bdfdd122b2988a2",
+    "epic_hotpotqa_attention.pdf": "1dd2c9789fa5a62985850053efa6d9b7ca230980febd1d92d608f3d3c1154e75",
+    "epic_hotpotqa_attention.png": "255f425b459739bef036c4973b22d460abc94d9f610580a43652e57719824581",
+    "overview.png": "ad0fd7e5ed44ba1d2dd54848aede2fc7083a3586fc56b7a8fe2038f3a3d2531f",
+    "overview.pdf": "f153f3041ad2dbf2725475470ef116664c8754c6394c088292a1d9e69ad72662",
+    "point_labels.csv": "aaf8446b8f7106da85a7ad013e8eab26117c67f5e1c665bee6ab8b1ae2b7b5a0"
+  }
+}
