@@ -6,14 +6,14 @@ from neusim.npusim.backend.tessera_partitioned import FirstFitFabric,packed_lane
 from neusim.run_scripts.run_tessera_partitioned import ENERGIES
 
 @lru_cache(maxsize=65536)
-def tile_plan(occupied,side,grain,geometry,m,nk,nn,variant,frequency,merged_load=False):
+def tile_plan(occupied,side,grain,geometry,m,nk,nn,variant,frequency):
     """Cache exact first-fit masks; coalesce only simultaneous retirements."""
     h,w=geometry[-2:];probe=FirstFitFabric(side,grain);probe.rows=list(occupied)
     limit=packed_lanes(nk,nn,side**2//(h*w),geometry[3]);boxes=probe.available(h,w,limit)
     if not boxes:return None
     width=len(boxes);groups={};final=list(occupied)
     for lane,(r,c,hh,ww) in enumerate(boxes):
-        duration=lane_cycles(m,geometry,variant,grain,(nk*nn+width-1-lane)//width,merged_load)/frequency
+        duration=lane_cycles(m,geometry,variant,grain,(nk*nn+width-1-lane)//width)/frequency
         mask=((1<<(ww//grain))-1)<<(c//grain)
         masks=groups.setdefault(duration,[0]*len(occupied))
         for y in range(r//grain,(r+hh)//grain):
@@ -29,16 +29,12 @@ def sections(batch):
 def segments(p,costs):
     """QK/PV/head order is retained; equal SRAM tiles are run-length encoded."""
     phases=p['phases']
-    # chenyi9: decision start -- replay uses the same hidden-ingress model as profiling.
-    merged_load=costs.chip.tessera_parameters.get('array_timing_model')=='merged_load_v2'
-    # chenyi9: decision end
     def phase_segments(phase):
         # chenyi9: decision start -- replay full-array bulk followed by packed mixed tails.
         if phase.get('native_tail'):
             from neusim.npusim.backend.tessera_partitioned import parts
             from neusim.npusim.backend.tessera_native_tail import geometry,groups,tile_cycles
-            # chenyi9: transfer boundaries cannot create replay-only array restarts.
-            mt,nt,kt=phase.get('array_tile',phase['memory_tile']);m,n,k=(phase[x] for x in ('M','N','K'))
+            mt,nt,kt=phase['memory_tile'];m,n,k=(phase[x] for x in ('M','N','K'))
             planes=phase['producer_planes'];family=phase['family'];total=0
             if n%nt==0 and k%kt==0:
                 full=(kt//costs.side)*(nt//costs.side)
@@ -51,7 +47,7 @@ def segments(p,costs):
                             yield dict(g=g,m=mm,nk=kt//costs.side,nn=nt//costs.side,groups=repeat)
                         else:
                             yield dict(g=tail[0][0],m=mm,nk=1,nn=1,groups=repeat,mixed_tail=tail,family=family)
-                        total+=repeat*tile_cycles(mm,nt,kt,costs.side,costs.grain,planes,family,merged_load=merged_load)/costs.chip.freq_GHz
+                        total+=repeat*tile_cycles(mm,nt,kt,costs.side,costs.grain,planes,family)/costs.chip.freq_GHz
                     assert math.isclose(total,float(phase['sa_ns']),rel_tol=1e-12),(total,phase)
                     return
             for _ in range(phase.get('B',1)):
@@ -69,18 +65,18 @@ def segments(p,costs):
                                         if tail:
                                             yield dict(g=tail[0][0],m=mm,nk=1,nn=1,groups=1,
                                                 mixed_tail=tail,family=family)
-                                    total+=kc*tile_cycles(mm,nn,kk,costs.side,costs.grain,planes,family,merged_load=merged_load)/costs.chip.freq_GHz
+                                    total+=kc*tile_cycles(mm,nn,kk,costs.side,costs.grain,planes,family)/costs.chip.freq_GHz
             assert math.isclose(total,float(phase['sa_ns']),rel_tol=1e-12),(total,phase)
             return
         # chenyi9: decision end
-        g=phase['geometry'];mt,nt,kt=phase.get('array_tile',phase['memory_tile'])
+        g=phase['geometry'];mt,nt,kt=phase['memory_tile']
         def one(m,n,k,groups):
             return dict(g=g,m=m,nk=(k+g[0]-1)//g[0],nn=(n+g[1]-1)//g[1],groups=groups)
         if not all(k in phase for k in ('M','N','K')):
             # Historical divisor-only artifacts do not carry complete dimensions.
             s=one(mt,nt,kt,1)
             width=packed_lanes(s['nk'],s['nn'],costs.side**2//(g[-2]*g[-1]),g[3])
-            cycle=lane_cycles(mt,g,costs.chip.tessera_variant,costs.grain,(s['nk']*s['nn']+width-1)//width,merged_load)/costs.chip.freq_GHz
+            cycle=lane_cycles(mt,g,costs.chip.tessera_variant,costs.grain,(s['nk']*s['nn']+width-1)//width)/costs.chip.freq_GHz
             groups=float(phase['sa_ns'])/cycle
             assert math.isclose(groups,round(groups),rel_tol=1e-12),(groups,phase)
             s['groups']=round(groups);yield s;return
@@ -105,7 +101,7 @@ def segments(p,costs):
         previous=None;total=0.
         for s in raw():
             width=packed_lanes(s['nk'],s['nn'],costs.side**2//(g[-2]*g[-1]),g[3])
-            total+=s['groups']*lane_cycles(s['m'],g,costs.chip.tessera_variant,costs.grain,(s['nk']*s['nn']+width-1)//width,merged_load)/costs.chip.freq_GHz
+            total+=s['groups']*lane_cycles(s['m'],g,costs.chip.tessera_variant,costs.grain,(s['nk']*s['nn']+width-1)//width)/costs.chip.freq_GHz
             if previous is not None and all(previous[x]==s[x] for x in ('g','m','nk','nn')):
                 previous['groups']+=s['groups']
             else:
@@ -154,17 +150,15 @@ def dispatch(batches,costs,mode,trace=None,compress=True):
     # chenyi9: decision end
     fabric=FirstFitFabric(costs.side,costs.grain);states=OrderedDict();live={};pending=[];done={};cohort=set();round_waiting=set()
     servers=dict(hbm=now,vu=now,ici=now);result=Counter();intervals=[];macros=[]
-    # chenyi9: replay the corrected array boundary, including tail packing.
-    merged_load=costs.chip.tessera_parameters.get('array_timing_model')=='merged_load_v2'
     def segment_plan(seg):
         if 'mixed_tail' in seg:
             from neusim.npusim.backend.tessera_native_tail import tail_plan
             plan=tail_plan(tuple(fabric.rows),costs.side,costs.grain,seg['m'],
-                tuple((tuple(g),nk,nn) for g,nk,nn in seg['mixed_tail']),seg['family'],merged_load=merged_load)
+                tuple((tuple(g),nk,nn) for g,nk,nn in seg['mixed_tail']),seg['family'])
             if plan is None:return None
             final,retirements=plan
             return final,tuple((dt/costs.chip.freq_GHz,mask) for dt,mask in retirements)
-        return tile_plan(tuple(fabric.rows),costs.side,costs.grain,tuple(seg['g']),seg['m'],seg['nk'],seg['nn'],costs.chip.tessera_variant,costs.chip.freq_GHz,merged_load)
+        return tile_plan(tuple(fabric.rows),costs.side,costs.grain,tuple(seg['g']),seg['m'],seg['nk'],seg['nn'],costs.chip.tessera_variant,costs.chip.freq_GHz)
     def push(t,kind,payload):
         nonlocal sequence
         sequence+=1;heapq.heappush(pending,(t,sequence,kind,payload))

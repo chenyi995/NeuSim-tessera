@@ -51,42 +51,15 @@ def geometries(config):
     # Codex: decision end
 
 
-# chenyi9: decision start -- continuous folds must respect live weight-bank ownership.
-def ws_lane_cycles(m, h, w, folds, load_height):
-    """Last output under two weight banks, one local load port, and skew.
-
-    Source: FissionSA README sections 4.2 and 6.1: local load d, release W-1,
-    output drain H+W-2. Generalize revision_arrays._bank_cycles without
-    padding every stream to its sufficient no-stall bound. For fold f:
-    F[f]=max(F[f-1]+d, I[f-2]+M+W-1); I[f]=max(F[f]+d,I[f-1]+M).
-    Planaria loads its constituent cores in parallel (d=grain); independent
-    WS loads its full local array (d=H). This is an analytical bank schedule.
-    """
-    if min(m,h,w,folds,load_height)<=0:
-        raise ValueError('nonpositive WS timing extent')
-    interval=max(m,load_height)
-    last=folds-1
-    return (load_height+last*interval+(last//2)*max(0,m+w-1+load_height-2*interval)
-            +m+h+w-2)
-# chenyi9: decision end
-
-
 @lru_cache(maxsize=131072)
-def array_cost(arch, m, n, k, geometry, grain=32, bank_timing=False, merged_load=False):
+def array_cost(arch, m, n, k, geometry, grain=32):
     """Return cycles, A words, B words, partial words, K groups and folds."""
     h, w = geometry[-2:]
     slots = geometry[3] if arch in ("Planaria-32", "Planaria") else 128**2 // (h*w)
     if arch in ("WS", "SOSA", "WS-independent", "Planaria-32", "Planaria"):
         nk, nn = ceildiv(k, h), ceildiv(n, w)
         folds = ceildiv(nk*nn, slots)
-        if (bank_timing or merged_load) and arch in ('WS','WS-independent','Planaria','Planaria-32'):
-            # chenyi9: use the same live-bank accounting for connected and independent WS.
-            # chenyi9: decision start -- merged Planaria loads one complete H-row region.
-            # Source: chenyi9's 2026-10-01 ruling; local-grain loading is historical only.
-            load=h if merged_load or not arch.startswith('Planaria') else grain
-            cycles=ws_lane_cycles(m,h,w,folds,load)
-            # chenyi9: decision end
-        elif arch in ("Planaria-32", "Planaria"):
+        if arch in ("Planaria-32", "Planaria"):
             # combo0's executable formula uses max(M,d), not the stale module
             # docstring's d+W-1. Keep the reference implementation exactly.
             # chenyi9: decision start -- use the configured grain in the source formula.
@@ -173,8 +146,7 @@ def padded_activity(arch, m, n, k, geometry):
 
 @lru_cache(maxsize=262144)
 def counts(b, m, n, k, a_bytes, b_bytes, out_bytes, geometry, arch,
-           capacity, freq, bw, resident=False, forced_tile=None, sa_energy_accounting="useful", sram_read_accounting="useful", grain=32,
-           transfer_only=False, bank_timing=False, merged_load=False):
+           capacity, freq, bw, resident=False, forced_tile=None, sa_energy_accounting="useful", sram_read_accounting="useful", grain=32):
     """Use native SRAM tiling/HBM traffic with each baseline's array schedule."""
     from neusim.npusim.backend.tessera_partitioned import memory_tile, parts, BACKEND
     planes = geometry[3]
@@ -192,18 +164,13 @@ def counts(b, m, n, k, a_bytes, b_bytes, out_bytes, geometry, arch,
         raise ValueError("unknown SA energy accounting")
     if sram_read_accounting not in ("useful", "padded_tiles"):
         raise ValueError("unknown SRAM read accounting")
-    # chenyi9: decision start -- SRAM transfer boundaries do not restart arrays.
-    # Source: native compute_node_cost_compute_time_for_matmul evaluates the
-    # whole operator independently of its HBM/SRAM transfer tile. Preserve the
-    # physical array kernel and true padding; memory capacity/reloads stay below.
-    am, an, ak = (m, n, k) if transfer_only else (mt, nt, kt)
-    for mm, mc in parts(m, am):
-        for nn, nc in parts(n, an):
+    for mm, mc in parts(m, mt):
+        for nn, nc in parts(n, nt):
             groups = 0
             # Reference SISA retains running sums in PEs across K transfers.
-            kparts = [(k, 1)] if arch == "SISA" else parts(k, ak)
+            kparts = [(k, 1)] if arch == "SISA" else parts(k, kt)
             for kk, kc in kparts:
-                timing, ra, rb, partial, kg, folds = array_cost(arch, mm, nn, kk, geometry, grain, bank_timing, merged_load)
+                timing, ra, rb, partial, kg, folds = array_cost(arch, mm, nn, kk, geometry, grain)
                 repeat = b*mc*nc*kc
                 # chenyi9: decision start — charge compute and reads for padded lanes.
                 cm, pa, pb = padded_activity(arch, mm, nn, kk, geometry)
@@ -247,8 +214,5 @@ def counts(b, m, n, k, a_bytes, b_bytes, out_bytes, geometry, arch,
                 sram_bytes=sram, hbm_a_read_bytes=hbm_a, hbm_b_read_bytes=hbm_b,
                 hbm_output_write_bytes=hbm_c, hbm_partial_read_bytes=0,
                 hbm_partial_write_bytes=0, hbm_bytes=hbm_a+hbm_b+hbm_c,
-                peak_live_bytes=peak, memory_tile=[mt, nt, kt], array_tile=[am, an, ak], rounds=rounds,
-                sram_tiling_model="transfer_only" if transfer_only else "restart_per_tile",
-                array_timing_model="merged_load_v2" if merged_load else "bank_events_v1" if bank_timing else "legacy",
+                peak_live_bytes=peak, memory_tile=[mt, nt, kt], rounds=rounds,
                 skew_tail_cycles=0)
-    # chenyi9: decision end

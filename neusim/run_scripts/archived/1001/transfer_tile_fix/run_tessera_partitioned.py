@@ -81,7 +81,7 @@ def native_record(op, chip):
     assert s.execution_time_ns >= max(s.sa_time_ns, s.vu_time_ns, s.vmem_time_ns, s.memory_time_ns, s.ici_time_ns)
     assert math.isclose(s.total_energy_J, sum(record[k] for k in ENERGIES), rel_tol=1e-12)
     record.update(peak_live_bytes=d.get("peak_live_bytes", 0),
-                  mapping_json=json.dumps({key:d[key] for key in ("geometry", "memory_tile", "array_tile", "sram_tiling_model", "phase_plans", "engine", "B", "M", "N", "K",
+                  mapping_json=json.dumps({key:d[key] for key in ("geometry", "memory_tile", "phase_plans", "engine", "B", "M", "N", "K",
                       "sram_bandwidth_model", "sram_bandwidth_bytes_per_ns", "sram_service_time_ns",
                       "sram_overlap_hidden_ns", "sa_energy_accounting", "charged_sa_macs", "padding_macs",
                       "sram_read_accounting", "padding_sram_read_bytes") if key in d}, separators=(",", ":")))

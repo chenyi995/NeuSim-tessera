@@ -127,15 +127,12 @@ def packed_lanes(nk, nn, slots, planes):
     return min(nk*nn, slots, planes*nn)
 
 
-def lane_cycles(m, geometry, variant, grain, folds, merged_load=False):
+def lane_cycles(m, geometry, variant, grain, folds):
     """A region retires after its own last fold, using the existing RTL anchor."""
     h, w = geometry[-2:]
     seams = w//grain-1 if variant not in ("independent", "independent_noskew", "ws") else 0
-    # chenyi9: decision start -- transpose ingress overlaps the HBM transfer.
-    # Source: 2026-10-01 ruling; Gemmini TIMING_AUDIT.md's array boundary excludes fill.
     return (bank_cycles(m, h, folds, variant in ("independent", "ws"))
-            + w - (h if merged_load else 0) + seams + (h-1 if variant == "skew" else 0))
-    # chenyi9: decision end
+            + w + seams + (h-1 if variant == "skew" else 0))
 # chenyi9: decision end
 
 
@@ -250,7 +247,7 @@ def checked_tile(m, n, k, a_bytes, b_bytes, accum, planes, capacity, tile):
 @lru_cache(maxsize=262144)
 def counts(b, m, n, k, a_bytes, b_bytes, out_bytes, geometry, variant,
            grain, side, capacity, freq, bw, resident=False, forced_tile=None, sa_energy_accounting="useful",
-           sram_read_accounting="useful", active_pe_budget=None, transfer_only=False, merged_load=False):
+           sram_read_accounting="useful", active_pe_budget=None, transfer_only=False):
     kt, nt, square, kp, h, w = geometry
     # Codex: decision start — FP32 partial sums and ping-pong buffers follow
     # paper Strip memory; HBM sees actual output dtype, never an imported C64 template.
@@ -295,11 +292,11 @@ def counts(b, m, n, k, a_bytes, b_bytes, out_bytes, geometry, variant,
                 # checked_tile/memory_tile still reserve those FP32 planes.
                 r = ceildiv(nk * nn_regions, packed_lanes(nk, nn_regions, slots, kp))
                 # chenyi9: decision end
-                # Strip registers affect the final tail, not each fold interval.
+                # RTL has one registered stage per crossed physical strip and
+                # one initial H-cycle transpose fill; both affect the final tail.
                 seams = w // grain - 1 if variant not in ("independent", "independent_noskew", "ws") else 0
                 traditional = variant in ("independent", "ws")
-                # chenyi9: hidden transpose fill is excluded at the array boundary.
-                time = bank_cycles(mm, h, r, traditional) + w - h + (0 if merged_load else h) + seams
+                time = bank_cycles(mm, h, r, traditional) + w - h + h + seams
                 delta = h - 1 if variant == "skew" else 0
                 cycles += multiplier * (time + delta)
                 tail += multiplier * delta
@@ -440,18 +437,17 @@ def compute_matmul(I, op, config, b, m, n, k):
     read_accounting = config.tessera_parameters.get("sram_read_accounting", "useful")
     # chenyi9: decision start -- use the same execution semantics in both mappers.
     transfer_only = config.tessera_parameters.get("sram_tiling_model") == "transfer_only"
-    merged_load = config.tessera_parameters.get('array_timing_model') == 'merged_load_v2'
     if baseline:
         from neusim.npusim.backend.tessera_baselines import counts as baseline_counts
         detail = dict(baseline_counts(b, m, n, k, ab, bb, cb, geometry, baseline,
             config.vmem_size_MB*1024**2, config.freq_GHz, config.hbm_bw_GBps, spec.get("resident", False), forced_tile, energy_accounting, read_accounting,
             grain=int(config.tessera_parameters.get("baseline_grain",32)), transfer_only=transfer_only,
-            bank_timing=config.tessera_parameters.get('array_timing_model')=='bank_events_v1', merged_load=merged_load))
+            bank_timing=config.tessera_parameters.get('array_timing_model')=='bank_events_v1'))
     else:
         detail = dict(counts(b, m, n, k, ab, bb, cb, geometry, config.tessera_variant,
                             grain, side, config.vmem_size_MB*1024**2, config.freq_GHz,
                             config.hbm_bw_GBps, spec.get("resident", False), forced_tile, energy_accounting, read_accounting,
-                            config.tessera_parameters.get("active_pe_budget"), transfer_only, merged_load))
+                            config.tessera_parameters.get("active_pe_budget"), transfer_only))
     # chenyi9: decision end
     sa, vu = ceil(detail["sa_cycles"] / config.freq_GHz), issue_ns(detail["reduction_ops"], config)
     # Preserve native VU matmul issue formula and its four-times selection policy.

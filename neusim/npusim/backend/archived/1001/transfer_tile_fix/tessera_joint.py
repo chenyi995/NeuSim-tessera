@@ -35,7 +35,7 @@ def factor_tiles(m, n, k, word, planes, capacity):
     return mt[valid], nt[valid], kt[valid], peak[valid]
 
 
-def array_vectors(arch, mt, nt, kt, g, variant, grain, side, active_pe_budget=None, bank_timing=False, merged_load=False):
+def array_vectors(arch, mt, nt, kt, g, variant, grain, side, active_pe_budget=None):
     """Divisor-tile counterpart of scalar array kernels; integer arithmetic."""
     h, w = g[-2:]
     active_pes = side**2 if active_pe_budget is None else active_pe_budget
@@ -46,13 +46,6 @@ def array_vectors(arch, mt, nt, kt, g, variant, grain, side, active_pe_budget=No
         minimum = grain if arch in ("Planaria-32", "Planaria") else 2*h-1
         cycles = rounds*np.where(rounds>=3,np.maximum(mt,minimum),mt)
         cycles += grain+h+w-2 if arch in ("Planaria-32", "Planaria") else 3*h-2
-        # chenyi9: decision start -- rank mappings with the repaired live-bank recurrence.
-        if (bank_timing or merged_load) and arch in ('WS','WS-independent','Planaria','Planaria-32'):
-            # chenyi9: merged Planaria uses the complete region's H-cycle load.
-            load=h if merged_load or not arch.startswith('Planaria') else grain
-            interval=np.maximum(mt,load);last=rounds-1
-            cycles=load+last*interval+(last//2)*np.maximum(0,mt+w-1+load-2*interval)+mt+h+w-2
-        # chenyi9: decision end
         # chenyi9: decision end
         return cycles, mt*kt*nn, kt*nt, mt*nt*nk, nk, rounds
     if arch == "SISA":
@@ -107,8 +100,7 @@ def array_vectors(arch, mt, nt, kt, g, variant, grain, side, active_pe_budget=No
     last, interval = rounds-1,np.maximum(mt,h)
     cycles = h+last*interval+(last//2)*np.maximum(0,mt+release+h-2*interval)+mt+drain
     seams = 0 if variant in ("independent","independent_noskew","ws") else w//grain-1
-    # chenyi9: transpose ingress overlaps memory transfer in merged_load_v2.
-    cycles += w-h+(0 if merged_load else h)+seams+(h-1 if variant=="skew" else 0)
+    cycles += w-h+h+seams+(h-1 if variant=="skew" else 0)
     return cycles,mt*kt*nn,kt*nt,mt*nt*nk,nk,rounds
 
 
@@ -124,22 +116,15 @@ def candidate_vectors(b, m, n, k, word, geometry, config, tiles, resident=False)
         if np.any(rem):
             yield np.maximum(rem,1), (rem>0).astype(np.int64)
     cycles=aw=bw=pw=rounds=reductions=padded_macs=padded_a=padded_b=np.zeros_like(mt)
-    # chenyi9: decision start -- score transfer tiles without inventing array work.
-    # Match the scalar whole-operator counters; M/N transfer tiling continues to
-    # set HBM reloads and finite live SRAM below. Array geometry remains searched.
-    transfer_only = config.tessera_parameters.get('sram_tiling_model') == 'transfer_only'
-    am,an,ak = (np.full_like(mt,m),np.full_like(nt,n),np.full_like(kt,k)) if transfer_only else (mt,nt,kt)
-    for mm,mc in pieces(m,am):
-        for nn,nc in pieces(n,an):
+    for mm,mc in pieces(m,mt):
+        for nn,nc in pieces(n,nt):
             groups=np.zeros_like(mt)
-            kparts=[(np.full_like(kt,k),np.ones_like(kt))] if arch=="SISA" else pieces(k,ak)
+            kparts=[(np.full_like(kt,k),np.ones_like(kt))] if arch=="SISA" else pieces(k,kt)
             for kk,kc in kparts:
                 repeats=b*mc*nc*kc
                 tc,ta,tb,tp,kg,tr=array_vectors(arch,mm,nn,kk,geometry,config.tessera_variant,
                     int(config.tessera_parameters.get("baseline_grain",32)) if arch in ("Planaria-32","Planaria") else grain,config.sa_dim,
-                    config.tessera_parameters.get("active_pe_budget"),
-                    config.tessera_parameters.get('array_timing_model')=='bank_events_v1',
-                    config.tessera_parameters.get('array_timing_model')=='merged_load_v2')
+                    config.tessera_parameters.get("active_pe_budget"))
                 cycles=cycles+repeats*tc;aw=aw+repeats*ta;bw=bw+repeats*tb
                 pw=pw+repeats*tp;rounds=rounds+repeats*tr;groups=groups+kc*kg
                 if arch=="SISA":
@@ -165,7 +150,6 @@ def candidate_vectors(b, m, n, k, word, geometry, config, tiles, resident=False)
                 padded_macs=padded_macs+repeats*pm
                 padded_a=padded_a+repeats*pa;padded_b=padded_b+repeats*pb
             reductions=reductions+b*mc*nc*mm*nn*(groups-1)
-    # chenyi9: decision end
     hbm_a, hbm_b = b*m*k*divup(n,nt)*word, b*k*n*divup(m,mt)*word
     hbm = hbm_a+hbm_b+b*m*n*word
     # chenyi9: decision end

@@ -23,23 +23,22 @@ def groups(n,k,side,grain,planes,family):
         ((side,grain,kb,ns),(grain,side,ks,nb),(grain,grain,ks,ns)) if nk and nt)
 
 
-def lane_time(m,g,folds,grain,family,bank_timing=False,merged_load=False):
+def lane_time(m,g,folds,grain,family,bank_timing=False):
     if family=='Tessera':
         from neusim.npusim.backend.tessera_partitioned import lane_cycles
-        return lane_cycles(m,g,'full',grain,folds,merged_load)
+        return lane_cycles(m,g,'full',grain,folds)
     h,w=g[-2:]
     # chenyi9: decision start -- normal tiling shares the EDP kernel's bank lifetime.
-    if bank_timing or merged_load:
+    if bank_timing:
         from neusim.npusim.backend.tessera_baselines import ws_lane_cycles
-        # chenyi9: load the merged region as one array, not parallel grain-sized cores.
-        return ws_lane_cycles(m,h,w,folds,h if merged_load else grain)
+        return ws_lane_cycles(m,h,w,folds,grain)
     # chenyi9: decision end
     # Source: tessera_baselines.array_cost -> combo0 native Planaria formula.
     return folds*(max(m,grain) if folds>=3 else m)+grain+h+w-2
 
 
 @lru_cache(maxsize=16384)
-def tail_plan(occupied,side,grain,m,work,family,audit=False,bank_timing=False,merged_load=False):
+def tail_plan(occupied,side,grain,m,work,family,audit=False,bank_timing=False):
     """Pack mixed residual groups into available physical regions.
 
     Each homogeneous group distributes its folds over available first-fit lanes.
@@ -62,7 +61,7 @@ def tail_plan(occupied,side,grain,m,work,family,audit=False,bank_timing=False,me
             width=len(boxes)
             for lane,box in enumerate(boxes):
                 r,c,hh,ww=box;folds=ceildiv(nk*nn-lane,width)
-                end=now+lane_time(m,g,folds,grain,family,bank_timing,merged_load)
+                end=now+lane_time(m,g,folds,grain,family,bank_timing)
                 mask=((1<<(ww//grain))-1)<<(c//grain)
                 for row in range(r//grain,(r+hh)//grain):
                     assert not fabric.rows[row]&mask
@@ -114,12 +113,12 @@ def memory_tile(m,n,k,a_bytes,b_bytes,capacity,side,grain,freq,bw,transfer_only=
 
 
 @lru_cache(maxsize=131072)
-def tile_cycles(m,n,k,side,grain,planes,family,bank_timing=False,merged_load=False):
+def tile_cycles(m,n,k,side,grain,planes,family,bank_timing=False):
     full=(k//side)*(n//side)
-    cycles=lane_time(m,geometry(side,side,grain,side,1,family),full,grain,family,bank_timing,merged_load) if full else 0
+    cycles=lane_time(m,geometry(side,side,grain,side,1,family),full,grain,family,bank_timing) if full else 0
     work=groups(n,k,side,grain,planes,family)
     if work:
-        plan=tail_plan((0,)*(side//grain),side,grain,m,work,family,bank_timing=bank_timing,merged_load=merged_load)
+        plan=tail_plan((0,)*(side//grain),side,grain,m,work,family,bank_timing=bank_timing)
         assert plan is not None and plan[1]
         cycles+=max(dt for dt,_ in plan[1])
     return cycles
@@ -134,13 +133,12 @@ def counts(b,m,n,k,a_bytes,b_bytes,out_bytes,config_json,resident=False):
     arch=config.tessera_parameters.get('baseline_architecture')
     transfer_only=config.tessera_parameters.get('sram_tiling_model')=='transfer_only'
     bank_timing=config.tessera_parameters.get('array_timing_model')=='bank_events_v1'
-    merged_load=config.tessera_parameters.get('array_timing_model')=='merged_load_v2'
     if arch in ('WS','WS-independent'):
         from neusim.npusim.backend import tessera_baselines as base
         g=next(base.geometries(config))
         return base.counts(b,m,n,k,a_bytes,b_bytes,out_bytes,g,arch,config.vmem_size_MB*1024**2,
             config.freq_GHz,config.hbm_bw_GBps,resident=resident,sa_energy_accounting='padded_tiles',
-            sram_read_accounting='padded_tiles',grain=grain,transfer_only=transfer_only,bank_timing=bank_timing,merged_load=merged_load)
+            sram_read_accounting='padded_tiles',grain=grain,transfer_only=transfer_only,bank_timing=bank_timing)
     family='Planaria' if arch in ('Planaria','Planaria-32') else 'Tessera'
     if family=='Tessera' and config.tessera_variant!='full':
         raise ValueError('native bulk/tail mode currently requires full Tessera')
@@ -156,7 +154,7 @@ def counts(b,m,n,k,a_bytes,b_bytes,out_bytes,config_json,resident=False):
                 repeat=b*mc*nc*kc;kb,kr=divmod(kk,side);nb,nr=divmod(nn,side)
                 ks,ns=ceildiv(kr,grain),ceildiv(nr,grain)
                 kp,np=kb*side+ks*grain,nb*side+ns*grain
-                cycles+=repeat*tile_cycles(mm,nn,kk,side,grain,planes,family,bank_timing,merged_load)
+                cycles+=repeat*tile_cycles(mm,nn,kk,side,grain,planes,family,bank_timing)
                 aw+=repeat*mm*kk*(nb+ns);bw+=repeat*kk*nn
                 pa+=repeat*mm*kp*(nb+ns);pb+=repeat*kp*np
                 pw+=repeat*mm*nn*(kb+ks);kgroups+=kc*(kb+ks)
@@ -182,7 +180,7 @@ def counts(b,m,n,k,a_bytes,b_bytes,out_bytes,config_json,resident=False):
         hbm_output_write_bytes=hc,hbm_partial_read_bytes=0,hbm_partial_write_bytes=0,hbm_bytes=ha+hb+hc,
         peak_live_bytes=peak,memory_tile=[mt,nt,kt],producer_planes=planes,rounds=rounds,skew_tail_cycles=0,
         phase_plans=[phase],array_tile=[am,an,ak],
-        array_timing_model='merged_load_v2' if merged_load else 'bank_events_v1' if bank_timing else 'legacy',
+        array_timing_model='bank_events_v1' if bank_timing else 'legacy',
         sram_tiling_model='transfer_only' if transfer_only else 'restart_per_tile')
     # chenyi9: decision end
 
