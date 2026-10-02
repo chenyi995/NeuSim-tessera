@@ -76,18 +76,6 @@ def profile(args):
         for value in configs.values():
             value['tessera_parameters']['sram_tiling_model'] = 'transfer_only'
     # chenyi9: decision end
-    # chenyi9: decision start -- opt into corrected banks while preserving historical artifacts.
-    if args.bank_timing:
-        for value in configs.values():
-            value['tessera_parameters']['array_timing_model']='bank_events_v1'
-        area=[ppa.with_partitioned_ws_sram(r) for r in area]
-    # chenyi9: decision end
-    # chenyi9: decision start -- one merged loader; transpose hidden by HBM transfer.
-    if args.merged_load:
-        for value in configs.values():
-            value['tessera_parameters']['array_timing_model']='merged_load_v2'
-        area=[ppa.with_partitioned_ws_sram(r) for r in area]
-    # chenyi9: decision end
 
     def saved_configs(bandwidth, mapping):
         # chenyi9: preserve every saved physical and energy parameter for reruns.
@@ -176,10 +164,6 @@ def main():
             r.add_argument('--limit', type=int, default=0, help='Explicit incomplete smoke test only.')
             r.add_argument('--transfer-only', action='store_true',
                            help='Separate SRAM transfer tiling from continuous array execution.')
-            r.add_argument('--bank-timing', action='store_true',
-                           help='Use exact two-bank fold timing and corrected independent-WS SRAM area.')
-            r.add_argument('--merged-load', action='store_true',
-                           help='Load each merged region as one array and overlap Tessera transpose with HBM transfer.')
         else:
             r.add_argument('--costs', type=Path, help='New complete profile; omit to replay included costs.')
     args = p.parse_args()

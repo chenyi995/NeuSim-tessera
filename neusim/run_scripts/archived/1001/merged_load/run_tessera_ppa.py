@@ -80,8 +80,7 @@ def configurations(bandwidth, mapping='joint_edp'):
             sa_energy_accounting='padded_tiles', sram_read_accounting='padded_tiles')
         # chenyi9: decision start -- repaired PPA uses native compute/transfer separation.
         chip.tessera_parameters['sram_tiling_model'] = 'transfer_only'
-        # chenyi9: merged Planaria load and hidden Tessera transpose, 2026-10-01.
-        chip.tessera_parameters['array_timing_model'] = 'merged_load_v2'
+        chip.tessera_parameters['array_timing_model'] = 'bank_events_v1'
         # chenyi9: decision end
         # chenyi9: decision start -- compare native bulk/tail with joint EDP tiling.
         chip.tessera_parameters['mapping_objective'] = 'e2e_edp' if mapping=='joint_edp' else 'native_hbm_reuse'
@@ -186,8 +185,7 @@ def verify(out):
                 for i in indices:
                     tile = tuple(int(x[i]) for x in tiles[:3])
                     kwargs = dict(forced_tile=tile,sa_energy_accounting='padded_tiles',sram_read_accounting='padded_tiles',
-                                  transfer_only=chip.tessera_parameters.get('sram_tiling_model')=='transfer_only',
-                                  merged_load=chip.tessera_parameters.get('array_timing_model')=='merged_load_v2')
+                                  transfer_only=chip.tessera_parameters.get('sram_tiling_model')=='transfer_only')
                     if arch:
                         kwargs['bank_timing']=chip.tessera_parameters.get('array_timing_model')=='bank_events_v1'
                         scalar = base.counts(*shape,2,2,2,g,arch,chip.vmem_size_MB*1024**2,

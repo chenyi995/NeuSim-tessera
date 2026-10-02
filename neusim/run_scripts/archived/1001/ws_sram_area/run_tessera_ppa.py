@@ -34,27 +34,6 @@ def rtl_data():
     return values
 
 
-# chenyi9: decision start -- independent WS uses same-grain Planaria SRAM and WS logic.
-def with_partitioned_ws_sram(record, source=None):
-    """Apply the requested area proxy without changing simulated energy or delay."""
-    result = dict(record)
-    if result['family'] != 'WS-independent':
-        return result
-    source = rtl_data() if source is None else source
-    # Source: RTL_PLOT A_FMA/A_LOG index 0 (WS); A_SRAM Planaria tiers
-    # at indices 2,4,6,8. Scaling preserves 128x128 PEs from 32x32 RTL.
-    assert result['rtl_index'] == 0
-    sram_grain = result['grain'] * result['rtl_side'] // math.isqrt(result['total_pes'])
-    sram_index = 2 + 2 * (16, 8, 4, 2).index(sram_grain)
-    array_area = result['scale'] * (source['A_FMA'][0] + source['A_LOG'][0])
-    sram_area = result['scale'] * source['A_SRAM'][sram_index]
-    result.update(area_model='ws_logic_planaria_sram', sram_rtl_index=sram_index,
-                  sram_rtl_grain=sram_grain, array_area_mm2=array_area,
-                  sram_area_mm2=sram_area, area_mm2=array_area+sram_area)
-    return result
-# chenyi9: decision end
-
-
 def configurations(bandwidth, mapping='joint_edp'):
     from neusim.run_scripts.run_tessera_partitioned import config
     from neusim.run_scripts.run_tessera_joint import apply_array_energy
@@ -80,8 +59,6 @@ def configurations(bandwidth, mapping='joint_edp'):
             sa_energy_accounting='padded_tiles', sram_read_accounting='padded_tiles')
         # chenyi9: decision start -- repaired PPA uses native compute/transfer separation.
         chip.tessera_parameters['sram_tiling_model'] = 'transfer_only'
-        # chenyi9: merged Planaria load and hidden Tessera transpose, 2026-10-01.
-        chip.tessera_parameters['array_timing_model'] = 'merged_load_v2'
         # chenyi9: decision end
         # chenyi9: decision start -- compare native bulk/tail with joint EDP tiling.
         chip.tessera_parameters['mapping_objective'] = 'e2e_edp' if mapping=='joint_edp' else 'native_hbm_reuse'
@@ -101,13 +78,13 @@ def configurations(bandwidth, mapping='joint_edp'):
             ppa_static_array_power_ratio=logic_ratio, ppa_rtl_index=index,
             ppa_area_source=str(RTL_PLOT), ppa_area_scale=scale)
         assert chip.num_sa*chip.sa_dim**2 == 128**2
-        metadata.append(with_partitioned_ws_sram(dict(architecture=name, family=family, grain=grain, mapping_policy=mapping,
+        metadata.append(dict(architecture=name, family=family, grain=grain, mapping_policy=mapping,
             total_pes=chip.sa_dim**2, subarrays=(chip.sa_dim//grain)**2,
             rtl_index=index, rtl_side=32, rtl_grain=grain//4 if family in ('Planaria','Tessera') else 32,
             scale=scale, array_area_mm2=array_area, sram_area_mm2=sram_area,
             area_mm2=array_area+sram_area, sram_power_ratio=sram_ratio,
             static_array_power_ratio=logic_ratio,
-            compute_pj_per_op=chip.tessera_parameters['array_energy_pj_per_op']), data))
+            compute_pj_per_op=chip.tessera_parameters['array_energy_pj_per_op']))
         output[name, bandwidth] = chip
     # chenyi9: decision end
     return output, metadata
@@ -186,10 +163,8 @@ def verify(out):
                 for i in indices:
                     tile = tuple(int(x[i]) for x in tiles[:3])
                     kwargs = dict(forced_tile=tile,sa_energy_accounting='padded_tiles',sram_read_accounting='padded_tiles',
-                                  transfer_only=chip.tessera_parameters.get('sram_tiling_model')=='transfer_only',
-                                  merged_load=chip.tessera_parameters.get('array_timing_model')=='merged_load_v2')
+                                  transfer_only=chip.tessera_parameters.get('sram_tiling_model')=='transfer_only')
                     if arch:
-                        kwargs['bank_timing']=chip.tessera_parameters.get('array_timing_model')=='bank_events_v1'
                         scalar = base.counts(*shape,2,2,2,g,arch,chip.vmem_size_MB*1024**2,
                             chip.freq_GHz,chip.hbm_bw_GBps,grain=grain,**kwargs)
                     else:
@@ -224,7 +199,6 @@ def verify(out):
     # execution semantics; the repaired model eliminates the repeated work.
     chip=configs['Planaria-8',2_800_000_000_000].model_copy(deep=True)
     chip.tessera_parameters['sram_tiling_model']='restart_per_tile'
-    chip.tessera_parameters.pop('array_timing_model',None)
     shape=(1,2482,28672,4096);g=(8,2048,True,1,8,2048);tile=(1,1,1)
     peak=part.checked_tile(*shape[1:],2,2,4,g[3],chip.vmem_size_MB*1024**2,tile)
     tiles=tuple(np.array([v],dtype=np.int64) for v in (*tile,peak))

@@ -18,10 +18,6 @@ def gm(values):
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--run',type=Path,required=True)
-    # chenyi9: decision start -- replot existing costs with explicitly sourced area metadata.
-    p.add_argument('--area-configurations',type=Path,
-        help='Override only area metadata; retain saved mappings, latency and energy.')
-    # chenyi9: decision end
     p.add_argument('--out',type=Path,required=True);a=p.parse_args()
     run=a.run.resolve();out=a.out.resolve();out.mkdir(parents=True,exist_ok=False)
     os.sched_setaffinity(0,sorted(os.sched_getaffinity(0))[-1:])
@@ -30,17 +26,6 @@ def main():
     assert sha(replay/'totals.csv')==audit['artifacts']['totals.csv']
     manifest=json.loads((costs/'manifest.json').read_text());assert manifest['status']=='PASS'
     config_records=json.loads((costs/'ppa_configurations.json').read_text())
-    # chenyi9: decision start -- permit only area fields to differ from the saved run.
-    area_file=costs/'ppa_configurations.json'
-    if a.area_configurations:
-        area_file=a.area_configurations.resolve()
-        replacement=json.loads(area_file.read_text())
-        mutable={'array_area_mm2','sram_area_mm2','area_mm2','area_model',
-                 'sram_rtl_index','sram_rtl_grain'}
-        assert [{k:v for k,v in r.items() if k not in mutable} for r in replacement] == [
-            {k:v for k,v in r.items() if k not in mutable} for r in config_records]
-        config_records=replacement
-    # chenyi9: decision end
     mapping=next(iter({c['mapping_policy'] for c in config_records}))
     assert {c['mapping_policy'] for c in config_records}=={mapping}
     mapping_label='Native tiling + tail packing' if mapping=='native_tail' else 'Joint EDP tiling'
@@ -59,13 +44,7 @@ def main():
     for c in config_records:
         arch=c['architecture'];config=configs[arch+'@2800000000000']
         assert config['sa_dim']**2*config['num_sa']==c['total_pes']==128**2
-        # chenyi9: decision start -- verify the WS logic and Planaria SRAM separately.
-        expected_array=c['scale']*sum(source[k][c['rtl_index']] for k in ('A_FMA','A_LOG'))
-        expected_sram=c['scale']*source['A_SRAM'][c.get('sram_rtl_index',c['rtl_index'])]
-        assert math.isclose(c['array_area_mm2'],expected_array,rel_tol=1e-14)
-        assert math.isclose(c['sram_area_mm2'],expected_sram,rel_tol=1e-14)
-        expected_area=expected_array+expected_sram
-        # chenyi9: decision end
+        expected_area=16*sum(source[k][c['rtl_index']] for k in ('A_FMA','A_LOG','A_SRAM'))
         assert math.isclose(c['area_mm2'],expected_area,rel_tol=1e-14)
         local=[]
         for wid in ids:
@@ -116,10 +95,7 @@ def main():
                 'e2e_speedup_vs_ws','energy_efficiency_vs_ws','performance_density_vs_ws','e2e_edp_gain_vs_ws')},
             mean_sram_energy_fraction=math.fsum(r['sram_energy_fraction'] for r in local)/len(local),
             mean_idle_fraction=math.fsum(r['idle_fraction'] for r in local)/len(local)))
-    # Codex: optional area provenance fields share a complete CSV header.
-    summary_keys=list(dict.fromkeys(k for r in summary for k in r))
-    save_csv(out/'workload_metrics.csv',detailed)
-    save_csv(out/'geomean.csv',[{k:r.get(k,'') for k in summary_keys} for r in summary])
+    save_csv(out/'workload_metrics.csv',detailed);save_csv(out/'geomean.csv',summary)
     # Independently read CSVs back and recompute the plotted means and WS ratios.
     back=list(rows(out/'workload_metrics.csv'))
     for r in rows(out/'geomean.csv'):
@@ -184,11 +160,8 @@ def main():
         'HBM rereads and padded compute/SRAM accesses are charged. Recorded arrival idle and dependencies are retained. '
         'Tessera uses corrected within-round packing and asynchronous reuse of free physical regions for independent adjacent requests. '
         'Planaria retains its legal long compositions and conventional schedule. The independent WS banks use all their arrays in parallel.', '',
-        'Area is derived from the matching 32×32 RTL tier multiplied by sixteen: RTL d=2,4,8,16 maps to d=8,16,32,64. '+
-        ('Independent WS arrays use scaled WS FMA and Logic, plus the matching Planaria fission tier SRAM. '
-         'This is a derived area proxy, not a synthesis measurement of the independent-array design. '
-         if any(c.get('area_model')=='ws_logic_planaria_sram' for c in config_records) else
-         'The five WS configurations use the historical monolithic WS area proxy. ')+
+        'Area is derived from the matching 32×32 RTL tier multiplied by sixteen: RTL d=2,4,8,16 maps to d=8,16,32,64. '
+        'The five WS configurations use the monolithic WS area scaled to the same PE count, as requested. '
         'The WS curve connects 1×128², 4×64², 16×32², 64×16² and 256×8² independent arrays. '
         'Tessera and Planaria each sweep physical fission grains 64, 32, 16 and 8.', '',
         'Compute uses the period-corrected Joules non-SRAM array proxy per executed arithmetic operation. '
@@ -216,7 +189,7 @@ def main():
         '- Plot coordinates and all geometric means were read back and independently recomputed.', '']
     (out/'README.md').write_text('\n'.join(lines))
     source_paths=[Path(__file__),costs/'ppa_configurations.json',costs/'configs.json',costs/'totals.csv',
-        replay/'verification.json',replay/'totals.csv',RTL_PLOT,RTL_REPORT,ENERGY,name_file,area_file]
+        replay/'verification.json',replay/'totals.csv',RTL_PLOT,RTL_REPORT,ENERGY,name_file]
     save_json(out/'verification.json',dict(status='PASS',configurations=len(summary),workloads=len(ids),
         workload_rows=len(detailed),source_sha256={str(p):sha(p) for p in source_paths},
         artifacts={p.name:sha(p) for p in out.iterdir() if p.is_file()},

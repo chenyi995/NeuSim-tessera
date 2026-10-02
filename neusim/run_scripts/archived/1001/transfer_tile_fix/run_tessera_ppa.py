@@ -34,27 +34,6 @@ def rtl_data():
     return values
 
 
-# chenyi9: decision start -- independent WS uses same-grain Planaria SRAM and WS logic.
-def with_partitioned_ws_sram(record, source=None):
-    """Apply the requested area proxy without changing simulated energy or delay."""
-    result = dict(record)
-    if result['family'] != 'WS-independent':
-        return result
-    source = rtl_data() if source is None else source
-    # Source: RTL_PLOT A_FMA/A_LOG index 0 (WS); A_SRAM Planaria tiers
-    # at indices 2,4,6,8. Scaling preserves 128x128 PEs from 32x32 RTL.
-    assert result['rtl_index'] == 0
-    sram_grain = result['grain'] * result['rtl_side'] // math.isqrt(result['total_pes'])
-    sram_index = 2 + 2 * (16, 8, 4, 2).index(sram_grain)
-    array_area = result['scale'] * (source['A_FMA'][0] + source['A_LOG'][0])
-    sram_area = result['scale'] * source['A_SRAM'][sram_index]
-    result.update(area_model='ws_logic_planaria_sram', sram_rtl_index=sram_index,
-                  sram_rtl_grain=sram_grain, array_area_mm2=array_area,
-                  sram_area_mm2=sram_area, area_mm2=array_area+sram_area)
-    return result
-# chenyi9: decision end
-
-
 def configurations(bandwidth, mapping='joint_edp'):
     from neusim.run_scripts.run_tessera_partitioned import config
     from neusim.run_scripts.run_tessera_joint import apply_array_energy
@@ -78,11 +57,6 @@ def configurations(bandwidth, mapping='joint_edp'):
             raise ValueError('PPA comparison requires native-tail or joint EDP mapping')
         chip.tessera_parameters.update(mapping_policy=mapping, selection_bandwidths=[bandwidth],
             sa_energy_accounting='padded_tiles', sram_read_accounting='padded_tiles')
-        # chenyi9: decision start -- repaired PPA uses native compute/transfer separation.
-        chip.tessera_parameters['sram_tiling_model'] = 'transfer_only'
-        # chenyi9: merged Planaria load and hidden Tessera transpose, 2026-10-01.
-        chip.tessera_parameters['array_timing_model'] = 'merged_load_v2'
-        # chenyi9: decision end
         # chenyi9: decision start -- compare native bulk/tail with joint EDP tiling.
         chip.tessera_parameters['mapping_objective'] = 'e2e_edp' if mapping=='joint_edp' else 'native_hbm_reuse'
         # chenyi9: decision end
@@ -101,13 +75,13 @@ def configurations(bandwidth, mapping='joint_edp'):
             ppa_static_array_power_ratio=logic_ratio, ppa_rtl_index=index,
             ppa_area_source=str(RTL_PLOT), ppa_area_scale=scale)
         assert chip.num_sa*chip.sa_dim**2 == 128**2
-        metadata.append(with_partitioned_ws_sram(dict(architecture=name, family=family, grain=grain, mapping_policy=mapping,
+        metadata.append(dict(architecture=name, family=family, grain=grain, mapping_policy=mapping,
             total_pes=chip.sa_dim**2, subarrays=(chip.sa_dim//grain)**2,
             rtl_index=index, rtl_side=32, rtl_grain=grain//4 if family in ('Planaria','Tessera') else 32,
             scale=scale, array_area_mm2=array_area, sram_area_mm2=sram_area,
             area_mm2=array_area+sram_area, sram_power_ratio=sram_ratio,
             static_array_power_ratio=logic_ratio,
-            compute_pj_per_op=chip.tessera_parameters['array_energy_pj_per_op']), data))
+            compute_pj_per_op=chip.tessera_parameters['array_energy_pj_per_op']))
         output[name, bandwidth] = chip
     # chenyi9: decision end
     return output, metadata
@@ -136,7 +110,7 @@ def verify(out):
     configs, area = configurations(2_800_000_000_000)  # Existing HBM4 sweep endpoint.
     checks = dict(source_kernel=0, vector_scalar=0, native_energy=0, full_grid=0)
     # chenyi9: decision start -- verify every energy coefficient against revision.
-    revision_path = ROOT / 'artifacts/tessera-20261001/ppa/joint_edp/main_costs/configs.json'
+    revision_path = ROOT / 'results/tessera/20260930_energy_corrected_v1/main_costs/configs.json'
     revision = json.loads(revision_path.read_text())
     for (name, bw), chip in configs.items():
         reference = 'WS' if name.startswith('WS') else 'Tessera-8' if name.startswith('Tessera') else 'Planaria-32'
@@ -185,11 +159,8 @@ def verify(out):
                 indices = np.unique(np.linspace(0,len(tiles[0])-1,min(7,len(tiles[0])),dtype=int))
                 for i in indices:
                     tile = tuple(int(x[i]) for x in tiles[:3])
-                    kwargs = dict(forced_tile=tile,sa_energy_accounting='padded_tiles',sram_read_accounting='padded_tiles',
-                                  transfer_only=chip.tessera_parameters.get('sram_tiling_model')=='transfer_only',
-                                  merged_load=chip.tessera_parameters.get('array_timing_model')=='merged_load_v2')
+                    kwargs = dict(forced_tile=tile,sa_energy_accounting='padded_tiles',sram_read_accounting='padded_tiles')
                     if arch:
-                        kwargs['bank_timing']=chip.tessera_parameters.get('array_timing_model')=='bank_events_v1'
                         scalar = base.counts(*shape,2,2,2,g,arch,chip.vmem_size_MB*1024**2,
                             chip.freq_GHz,chip.hbm_bw_GBps,grain=grain,**kwargs)
                     else:
@@ -220,11 +191,7 @@ def verify(out):
     # Source: retained full-run failure_case.json and failure_vectors.json in
     # results/tessera/20260930_ppa_equal_pe_v1. A literal Python-int product
     # independently checks the same capacity bound without NumPy overflow.
-    # Codex: retain the historical overflow regression under its original
-    # execution semantics; the repaired model eliminates the repeated work.
-    chip=configs['Planaria-8',2_800_000_000_000].model_copy(deep=True)
-    chip.tessera_parameters['sram_tiling_model']='restart_per_tile'
-    chip.tessera_parameters.pop('array_timing_model',None)
+    chip=configs['Planaria-8',2_800_000_000_000]
     shape=(1,2482,28672,4096);g=(8,2048,True,1,8,2048);tile=(1,1,1)
     peak=part.checked_tile(*shape[1:],2,2,4,g[3],chip.vmem_size_MB*1024**2,tile)
     tiles=tuple(np.array([v],dtype=np.int64) for v in (*tile,peak))
